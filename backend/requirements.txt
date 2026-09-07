@@ -1,0 +1,23 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.9.2
+pydantic-settings==2.5.2
+sqlalchemy==2.0.35
+geoalchemy2==0.15.2
+psycopg2-binary==2.9.9
+alembic==1.13.3
+celery==5.4.0
+redis==5.0.8
+pandas==2.2.3
+numpy==2.2.6
+scikit-learn==1.5.2
+geopandas==1.0.1        # osm_loader: read .osm.pbf via GDAL
+pyogrio==0.13.0
+shapely==2.1.2
+requests==2.32.3
+openai==1.59.9          # OpenAI-compatible client for Gemini / NVIDIA build / etc.
+python-dotenv==1.0.1
+
+# dev / test
+pytest==9.1.1
+httpx==0.28.1

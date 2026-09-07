@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+.expo/
+.expo-shared/
+
+# Env
+.env
+*.env.local
+
+# Data (never commit raw datasets)
+data/*
+!data/.gitkeep
+# ...but DO commit the frozen demo snapshot so the presentation is reproducible
+!data/demo/
+data/demo/*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ML artifacts
+ml/models/*.pkl
+ml/models/*.joblib

@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "FireDetect Companion",
+    "slug": "firedetect-mobile",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": { "package": "org.sih26162.firedetect" },
+    "ios": { "bundleIdentifier": "org.sih26162.firedetect" }
+  }
+}

@@ -15,7 +15,7 @@
 - **Mobile app:** React Native (Expo) — scoped as a lightweight view-only companion
 - **ML:** Python, pandas, geopandas, scikit-learn, LightGBM
 - **Jobs / cache:** Celery + Redis
-- **AI layer:** Claude API (narratives + natural-language query)
+- **AI layer:** OpenAI-compatible LLM API — Google Gemini (free tier) primary, NVIDIA build as fallback (narratives + natural-language query)
 
 ---
 
@@ -111,7 +111,7 @@ ML CLASSIFICATION
   Stage 4 (optional): Sentinel-2 NBR wildfire confirmation
         │
         ▼
-LLM REASONING (Claude API)
+LLM REASONING (OpenAI-compatible API — Gemini / NVIDIA)
   per cluster → incident narrative + recommended action + caveats
   NL query endpoint → PostGIS query via function calling
         │
@@ -156,7 +156,7 @@ Nobody waits on anyone.
 
 - **M1:** Register FIRMS `MAP_KEY` today. Submit the **archive download request** immediately (queued server-side). Meanwhile pull last-3-days NRT via the Area API so live data flows.
 - **M5:** Start the **Geofabrik India OSM extract** download (~500MB). Register a **Google Earth Engine** account (WorldCover + Sentinel-2). Download the **ORNL VNF flare catalog (2012–2019)** for weak labels.
-- **M2:** Repo skeleton, `docker-compose` with **PostGIS + Redis**, FastAPI hello-world, folder structure, `.env` (`FIRMS_MAP_KEY`, `DATABASE_URL`, `ANTHROPIC_API_KEY`).
+- **M2:** Repo skeleton, `docker-compose` with **PostGIS + Redis**, FastAPI hello-world, folder structure, `.env` (`FIRMS_MAP_KEY`, `DATABASE_URL`, `LLM_API_KEY`).
 - **M3 & M4:** Scaffold React (Vite) and React Native (Expo), render a map with one hardcoded marker. Agree the API contract with M2 **on paper** first.
 
 **Acceptance:** live FIRMS CSV in a DataFrame; OSM + land cover accessible; both frontends render a map with a marker; `docker-compose up` brings up Postgres + Redis + API.
@@ -193,7 +193,7 @@ A persistent, stable, 24/7 source with **no matching OSM/gov infrastructure near
 
 ### 2c. AI integration / LLM layer (M2)
 
-- Per flagged cluster → Claude API with feature vector + class probabilities + nearest-facility name → **human-readable incident narrative + recommended action + confidence caveats**. Makes the output actionable, not just a colored dot.
+- Per flagged cluster → LLM with feature vector + class probabilities + nearest-facility name → **human-readable incident narrative + recommended action + confidence caveats**. Makes the output actionable, not just a colored dot.
 - **NL query endpoint** (`POST /query`): "show persistent gas flares near refineries in Gujarat active over 6 months" → LLM translates to a PostGIS query via function calling → results + summary. A genuine wow-moment in a live demo.
 
 **M3/M4 in parallel:** color markers by predicted class (locked legend); per-source detail panel with lifecycle chart + classification + LLM narrative.
@@ -233,12 +233,12 @@ Winning is 60% build, 40% story. Do not skip this.
 
 ## Cut list (decide early, not at 2am)
 
-Cut in this order:
+Cut in this order (nothing has been cut — all built):
 
-1. Mobile push notifications
-2. Sentinel-2 NBR confirmation
-3. LightGBM (fall back to pure rule engine — still explainable and demo-able)
-4. NL query endpoint
+1. Mobile push notifications — cut
+2. ~~Sentinel-2 NBR confirmation~~ — built (`app/ingestion/sentinel.py`, Stage 4)
+3. ~~LightGBM~~ — built (`ml/scripts/train_classifier.py`)
+4. ~~NL query endpoint~~ — built (`app/api/v1/query.py`)
 
 **Never cut:** the clustering/lifecycle entity, the class-colored map, and the unregistered-source flag. Those three are the demo.
 
@@ -246,12 +246,12 @@ Cut in this order:
 
 ## Deliverables checklist (maps to the PS)
 
-- [ ] Classification and segregation of industrial fires from forest/natural fires (Phase 2a)
-- [ ] GIS-based data storage (PostGIS) + map-overlay visualization (Phase 3)
-- [ ] React web app
-- [ ] React Native mobile app
-- [ ] FastAPI + SQL backend
-- [ ] AI integrated (classifier + anomaly flag + LLM narrative/query)
-- [ ] Validation accuracy figure + confusion matrix
-- [ ] Export to GeoJSON/KML
-- [ ] Pitch deck + rehearsed live demo + video fallback
+- [x] Classification and segregation of industrial fires from forest/natural fires — Stage-1 rule engine (7 classes, explainable) + Stage-2 LightGBM on weak labels
+- [x] GIS-based data storage (PostGIS on Supabase) + map-overlay visualization — web dashboard with class/infra/unregistered layers
+- [x] React web app — control-room dashboard, verified in browser against live API
+- [x] React Native mobile app — view-only companion (map + alert feed + detail), Android bundle builds clean
+- [x] FastAPI + SQL backend
+- [x] AI integrated — anomaly flag (`is_unregistered`, 29 sources), LLM incident narrative, NL query endpoint (Phase 2b/2c)
+- [x] Validation accuracy figure + confusion matrix — 93.8% on the reference-labelable subset (`ml/validation_report.md`)
+- [x] Export to GeoJSON/KML — `/api/v1/export`
+- [ ] Pitch deck + rehearsed live demo + video fallback *(M5 / everyone)*
