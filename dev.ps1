@@ -36,13 +36,29 @@ if (-not (Test-Path (Join-Path $root ".env"))) {
   Write-Warning "No .env at repo root. Copy .env.example to .env and fill it in first."
 }
 
-# prefer a project virtualenv if one exists, else system python
-$py = "python"
-foreach ($cand in @("backend\.venv\Scripts\python.exe", ".venv\Scripts\python.exe")) {
-  $p = Join-Path $root $cand
-  if (Test-Path $p) { $py = $p; break }
+# # prefer a project virtualenv if one exists, else system python
+# $py = "python"
+# foreach ($cand in @("backend\.venv\Scripts\python.exe", ".venv\Scripts\python.exe")) {
+#   $p = Join-Path $root $cand
+#   if (Test-Path $p) { $py = $p; break }
+# --- Python environment -----------------------------------------------------
+
+$venv = Join-Path $root "backend\.venv"
+$py = Join-Path $venv "Scripts\python.exe"
+
+if (-not (Test-Path $py)) {
+  Write-Host "`n== creating Python 3.12 virtual environment =="
+
+  & py -3.12 -m venv $venv
+
+  if ($LASTEXITCODE -ne 0) {
+    Write-Error "Python 3.12 is required but was not found. Install Python 3.12 first."
+    exit 1
+  }
 }
+
 Write-Host "python  : $py"
+Write-Host "version : $(& $py --version)"
 Write-Host "repo    : $root"
 
 function Start-Service([string]$Title, [string]$WorkDir, [string]$Command) {
@@ -80,6 +96,6 @@ Write-Host ""
 Write-Host "up:"
 Write-Host "  api   -> http://localhost:8000/health   (Swagger: http://localhost:8000/docs)"
 if (-not $NoWeb) { Write-Host "  web   -> http://localhost:5173" }
-if ($Mobile)     { Write-Host "  expo  -> scan the QR in the firedetect-mobile window" }
+if ($Mobile) { Write-Host "  expo  -> scan the QR in the firedetect-mobile window" }
 Write-Host ""
 Write-Host "each service runs in its own window - close the window (or Ctrl+C in it) to stop that service."
