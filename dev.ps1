@@ -7,6 +7,8 @@
     - FastAPI backend  (uvicorn --reload)  -> http://localhost:8000
     - Vite web app     (npm run dev)       -> http://localhost:5173
     - Expo mobile app  (npx expo start)    -> optional, with -Mobile
+    - Celery worker+beat (6-hourly FIRMS ingest) -> optional, with -Worker
+                                                   (needs REDIS_URL in .env)
 
   Requires a filled-in .env at the repo root (copy from .env.example).
 
@@ -17,12 +19,15 @@
 .EXAMPLE
   .\dev.ps1 -Mobile         # also start the Expo dev server
 .EXAMPLE
+  .\dev.ps1 -Worker         # also start the Celery scheduled-ingest worker
+.EXAMPLE
   .\dev.ps1 -NoWeb          # backend only
 #>
 [CmdletBinding()]
 param(
   [switch]$Install,
   [switch]$Mobile,
+  [switch]$Worker,
   [switch]$NoWeb
 )
 
@@ -92,10 +97,17 @@ if ($Mobile) {
   Start-Service "firedetect-mobile" (Join-Path $root "mobile") "npx expo start"
 }
 
+if ($Worker) {
+  $celery = "& '$py' -m celery -A app.workers.celery_app worker --beat --pool=solo " +
+            "--loglevel=info --without-gossip --without-mingle --without-heartbeat"
+  Start-Service "firedetect-worker" (Join-Path $root "backend") $celery
+}
+
 Write-Host ""
 Write-Host "up:"
-Write-Host "  api   -> http://localhost:8000/health   (Swagger: http://localhost:8000/docs)"
-if (-not $NoWeb) { Write-Host "  web   -> http://localhost:5173" }
-if ($Mobile) { Write-Host "  expo  -> scan the QR in the firedetect-mobile window" }
+Write-Host "  api    -> http://localhost:8000/health   (Swagger: http://localhost:8000/docs)"
+if (-not $NoWeb) { Write-Host "  web    -> http://localhost:5173" }
+if ($Mobile) { Write-Host "  expo   -> scan the QR in the firedetect-mobile window" }
+if ($Worker) { Write-Host "  worker -> ingests FIRMS now + every 6h (firedetect-worker window)" }
 Write-Host ""
 Write-Host "each service runs in its own window - close the window (or Ctrl+C in it) to stop that service."

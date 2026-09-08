@@ -60,11 +60,20 @@ curl "localhost:8000/api/v1/hotspots/?days=3"    # GeoJSON of raw detections
 
 `pytest` runs the no-DB logic tests (clustering, FIRMS parsing, API smoke).
 
-**Scheduled refresh** — three ways, pick one:
-- On demand: `POST /api/v1/ingest/?days=3`
-- No infra: `python scripts/run_pipeline.py` from cron / Task Scheduler (every 6h)
-- Celery: point `REDIS_URL` at a free Upstash Redis, then
-  `celery -A app.workers.celery_app worker --beat --loglevel=info` (schedule is in `app/workers/celery_app.py`)
+**Scheduled refresh (every 6h)** — Celery + Upstash Redis:
+1. Create a free Upstash Redis DB, copy its URL into `.env` as
+   `REDIS_URL=rediss://default:<password>@<host>.upstash.io:6379?ssl_cert_reqs=required`
+   (TLS scheme `rediss://` is required).
+2. Verify: `python scripts/check_celery.py`
+3. Run the worker (keep it alive — `--pool=solo` is required on Windows):
+   ```
+   celery -A app.workers.celery_app worker --beat --pool=solo --loglevel=info \
+       --without-gossip --without-mingle --without-heartbeat
+   ```
+   Tuned for Upstash's free ~10k commands/day cap (30s polling, no result backend). If you
+   still hit the cap, use the no-infra path instead: `scripts/run_pipeline.py` on Task Scheduler.
+- On demand any time: `POST /api/v1/ingest/?days=3`
+- After a fresh ingest, re-run `python scripts/confirm_wildfires.py` for the new wildfire candidates.
 
 **Alternative — all local via Docker** (matches `docker-compose.yml`, needs Docker Desktop):
 ```
