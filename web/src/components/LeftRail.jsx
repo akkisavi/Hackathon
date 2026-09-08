@@ -9,7 +9,7 @@ export default function LeftRail({
   const allOn = visibleClasses.size === CLASS_KEYS.length;
 
   return (
-    <aside className="flex w-72 shrink-0 flex-col border-r border-zinc-800 bg-zinc-950 text-zinc-300">
+    <aside className="flex w-72 shrink-0 flex-col border-r border-zinc-200 bg-zinc-50 text-zinc-700">
       <Section title="Layers">
         <Toggle checked={showInfra} onChange={onToggleInfra}
           label="Industrial infrastructure"
@@ -30,18 +30,18 @@ export default function LeftRail({
       <Section title="Source class"
         action={
           <button onClick={() => onSetAllClasses(!allOn)}
-            className="text-[11px] text-zinc-500 hover:text-zinc-300">
+            className="text-[11px] text-zinc-500 hover:text-zinc-800">
             {allOn ? "none" : "all"}
           </button>
         }>
         <div className="space-y-0.5">
           {CLASS_KEYS.map((k) => (
             <button key={k} onClick={() => onToggleClass(k)}
-              className="flex w-full items-center gap-2 rounded px-1.5 py-1 text-left text-[12px] hover:bg-zinc-900">
+              className="flex w-full items-center gap-2 rounded px-1.5 py-1 text-left text-[12px] hover:bg-zinc-100">
               <span className="h-2.5 w-2.5 shrink-0 rounded-sm"
                 style={{ background: CLASS_LEGEND[k].color,
                          opacity: visibleClasses.has(k) ? 1 : 0.25 }} />
-              <span className={visibleClasses.has(k) ? "" : "text-zinc-600"}>
+              <span className={visibleClasses.has(k) ? "" : "text-zinc-400"}>
                 {CLASS_LEGEND[k].label}
               </span>
               <span className="ml-auto font-mono text-[11px] text-zinc-500 tabular-nums">
@@ -54,13 +54,13 @@ export default function LeftRail({
 
       <Section title="Alerts" grow
         action={<span className="font-mono text-[11px] text-zinc-500">{alerts?.length ?? 0}</span>}>
-        <div className="-mx-1 divide-y divide-zinc-900 overflow-y-auto">
+        <div className="-mx-1 divide-y divide-zinc-200 overflow-y-auto">
           {(alerts ?? []).map((a) => (
             <button key={a.source_id} onClick={() => onSelectAlert(a.source_id)}
-              className="flex w-full flex-col gap-0.5 px-1 py-2 text-left hover:bg-zinc-900">
+              className="flex w-full flex-col gap-0.5 px-1 py-2 text-left hover:bg-zinc-100">
               <div className="flex items-center gap-2 text-[12px]">
                 <span className={`h-1.5 w-1.5 rounded-full ${
-                  a.severity === "unregistered" ? "bg-amber-500" : "bg-zinc-600"}`} />
+                  a.severity === "unregistered" ? "bg-amber-500" : "bg-zinc-400"}`} />
                 <span className="font-medium">
                   {CLASS_LEGEND[a.predicted_class]?.label ?? a.predicted_class ?? "unclassified"}
                 </span>
@@ -72,7 +72,7 @@ export default function LeftRail({
             </button>
           ))}
           {alerts && alerts.length === 0 && (
-            <p className="px-1 py-3 text-[12px] text-zinc-600">No active alerts.</p>
+            <p className="px-1 py-3 text-[12px] text-zinc-400">No active alerts.</p>
           )}
         </div>
       </Section>
@@ -82,7 +82,7 @@ export default function LeftRail({
 
 function Section({ title, action, children, grow }) {
   return (
-    <div className={`border-b border-zinc-800 px-3 py-3 ${grow ? "flex min-h-0 flex-1 flex-col" : ""}`}>
+    <div className={`border-b border-zinc-200 px-3 py-3 ${grow ? "flex min-h-0 flex-1 flex-col" : ""}`}>
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">{title}</h2>
         {action}
@@ -96,7 +96,7 @@ function Toggle({ checked, onChange, label, hint, accent }) {
   return (
     <label className="flex cursor-pointer items-center gap-2 py-1 text-[12px]">
       <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)}
-        className={`h-3.5 w-3.5 rounded-sm border-zinc-700 bg-zinc-900 ${accent ? "accent-amber-500" : "accent-zinc-400"}`} />
+        className={`h-3.5 w-3.5 rounded-sm border-zinc-300 bg-white ${accent ? "accent-amber-500" : "accent-zinc-600"}`} />
       <span>{label}</span>
       {hint && <span className="ml-auto font-mono text-[11px] text-zinc-500 tabular-nums">{hint}</span>}
     </label>

@@ -22,41 +22,41 @@ export default function QueryBar({ onResult, onClear, active, exportParams }) {
   }
 
   return (
-    <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-950 px-4 py-2.5">
-      <span className="text-[12px] font-semibold uppercase tracking-wider text-zinc-100">
+    <div className="flex items-center gap-3 border-b border-zinc-200 bg-white px-4 py-2.5">
+      <span className="text-[12px] font-semibold uppercase tracking-wider text-zinc-900">
         Thermal Source Monitor
       </span>
-      <span className="text-[11px] text-zinc-600">NASA FIRMS · NTRO PS 26162</span>
+      <span className="text-[11px] text-zinc-400">NASA FIRMS · NTRO PS 26162</span>
 
       <form onSubmit={submit} className="ml-4 flex flex-1 items-center gap-2">
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder='Ask: "persistent gas flares near refineries active over 6 months"'
-          className="w-full rounded border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[12px] text-zinc-200 placeholder:text-zinc-600 focus:border-amber-600 focus:outline-none"
+          className="w-full rounded border border-zinc-300 bg-white px-3 py-1.5 text-[12px] text-zinc-800 placeholder:text-zinc-400 focus:border-amber-500 focus:outline-none"
         />
         <button
           type="submit" disabled={busy}
-          className="shrink-0 rounded border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-[12px] text-zinc-200 hover:bg-zinc-700 disabled:opacity-50"
+          className="shrink-0 rounded border border-zinc-300 bg-zinc-100 px-3 py-1.5 text-[12px] text-zinc-800 hover:bg-zinc-200 disabled:opacity-50"
         >
           {busy ? "…" : "Query"}
         </button>
         {active && (
           <button type="button" onClick={() => { setQ(""); onClear(); }}
-            className="shrink-0 rounded px-2 py-1.5 text-[12px] text-zinc-400 hover:text-zinc-200">
+            className="shrink-0 rounded px-2 py-1.5 text-[12px] text-zinc-500 hover:text-zinc-800">
             clear
           </button>
         )}
       </form>
 
-      {error && <span className="text-[11px] text-red-400">{error}</span>}
+      {error && <span className="text-[11px] text-red-600">{error}</span>}
 
       <div className="flex shrink-0 items-center gap-1.5 text-[11px]">
-        <span className="text-zinc-600">export</span>
+        <span className="text-zinc-400">export</span>
         <a href={api.exportUrl({ ...exportParams, format: "geojson" })}
-          className="rounded border border-zinc-800 px-2 py-1 text-zinc-300 hover:bg-zinc-900">GeoJSON</a>
+          className="rounded border border-zinc-300 px-2 py-1 text-zinc-700 hover:bg-zinc-100">GeoJSON</a>
         <a href={api.exportUrl({ ...exportParams, format: "kml" })}
-          className="rounded border border-zinc-800 px-2 py-1 text-zinc-300 hover:bg-zinc-900">KML</a>
+          className="rounded border border-zinc-300 px-2 py-1 text-zinc-700 hover:bg-zinc-100">KML</a>
       </div>
     </div>
   );

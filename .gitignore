@@ -19,6 +19,7 @@ build/
 # Data (never commit raw datasets)
 data/*
 !data/.gitkeep
+data.rar
 # ...but DO commit the frozen demo snapshot so the presentation is reproducible
 !data/demo/
 data/demo/*.csv

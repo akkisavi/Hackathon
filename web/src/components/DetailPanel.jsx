@@ -23,14 +23,14 @@ export default function DetailPanel({ sourceId, onClose }) {
 
   return (
     <div
-      className={`absolute right-0 top-0 z-20 h-full w-[380px] transform border-l border-zinc-800 bg-zinc-950 text-zinc-300 transition-transform duration-200 ${
+      className={`absolute right-0 top-0 z-20 h-full w-[380px] transform border-l border-zinc-200 bg-white text-zinc-700 transition-transform duration-200 ${
         open ? "translate-x-0" : "translate-x-full"
       }`}
     >
       {open && (
         <div className="flex h-full flex-col">
-          <header className="flex items-center justify-between border-b border-zinc-800 px-4 py-3">
-            <div className="font-mono text-[13px] text-zinc-100">
+          <header className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
+            <div className="font-mono text-[13px] text-zinc-900">
               Source #{sourceId}
               {data?.geometry && (
                 <span className="ml-2 text-[11px] text-zinc-500">
@@ -38,13 +38,13 @@ export default function DetailPanel({ sourceId, onClose }) {
                 </span>
               )}
             </div>
-            <button onClick={onClose} className="text-zinc-500 hover:text-zinc-200" aria-label="Close">
+            <button onClick={onClose} className="text-zinc-500 hover:text-zinc-800" aria-label="Close">
               ✕
             </button>
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-            {error && <p className="text-[12px] text-red-400">{error}</p>}
+            {error && <p className="text-[12px] text-red-600">{error}</p>}
             {!data && !error && <Skeleton />}
 
             {data && (
@@ -53,23 +53,23 @@ export default function DetailPanel({ sourceId, onClose }) {
                   <>
                     <div className="flex items-center gap-2">
                       <span className="h-3 w-3 rounded-sm" style={{ background: legend?.color }} />
-                      <span className="text-[15px] font-semibold text-zinc-100">
+                      <span className="text-[15px] font-semibold text-zinc-900">
                         {legend?.label ?? c.predicted_class}
                       </span>
-                      <span className="ml-auto font-mono text-[12px] text-zinc-400 tabular-nums">
+                      <span className="ml-auto font-mono text-[12px] text-zinc-500 tabular-nums">
                         {(c.confidence * 100).toFixed(0)}% · {c.method}
                       </span>
                     </div>
 
                     {c.is_unregistered && (
-                      <div className="mt-3 rounded border border-amber-600/40 bg-amber-950/30 px-3 py-2 text-[12px] text-amber-200">
+                      <div className="mt-3 rounded border border-amber-400 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
                         <span className="font-semibold uppercase tracking-wide">Unregistered source</span>
-                        <p className="mt-1 leading-snug text-amber-200/80">{c.unregistered_reason}</p>
+                        <p className="mt-1 leading-snug text-amber-700">{c.unregistered_reason}</p>
                       </div>
                     )}
 
                     <Block label="Why">
-                      <p className="text-[12px] leading-relaxed text-zinc-400">{c.rationale}</p>
+                      <p className="text-[12px] leading-relaxed text-zinc-600">{c.rationale}</p>
                     </Block>
 
                     {c.scores && (
@@ -83,9 +83,9 @@ export default function DetailPanel({ sourceId, onClose }) {
                                 <span className="w-28 shrink-0 text-zinc-500">
                                   {CLASS_LEGEND[k]?.label ?? k}
                                 </span>
-                                <span className="h-1 flex-1 rounded bg-zinc-900">
+                                <span className="h-1 flex-1 rounded bg-zinc-200">
                                   <span
-                                    className="block h-full rounded bg-zinc-600"
+                                    className="block h-full rounded bg-zinc-400"
                                     style={{ width: `${Math.min(100, v * 100)}%` }}
                                   />
                                 </span>
@@ -100,7 +100,7 @@ export default function DetailPanel({ sourceId, onClose }) {
 
                     {data.narrative && (
                       <Block label="Incident brief (AI)">
-                        <p className="whitespace-pre-line text-[12px] leading-relaxed text-zinc-300">
+                        <p className="whitespace-pre-line text-[12px] leading-relaxed text-zinc-700">
                           {data.narrative}
                         </p>
                       </Block>
@@ -149,7 +149,7 @@ export default function DetailPanel({ sourceId, onClose }) {
 
 function Block({ label, children }) {
   return (
-    <div className="mt-4 border-t border-zinc-800 pt-3">
+    <div className="mt-4 border-t border-zinc-200 pt-3">
       <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
         {label}
       </div>
@@ -162,7 +162,7 @@ function Metric({ k, v }) {
   return (
     <div className="flex justify-between">
       <dt className="text-zinc-500">{k}</dt>
-      <dd className="font-mono tabular-nums text-zinc-200">{String(v)}</dd>
+      <dd className="font-mono tabular-nums text-zinc-900">{String(v)}</dd>
     </div>
   );
 }
@@ -171,7 +171,7 @@ function Skeleton() {
   return (
     <div className="space-y-2">
       {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-4 animate-pulse rounded bg-zinc-900" style={{ width: `${90 - i * 8}%` }} />
+        <div key={i} className="h-4 animate-pulse rounded bg-zinc-200" style={{ width: `${90 - i * 8}%` }} />
       ))}
     </div>
   );

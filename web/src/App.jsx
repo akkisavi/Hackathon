@@ -65,7 +65,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen flex-col bg-zinc-950 text-zinc-200">
+    <div className="flex h-screen w-screen flex-col bg-white text-zinc-800">
       <QueryBar
         active={!!query}
         exportParams={exportParams}
@@ -87,9 +87,9 @@ export default function App() {
 
         <main className="relative min-w-0 flex-1">
           {loadError ? (
-            <div className="grid h-full place-items-center p-6 text-center text-[13px] text-zinc-400">
+            <div className="grid h-full place-items-center p-6 text-center text-[13px] text-zinc-600">
               Couldn’t reach the API ({loadError}).<br />
-              Start it with <code className="text-zinc-200">uvicorn app.main:app</code> on :8000.
+              Start it with <code className="text-zinc-900">uvicorn app.main:app</code> on :8000.
             </div>
           ) : !sources ? (
             <div className="grid h-full place-items-center text-[13px] text-zinc-500">
@@ -109,14 +109,14 @@ export default function App() {
           )}
 
           {query && (
-            <div className="absolute left-4 top-4 z-10 max-w-md rounded border border-zinc-800 bg-zinc-950/95 px-3 py-2 text-[12px] backdrop-blur">
+            <div className="absolute left-4 top-4 z-10 max-w-md rounded border border-zinc-200 bg-white/95 px-3 py-2 text-[12px] shadow-sm backdrop-blur">
               <div className="mb-1 flex items-center gap-2">
-                <span className="font-semibold text-zinc-100">Query · {query.count} results</span>
+                <span className="font-semibold text-zinc-900">Query · {query.count} results</span>
                 <span className="font-mono text-[11px] text-zinc-500">
                   {JSON.stringify(query.interpreted)}
                 </span>
               </div>
-              <p className="leading-snug text-zinc-400">{query.summary}</p>
+              <p className="leading-snug text-zinc-600">{query.summary}</p>
             </div>
           )}
 

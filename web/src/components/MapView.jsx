@@ -13,14 +13,14 @@ const BASE_STYLE = {
     basemap: {
       type: "raster",
       tiles: [
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
       ],
       tileSize: 256,
       attribution: "Esri, OpenStreetMap contributors",
     },
   },
   layers: [
-    { id: "bg", type: "background", paint: { "background-color": "#09090b" } },
+    { id: "bg", type: "background", paint: { "background-color": "#f4f4f5" } },
     { id: "basemap", type: "raster", source: "basemap" },
   ],
 };
@@ -30,7 +30,7 @@ const SOURCE_PAINT = {
   "circle-color": classColorExpr,
   "circle-opacity": 0.9,
   "circle-stroke-width": ["case", ["get", "is_unregistered"], 2, 0.6],
-  "circle-stroke-color": ["case", ["get", "is_unregistered"], "#fafafa", "#09090b"],
+  "circle-stroke-color": ["case", ["get", "is_unregistered"], "#18181b", "#ffffff"],
 };
 
 const INFRA_PAINT = {
@@ -83,9 +83,9 @@ export default function MapView({
           new maplibregl.Popup({ closeButton: false, maxWidth: "220px" })
             .setLngLat(e.lngLat)
             .setHTML(
-              `<div style="font:11px ui-monospace,monospace;color:#e4e4e7">${
+              `<div style="font:11px ui-monospace,monospace;color:#27272a">${
                 p.name || "(unnamed)"
-              }<br><span style="color:#a1a1aa">${p.kind}</span></div>`
+              }<br><span style="color:#71717a">${p.kind}</span></div>`
             )
             .addTo(map);
         });
@@ -144,8 +144,8 @@ export default function MapView({
     <div className="relative h-full w-full">
       <div ref={containerRef} className="h-full w-full" />
       {range && (
-        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-zinc-800 bg-zinc-950/90 px-4 py-2.5 backdrop-blur">
-          <div className="flex items-center gap-3 text-[11px] text-zinc-400">
+        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-zinc-200 bg-white/90 px-4 py-2.5 backdrop-blur">
+          <div className="flex items-center gap-3 text-[11px] text-zinc-600">
             <label className="flex shrink-0 cursor-pointer items-center gap-1.5">
               <input type="checkbox" checked={timeFilter}
                 onChange={(e) => setTimeFilter(e.target.checked)}
@@ -157,14 +157,14 @@ export default function MapView({
               type="range" min={range[0]} max={range[1]} step={DAY}
               value={cursor ?? range[1]} disabled={!timeFilter}
               onChange={(e) => setCursor(Number(e.target.value))}
-              className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-800 accent-amber-500 disabled:opacity-40"
+              className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-200 accent-amber-500 disabled:opacity-40"
               aria-label="Active-date cursor"
             />
             <span className="font-mono tabular-nums">{fmtDay(range[1])}</span>
           </div>
           <div className="mt-1 text-[11px] text-zinc-500">
             {timeFilter
-              ? <>active on <span className="font-mono text-zinc-300">{fmtDay(cursor)}</span> (±7 days)</>
+              ? <>active on <span className="font-mono text-zinc-800">{fmtDay(cursor)}</span> (±7 days)</>
               : "showing all dates"}
           </div>
         </div>
