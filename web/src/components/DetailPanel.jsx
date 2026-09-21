@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { api } from "../lib/api.js";
 import { CLASS_LEGEND } from "../lib/classes.js";
+import {
+  priority, plainSummary, heatLevel, activityPattern, persistencePhrase, spreadPhrase,
+} from "../lib/humanize.js";
 
 export default function DetailPanel({ sourceId, onClose }) {
   const [data, setData] = useState(null);
@@ -20,6 +23,8 @@ export default function DetailPanel({ sourceId, onClose }) {
   const p = data?.properties;
   const c = data?.classification;
   const legend = c ? CLASS_LEGEND[c.predicted_class] : null;
+  const m = c ? { ...p, ...c } : p;
+  const pri = c ? priority(m) : null;
 
   return (
     <div
@@ -60,6 +65,37 @@ export default function DetailPanel({ sourceId, onClose }) {
                         {(c.confidence * 100).toFixed(0)}% · {c.method}
                       </span>
                     </div>
+
+                    {pri && (
+                      <div className="mt-3 flex items-start gap-2">
+                        <span
+                          className="mt-0.5 shrink-0 rounded px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white"
+                          style={{ background: pri.color }}
+                        >
+                          {pri.label}
+                        </span>
+                        <span className="text-[12px] leading-snug text-zinc-600">{pri.reason}</span>
+                      </div>
+                    )}
+
+                    <Block label="In plain words">
+                      <p className="mb-2.5 text-[12px] leading-relaxed text-zinc-700">
+                        {plainSummary(m, legend?.label)}
+                      </p>
+                      <dl className="space-y-1.5 text-[12px]">
+                        <Plain k="Heat"
+                          v={`${heatLevel(m.frp_mean)} (${Number(m.frp_mean).toFixed(1)} MW)`} />
+                        <Plain k="When active" v={activityPattern(m.day_night_ratio)} />
+                        <Plain k="How long" v={cap(persistencePhrase(m.span_days))} />
+                        <Plain k="Location" v={spreadPhrase(m.bbox_growth_rate)} />
+                        {m.land_cover && (
+                          <Plain k="Ground" v={cap(String(m.land_cover).replace(/_/g, " "))} />
+                        )}
+                        {m.burn_scar === "confirmed" && (
+                          <Plain k="Satellite check" v="A real burn scar is visible from space" />
+                        )}
+                      </dl>
+                    </Block>
 
                     {c.is_unregistered && (
                       <div className="mt-3 rounded border border-amber-400 bg-amber-50 px-3 py-2 text-[12px] text-amber-800">
@@ -110,6 +146,11 @@ export default function DetailPanel({ sourceId, onClose }) {
                   <p className="text-[12px] text-zinc-500">Not classified yet.</p>
                 )}
 
+                <details className="mt-4 border-t border-zinc-200 pt-3">
+                  <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wider text-zinc-500 hover:text-zinc-800">
+                    Technical details
+                  </summary>
+
                 <Block label="Site">
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[12px]">
                     <Metric k="Land cover" v={(p.land_cover || "not sampled").replace(/_/g, " ")} />
@@ -138,6 +179,7 @@ export default function DetailPanel({ sourceId, onClose }) {
                     <Metric k="Growth (km²/d)" v={p.bbox_growth_rate} />
                   </dl>
                 </Block>
+                </details>
               </>
             )}
           </div>
@@ -166,6 +208,18 @@ function Metric({ k, v }) {
     </div>
   );
 }
+
+// Plain-language row: label on the left, a readable sentence on the right.
+function Plain({ k, v }) {
+  return (
+    <div className="flex gap-3">
+      <dt className="w-24 shrink-0 text-zinc-500">{k}</dt>
+      <dd className="text-zinc-800">{v}</dd>
+    </div>
+  );
+}
+
+const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
 function Skeleton() {
   return (

@@ -141,7 +141,7 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 - [x] Stage-1 rule engine (`app/processing/classify.py`) — 7 classes, every prediction carries a plain-language rationale + per-class scores
 - [x] Stage-3 Isolation Forest → `is_unregistered` flag (needs `osm_infra` loaded to fire — it is the "no facility on record" signal)
 - [x] EOG/VIIRS flare catalogue loaded → `flare_ref` (542 India locations, 2012-2019): `python -m app.ingestion.flare_catalog ../data`
-- [x] FIRMS 2025 archive loaded → 647k detections → ~13.9k classified thermal sources: `python scripts/load_archive.py ../data/fire_archive_SV-C2_800603.csv`
+- [x] FIRMS 2025 archive loaded → 647k detections → 4,984 persistent thermal sources (DBSCAN + persistence filter): `python scripts/load_archive.py ../data/fire_archive_SV-C2_800603.csv`
 - [x] LLM incident narrative (`app/ai/report_generator.py`) + NL query endpoint (`app/api/v1/query.py`) — verified against Gemini
 - [x] `osm_infra` populated — 42,255 features via `python -m app.ingestion.osm_loader ../data/india-260906.osm.pbf`
 - [x] Stage-2 LightGBM — `python ml/scripts/train_classifier.py` → `ml/models/classifier.pkl`; pipeline auto-uses it (`method: lightgbm`). Weak labels: flare catalogue + OSM + land cover + rule engine
@@ -164,6 +164,6 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 1. **India map, all sources** — "FIRMS gives thermal pixels; we colour them by *what* they are." Point out mining in the eastern coal belt, agricultural burning across the north.
 2. **Click a gas flare near a refinery** — detail panel: explainable rule rationale + the LLM incident brief naming the nearest facility.
 3. **Type a query** — `unregistered brick kilns in West Bengal` → watch it filter the map + summarise.
-4. **Toggle "Unregistered only"** — 29 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
+4. **Toggle "Unregistered only"** — 27 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
 
 Before presenting: `python backend/scripts/demo_snapshot.py load` to guarantee the DB state.

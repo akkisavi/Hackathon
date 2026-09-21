@@ -4,12 +4,21 @@ export default function LeftRail({
   visibleClasses, onToggleClass, onSetAllClasses,
   showInfra, onToggleInfra, infraCounts,
   unregOnly, onToggleUnreg, unregCount,
+  totalCount, highPriorityCount,
   classCounts, alerts, onSelectAlert,
 }) {
   const allOn = visibleClasses.size === CLASS_KEYS.length;
 
   return (
     <aside className="flex w-72 shrink-0 flex-col border-r border-zinc-200 bg-zinc-50 text-zinc-700">
+      <Section title="Overview">
+        <div className="grid grid-cols-3 gap-2">
+          <Stat n={totalCount} label="Heat sources" />
+          <Stat n={highPriorityCount} label="High priority" color="#dc2626" />
+          <Stat n={unregCount} label="Unregistered" color="#d97706" />
+        </div>
+      </Section>
+
       <Section title="Layers">
         <Toggle checked={showInfra} onChange={onToggleInfra}
           label="Industrial infrastructure"
@@ -77,6 +86,18 @@ export default function LeftRail({
         </div>
       </Section>
     </aside>
+  );
+}
+
+function Stat({ n, label, color }) {
+  return (
+    <div className="rounded border border-zinc-200 bg-white px-2 py-1.5">
+      <div className="font-mono text-[18px] font-semibold tabular-nums leading-none"
+        style={{ color: color ?? "#18181b" }}>
+        {(n ?? 0).toLocaleString()}
+      </div>
+      <div className="mt-1 text-[10px] leading-tight text-zinc-500">{label}</div>
+    </div>
   );
 }
 

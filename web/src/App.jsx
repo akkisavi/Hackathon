@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api } from "./lib/api.js";
 import { CLASS_KEYS } from "./lib/classes.js";
+import { priority } from "./lib/humanize.js";
 import MapView from "./components/MapView.jsx";
 import LeftRail from "./components/LeftRail.jsx";
 import DetailPanel from "./components/DetailPanel.jsx";
@@ -46,6 +47,11 @@ export default function App() {
     () => (sources?.features ?? []).filter((f) => f.properties.is_unregistered).length,
     [sources]
   );
+  const highPriorityCount = useMemo(
+    () => (sources?.features ?? []).filter((f) => priority(f.properties).level === "high").length,
+    [sources]
+  );
+  const totalCount = sources?.features?.length ?? 0;
 
   const toggleClass = useCallback((k) => {
     setVisibleClasses((prev) => {
@@ -80,6 +86,7 @@ export default function App() {
           onSetAllClasses={setAllClasses}
           showInfra={showInfra} onToggleInfra={setShowInfra} infraCounts={infraCounts}
           unregOnly={unregOnly} onToggleUnreg={setUnregOnly} unregCount={unregCount}
+          totalCount={totalCount} highPriorityCount={highPriorityCount}
           classCounts={classCounts}
           alerts={alerts}
           onSelectAlert={setSelectedId}
