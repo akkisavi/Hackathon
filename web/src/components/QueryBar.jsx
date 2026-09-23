@@ -1,15 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../lib/api.js";
 import { auth } from "../lib/auth.js";
+import { CLASS_LEGEND } from "../lib/classes.js";
 import ThemeToggle from "./ThemeToggle.jsx";
 
-export default function QueryBar({ onResult, onClear, active, exportParams }) {
+export default function QueryBar({ onResult, onClear, active, exportParams, alerts, onSelectAlert }) {
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(auth.getUser());
   const navigate = useNavigate();
+  const bellRef = useRef(null);
+
+  function pickAlert(sourceId) {
+    if (bellRef.current) bellRef.current.open = false;
+    onSelectAlert?.(sourceId);
+  }
 
   // older sessions logged in before role-caching existed have a token but no
   // cached user — fetch it once so the Admin button appears without re-login
@@ -99,6 +106,46 @@ export default function QueryBar({ onResult, onClear, active, exportParams }) {
         <a href={api.exportUrl({ ...exportParams, format: "kml" })}
           className="rounded border border-zinc-300 px-2 py-1 text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">KML</a>
       </div>
+
+      <details ref={bellRef} className="relative shrink-0">
+        <summary className="flex list-none cursor-pointer items-center justify-center rounded border border-zinc-300 p-1.5 text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+            <path d="M12 22a2.2 2.2 0 0 0 2.2-2.2h-4.4A2.2 2.2 0 0 0 12 22Zm8-6.2v-.6l-1.8-1.8v-4.8a6.2 6.2 0 0 0-5-6.1V2h-2.4v.5a6.2 6.2 0 0 0-5 6.1v4.8L4 15.2v.6Z" />
+          </svg>
+          {alerts?.length > 0 && (
+            <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-600 px-1 text-[9px] font-bold leading-none text-white">
+              {alerts.length}
+            </span>
+          )}
+        </summary>
+        <div className="absolute right-0 top-full z-30 mt-1.5 w-72 rounded border border-zinc-200 bg-white shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="max-h-80 divide-y divide-zinc-200 overflow-y-auto dark:divide-zinc-800">
+            {(alerts ?? []).map((a) => (
+              <button
+                key={a.source_id}
+                onClick={() => pickAlert(a.source_id)}
+                className="flex w-full flex-col gap-0.5 px-3 py-2 text-left transition hover:bg-zinc-100 dark:hover:bg-zinc-800"
+              >
+                <div className="flex items-center gap-2 text-[12px]">
+                  <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                    a.severity === "unregistered" ? "bg-amber-500 dark:bg-amber-400" : "bg-zinc-400 dark:bg-zinc-600"}`} />
+                  <span className="font-medium text-zinc-900 dark:text-zinc-100">
+                    {CLASS_LEGEND[a.predicted_class]?.label ?? a.predicted_class ?? "unclassified"}
+                  </span>
+                  <span className="ml-auto shrink-0 font-mono text-[10px] uppercase text-zinc-500 dark:text-zinc-500">
+                    {a.severity}
+                  </span>
+                </div>
+                <div className="pl-3.5 text-[11px] leading-snug text-zinc-500 dark:text-zinc-500">{a.reason}</div>
+              </button>
+            ))}
+            {alerts && alerts.length === 0 && (
+              <p className="px-3 py-3 text-[12px] text-zinc-400 dark:text-zinc-600">No active alerts.</p>
+            )}
+            {!alerts && <p className="px-3 py-3 text-[12px] text-zinc-400 dark:text-zinc-600">Loading…</p>}
+          </div>
+        </div>
+      </details>
 
       <div className="flex shrink-0 items-center gap-1.5 border-l border-zinc-200 pl-3 text-[11px] dark:border-zinc-800">
         {user?.role === "admin" && (

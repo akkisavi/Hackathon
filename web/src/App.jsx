@@ -92,6 +92,8 @@ export default function App() {
         exportParams={exportParams}
         onResult={(r) => { setQuery(r); setSelectedId(null); }}
         onClear={() => setQuery(null)}
+        alerts={alerts}
+        onSelectAlert={setSelectedId}
       />
 
       <div className="relative flex min-h-0 flex-1 overflow-hidden">

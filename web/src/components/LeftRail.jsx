@@ -84,7 +84,7 @@ export default function LeftRail({
 
       <Section title="Alerts" grow
         action={<span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-500">{alerts?.length ?? 0}</span>}>
-        <div className="-mx-1 divide-y divide-zinc-200 overflow-y-auto dark:divide-zinc-800">
+        <div className="-mx-1 h-full divide-y divide-zinc-200 overflow-y-auto dark:divide-zinc-800">
           {(alerts ?? []).map((a) => (
             <button key={a.source_id} onClick={() => onSelectAlert(a.source_id)}
               className="flex w-full flex-col gap-0.5 px-1 py-2 text-left transition hover:bg-zinc-100 dark:hover:bg-zinc-900">
