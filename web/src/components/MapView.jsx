@@ -2,35 +2,60 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { classColorExpr, INFRA_LEGEND } from "../lib/classes.js";
+import { theme } from "../lib/theme.js";
+import { estimatedSpreadRadiusKm } from "../lib/humanize.js";
 
 const DAY = 86400000;
 const fmtDay = (ms) => new Date(ms).toISOString().slice(0, 10);
 const empty = () => ({ type: "FeatureCollection", features: [] });
 
-const BASE_STYLE = {
-  version: 8,
-  sources: {
-    basemap: {
-      type: "raster",
-      tiles: [
-        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-      ],
-      tileSize: 256,
-      attribution: "Esri, OpenStreetMap contributors",
+// A geodesic circle polygon (radiusKm around [lon, lat]) — good enough at
+// the city/facility scale this is used at, no geo library needed for it.
+function circlePolygon([lon, lat], radiusKm, steps = 64) {
+  const coords = [];
+  const latRad = (lat * Math.PI) / 180;
+  const kmPerDegLat = 110.574;
+  const kmPerDegLon = 111.32 * Math.cos(latRad);
+  for (let i = 0; i <= steps; i++) {
+    const angle = (i / steps) * 2 * Math.PI;
+    coords.push([
+      lon + (Math.cos(angle) * radiusKm) / kmPerDegLon,
+      lat + (Math.sin(angle) * radiusKm) / kmPerDegLat,
+    ]);
+  }
+  return { type: "Polygon", coordinates: [coords] };
+}
+
+function baseStyle(mode) {
+  const dark = mode === "dark";
+  return {
+    version: 8,
+    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+    sources: {
+      basemap: {
+        type: "raster",
+        tiles: [
+          `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_${
+            dark ? "Dark_Gray" : "Light_Gray"
+          }_Base/MapServer/tile/{z}/{y}/{x}`,
+        ],
+        tileSize: 256,
+        attribution: "Esri, OpenStreetMap contributors",
+      },
     },
-  },
-  layers: [
-    { id: "bg", type: "background", paint: { "background-color": "#09090b" } },
-    { id: "basemap", type: "raster", source: "basemap" },
-  ],
-};
+    layers: [
+      { id: "bg", type: "background", paint: { "background-color": dark ? "#1c1c1c" : "#f4f4f5" } },
+      { id: "basemap", type: "raster", source: "basemap" },
+    ],
+  };
+}
 
 const SOURCE_PAINT = {
   "circle-radius": ["interpolate", ["linear"], ["get", "detection_count"], 1, 3.5, 200, 15],
   "circle-color": classColorExpr,
   "circle-opacity": 0.9,
   "circle-stroke-width": ["case", ["get", "is_unregistered"], 2, 0.6],
-  "circle-stroke-color": ["case", ["get", "is_unregistered"], "#fafafa", "#09090b"],
+  "circle-stroke-color": ["case", ["get", "is_unregistered"], "#18181b", "#ffffff"],
 };
 
 const INFRA_PAINT = {
@@ -45,7 +70,7 @@ const INFRA_PAINT = {
 
 export default function MapView({
   sources, infra, visibleClasses, showInfra, unregOnly,
-  restrictIds, onSelectSource, onCountChange,
+  restrictIds, selectedId, onSelectSource, onCountChange,
 }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
@@ -57,7 +82,7 @@ export default function MapView({
   useEffect(() => {
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: BASE_STYLE,
+      style: baseStyle(theme.get()),
       center: [80.0, 22.5],
       zoom: 3.7,
     });
@@ -72,6 +97,37 @@ export default function MapView({
         map.on("mouseenter", "sources", () => (map.getCanvas().style.cursor = "pointer"));
         map.on("mouseleave", "sources", () => (map.getCanvas().style.cursor = ""));
       }
+      if (!map.getSource("spread-radius")) {
+        map.addSource("spread-radius", { type: "geojson", data: empty() });
+        map.addLayer(
+          { id: "spread-radius-fill", type: "fill", source: "spread-radius",
+            paint: { "fill-color": "#f59e0b", "fill-opacity": 0.12 } },
+          "sources"
+        );
+        map.addLayer(
+          { id: "spread-radius-line", type: "line", source: "spread-radius",
+            paint: { "line-color": "#f59e0b", "line-width": 2, "line-dasharray": [2, 2] } },
+          "sources"
+        );
+      }
+      if (!map.getSource("spread-radius-label")) {
+        map.addSource("spread-radius-label", { type: "geojson", data: empty() });
+        map.addLayer({
+          id: "spread-radius-label", type: "symbol", source: "spread-radius-label",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 12,
+            "text-font": ["Noto Sans Bold"],
+            "text-anchor": "bottom",
+            "text-offset": [0, -0.3],
+          },
+          paint: {
+            "text-color": "#f59e0b",
+            "text-halo-color": "#000000",
+            "text-halo-width": 1.4,
+          },
+        });
+      }
       if (!map.getSource("infra")) {
         map.addSource("infra", { type: "geojson", data: empty() });
         map.addLayer(
@@ -83,9 +139,9 @@ export default function MapView({
           new maplibregl.Popup({ closeButton: false, maxWidth: "220px" })
             .setLngLat(e.lngLat)
             .setHTML(
-              `<div style="font:11px ui-monospace,monospace;color:#e4e4e7">${
+              `<div style="font:11px 'JetBrains Mono',ui-monospace,monospace">${
                 p.name || "(unnamed)"
-              }<br><span style="color:#a1a1aa">${p.kind}</span></div>`
+              }<br><span style="opacity:.6">${p.kind}</span></div>`
             )
             .addTo(map);
         });
@@ -94,7 +150,14 @@ export default function MapView({
 
     map.on("load", ensureLayers);
     map.on("styledata", ensureLayers);
-    return () => map.remove();
+
+    const onThemeChange = (e) => map.setStyle(baseStyle(e.detail));
+    window.addEventListener("themechange", onThemeChange);
+
+    return () => {
+      window.removeEventListener("themechange", onThemeChange);
+      map.remove();
+    };
   }, [onSelectSource]);
 
   useEffect(() => {
@@ -105,6 +168,49 @@ export default function MapView({
     setRange([a, b]);
     setCursor((c) => c ?? b);
   }, [sources]);
+
+  // fly to the selected source (e.g. clicked from the alerts list) and draw
+  // its estimated 6-hour spread radius
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const feature = selectedId == null ? null
+      : (sources?.features ?? []).find((f) => f.properties.id === selectedId);
+
+    const drawRadius = () => {
+      const src = map.getSource("spread-radius");
+      const labelSrc = map.getSource("spread-radius-label");
+      if (!src || !labelSrc) return;
+      if (!feature) { src.setData(empty()); labelSrc.setData(empty()); return; }
+      const radiusKm = estimatedSpreadRadiusKm(feature.properties);
+      const [lon, lat] = feature.geometry.coordinates;
+      src.setData({
+        type: "Feature",
+        properties: {},
+        geometry: circlePolygon(feature.geometry.coordinates, radiusKm),
+      });
+      labelSrc.setData({
+        type: "Feature",
+        properties: { label: `${radiusKm.toFixed(2)} km radius` },
+        // sits just above the circle's northmost edge, not on top of the dot
+        geometry: { type: "Point", coordinates: [lon, lat + radiusKm / 110.574] },
+      });
+    };
+    if (map.isStyleLoaded() && map.getSource("spread-radius")) drawRadius();
+    else map.once("idle", drawRadius);
+
+    if (feature) {
+      // frame the dot + its spread circle close-up, however big the circle is
+      const radiusKm = estimatedSpreadRadiusKm(feature.properties);
+      const [lon, lat] = feature.geometry.coordinates;
+      const latPad = (radiusKm * 3) / 110.574;
+      const lonPad = (radiusKm * 3) / (111.32 * Math.cos((lat * Math.PI) / 180));
+      map.fitBounds(
+        [[lon - lonPad, lat - latPad], [lon + lonPad, lat + latPad]],
+        { maxZoom: 16, duration: 1200 }
+      );
+    }
+  }, [selectedId, sources]);
 
   const shownSources = useMemo(() => {
     const f = sources?.features ?? [];
@@ -144,12 +250,12 @@ export default function MapView({
     <div className="relative h-full w-full">
       <div ref={containerRef} className="h-full w-full" />
       {range && (
-        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-zinc-800 bg-zinc-950/90 px-4 py-2.5 backdrop-blur">
-          <div className="flex items-center gap-3 text-[11px] text-zinc-400">
+        <div className="absolute inset-x-0 bottom-0 z-10 border-t border-zinc-200 bg-white/90 px-4 py-2.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/85">
+          <div className="flex items-center gap-3 text-[11px] text-zinc-600 dark:text-zinc-400">
             <label className="flex shrink-0 cursor-pointer items-center gap-1.5">
               <input type="checkbox" checked={timeFilter}
                 onChange={(e) => setTimeFilter(e.target.checked)}
-                className="h-3 w-3 rounded-sm accent-amber-500" />
+                className="h-3 w-3 rounded-sm accent-amber-500 dark:accent-cyan-500" />
               date filter
             </label>
             <span className="font-mono tabular-nums">{fmtDay(range[0])}</span>
@@ -157,14 +263,14 @@ export default function MapView({
               type="range" min={range[0]} max={range[1]} step={DAY}
               value={cursor ?? range[1]} disabled={!timeFilter}
               onChange={(e) => setCursor(Number(e.target.value))}
-              className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-800 accent-amber-500 disabled:opacity-40"
+              className="h-1 flex-1 cursor-pointer appearance-none rounded bg-zinc-200 accent-amber-500 disabled:opacity-40 dark:bg-zinc-800 dark:accent-cyan-500"
               aria-label="Active-date cursor"
             />
             <span className="font-mono tabular-nums">{fmtDay(range[1])}</span>
           </div>
-          <div className="mt-1 text-[11px] text-zinc-500">
+          <div className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-500">
             {timeFilter
-              ? <>active on <span className="font-mono text-zinc-300">{fmtDay(cursor)}</span> (±7 days)</>
+              ? <>active on <span className="font-mono text-zinc-800 dark:text-zinc-200">{fmtDay(cursor)}</span> (±7 days)</>
               : "showing all dates"}
           </div>
         </div>

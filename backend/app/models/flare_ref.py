@@ -27,3 +27,7 @@ class FlareRef(Base):
     first_year: Mapped[int] = mapped_column(Integer, nullable=False)
     last_year: Mapped[int] = mapped_column(Integer, nullable=False)
     years_seen: Mapped[int] = mapped_column(Integer, nullable=False)
+
+    # EOG-published flared gas volume (BCM/year, averaged across survey years) —
+    # the ground truth the FRP->volume emissions calibration is fit against.
+    flr_volume_bcm: Mapped[float | None] = mapped_column(Float, nullable=True)

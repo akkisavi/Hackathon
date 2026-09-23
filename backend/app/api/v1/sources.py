@@ -10,6 +10,8 @@ from app.core.db import get_db
 from app.core.geojson import feature_collection, point_feature
 from app.models.classification import Classification
 from app.models.thermal_source import ThermalSource
+from app.models.user import User
+from app.api.dependencies import get_current_user_or_api_key
 
 router = APIRouter(prefix="/sources", tags=["sources"])
 
@@ -35,8 +37,11 @@ def _class_props(c: Classification | None) -> dict:
     return {
         "predicted_class": c.predicted_class,
         "confidence": c.confidence,
-        "is_unregistered": c.is_unregistered,
+        "is_unregistered": c.is_unregistered if c else None,
         "anomaly_score": c.anomaly_score,
+        "estimated_bcm_per_year": c.estimated_bcm_per_year,
+        "estimated_co2_tons_per_year": c.estimated_co2_tons_per_year,
+        "estimated_value_inr": c.estimated_value_inr,
     }
 
 
@@ -46,6 +51,7 @@ def list_sources(
     predicted_class: str | None = Query(None),
     unregistered_only: bool = Query(False),
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_or_api_key),
 ):
     stmt = (
         select(ThermalSource, Classification)
@@ -60,19 +66,21 @@ def list_sources(
 
     rows = db.execute(stmt).all()
     return feature_collection(
-        point_feature(s.centroid_lon, s.centroid_lat, {**_base_props(s), **_class_props(c)})
+        point_feature(s.centroid_lon, s.centroid_lat, {
+                      **_base_props(s), **_class_props(c)})
         for s, c in rows
     )
 
 
 @router.get("/{source_id}")
-def get_source(source_id: int, db: Session = Depends(get_db)):
+def get_source(source_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user_or_api_key)):
     s = db.get(ThermalSource, source_id)
     if s is None:
         raise HTTPException(status_code=404, detail="thermal source not found")
 
     c = db.execute(
-        select(Classification).where(Classification.thermal_source_id == source_id)
+        select(Classification).where(
+            Classification.thermal_source_id == source_id)
     ).scalar_one_or_none()
 
     classification = None

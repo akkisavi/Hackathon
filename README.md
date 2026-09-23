@@ -60,11 +60,20 @@ curl "localhost:8000/api/v1/hotspots/?days=3"    # GeoJSON of raw detections
 
 `pytest` runs the no-DB logic tests (clustering, FIRMS parsing, API smoke).
 
-**Scheduled refresh** — three ways, pick one:
-- On demand: `POST /api/v1/ingest/?days=3`
-- No infra: `python scripts/run_pipeline.py` from cron / Task Scheduler (every 6h)
-- Celery: point `REDIS_URL` at a free Upstash Redis, then
-  `celery -A app.workers.celery_app worker --beat --loglevel=info` (schedule is in `app/workers/celery_app.py`)
+**Scheduled refresh (every 6h)** — Celery + Upstash Redis:
+1. Create a free Upstash Redis DB, copy its URL into `.env` as
+   `REDIS_URL=rediss://default:<password>@<host>.upstash.io:6379?ssl_cert_reqs=required`
+   (TLS scheme `rediss://` is required).
+2. Verify: `python scripts/check_celery.py`
+3. Run the worker (keep it alive — `--pool=solo` is required on Windows):
+   ```
+   celery -A app.workers.celery_app worker --beat --pool=solo --loglevel=info \
+       --without-gossip --without-mingle --without-heartbeat
+   ```
+   Tuned for Upstash's free ~10k commands/day cap (30s polling, no result backend). If you
+   still hit the cap, use the no-infra path instead: `scripts/run_pipeline.py` on Task Scheduler.
+- On demand any time: `POST /api/v1/ingest/?days=3`
+- After a fresh ingest, re-run `python scripts/confirm_wildfires.py` for the new wildfire candidates.
 
 **Alternative — all local via Docker** (matches `docker-compose.yml`, needs Docker Desktop):
 ```
@@ -132,7 +141,7 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 - [x] Stage-1 rule engine (`app/processing/classify.py`) — 7 classes, every prediction carries a plain-language rationale + per-class scores
 - [x] Stage-3 Isolation Forest → `is_unregistered` flag (needs `osm_infra` loaded to fire — it is the "no facility on record" signal)
 - [x] EOG/VIIRS flare catalogue loaded → `flare_ref` (542 India locations, 2012-2019): `python -m app.ingestion.flare_catalog ../data`
-- [x] FIRMS 2025 archive loaded → 647k detections → ~13.9k classified thermal sources: `python scripts/load_archive.py ../data/fire_archive_SV-C2_800603.csv`
+- [x] FIRMS 2025 archive loaded → 647k detections → 4,984 persistent thermal sources (DBSCAN + persistence filter): `python scripts/load_archive.py ../data/fire_archive_SV-C2_800603.csv`
 - [x] LLM incident narrative (`app/ai/report_generator.py`) + NL query endpoint (`app/api/v1/query.py`) — verified against Gemini
 - [x] `osm_infra` populated — 42,255 features via `python -m app.ingestion.osm_loader ../data/india-260906.osm.pbf`
 - [x] Stage-2 LightGBM — `python ml/scripts/train_classifier.py` → `ml/models/classifier.pkl`; pipeline auto-uses it (`method: lightgbm`). Weak labels: flare catalogue + OSM + land cover + rule engine
@@ -155,6 +164,6 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 1. **India map, all sources** — "FIRMS gives thermal pixels; we colour them by *what* they are." Point out mining in the eastern coal belt, agricultural burning across the north.
 2. **Click a gas flare near a refinery** — detail panel: explainable rule rationale + the LLM incident brief naming the nearest facility.
 3. **Type a query** — `unregistered brick kilns in West Bengal` → watch it filter the map + summarise.
-4. **Toggle "Unregistered only"** — 29 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
+4. **Toggle "Unregistered only"** — 27 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
 
 Before presenting: `python backend/scripts/demo_snapshot.py load` to guarantee the DB state.

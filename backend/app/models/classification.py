@@ -36,6 +36,12 @@ class Classification(Base):
     # LLM incident narrative, generated lazily and cached (Phase 2c)
     narrative: Mapped[str | None] = mapped_column(String, nullable=True)
 
+    # Emissions/economic impact (gas_flare only) — FRP calibrated against the
+    # EOG flare survey's own published volumes. See app/processing/emissions.py
+    estimated_bcm_per_year: Mapped[float | None] = mapped_column(Float, nullable=True)
+    estimated_co2_tons_per_year: Mapped[float | None] = mapped_column(Float, nullable=True)
+    estimated_value_inr: Mapped[float | None] = mapped_column(Float, nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )

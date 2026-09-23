@@ -22,7 +22,9 @@ from app.models.detection import Detection
 from app.models.thermal_source import ThermalSource
 from app.processing.classify import anomaly_scores, classify_one, is_unregistered
 from app.processing.clustering import cluster_detections
+from app.processing.emissions import estimate_flare_impact, fit_frp_to_volume
 from app.processing.features import build_feature_frame
+from app.processing.notify import notify_new_alerts
 
 # thermal_source is derived and rebuilt every run; the window must be wide
 # enough to keep a persistent source's full history (that persistence is the
@@ -108,6 +110,7 @@ def classify_sources(db: Session) -> dict:
 
     scores = anomaly_scores(frame)
     cut = float(scores.quantile(0.85)) if (scores > 0).any() else float("inf")
+    flare_calibration = fit_frp_to_volume(db)
 
     db.query(Classification).delete()
     n_unreg = 0
@@ -118,6 +121,11 @@ def classify_sources(db: Session) -> dict:
         a = float(scores.loc[sid])
         unreg, reason = is_unregistered(f, pred["predicted_class"], a, cut)
         n_unreg += int(unreg)
+        impact = (
+            estimate_flare_impact(f["frp_mean"], flare_calibration)
+            if pred["predicted_class"] == "gas_flare" and flare_calibration
+            else {}
+        )
         batch.append({
             "thermal_source_id": int(sid),
             "predicted_class": pred["predicted_class"],
@@ -128,6 +136,9 @@ def classify_sources(db: Session) -> dict:
             "anomaly_score": round(a, 4),
             "is_unregistered": unreg,
             "unregistered_reason": reason or None,
+            "estimated_bcm_per_year": impact.get("estimated_bcm_per_year"),
+            "estimated_co2_tons_per_year": impact.get("estimated_co2_tons_per_year"),
+            "estimated_value_inr": impact.get("estimated_value_inr"),
         })
     for i in range(0, len(batch), _INSERT_CHUNK):
         db.execute(insert(Classification), batch[i:i + _INSERT_CHUNK])
@@ -188,7 +199,9 @@ def run_ingest_and_cluster(db: Session, days: int = 3) -> dict:
     covered = enrich_land_cover(db)
     cls = classify_sources(db)
     burn = confirm_wildfires(db)
+    notified = notify_new_alerts(db)
     return {
         "fetched": len(raw), "new_detections": added,
         "thermal_sources": source_count, "land_cover_sampled": covered, **cls, **burn,
+        "notified": notified,
     }

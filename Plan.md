@@ -251,7 +251,7 @@ Cut in this order (nothing has been cut — all built):
 - [x] React web app — control-room dashboard, verified in browser against live API
 - [x] React Native mobile app — view-only companion (map + alert feed + detail), Android bundle builds clean
 - [x] FastAPI + SQL backend
-- [x] AI integrated — anomaly flag (`is_unregistered`, 29 sources), LLM incident narrative, NL query endpoint (Phase 2b/2c)
+- [x] AI integrated — anomaly flag (`is_unregistered`, 27 sources), LLM incident narrative, NL query endpoint (Phase 2b/2c)
 - [x] Validation accuracy figure + confusion matrix — 93.8% on the reference-labelable subset (`ml/validation_report.md`)
 - [x] Export to GeoJSON/KML — `/api/v1/export`
 - [ ] Pitch deck + rehearsed live demo + video fallback *(M5 / everyone)*

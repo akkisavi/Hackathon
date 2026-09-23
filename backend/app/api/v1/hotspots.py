@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from app.core.db import get_db
 from app.core.geojson import feature_collection, point_feature
 from app.models.detection import Detection
+from app.models.user import User
+from app.api.dependencies import get_current_user_or_api_key
 
 router = APIRouter(prefix="/hotspots", tags=["hotspots"])
 
@@ -19,6 +21,7 @@ def list_hotspots(
     days: int = Query(3, ge=1, le=60),
     limit: int = Query(5000, ge=1, le=20000),
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_or_api_key),
 ):
     cutoff = datetime.now(timezone.utc) - timedelta(days=days)
     stmt = (
