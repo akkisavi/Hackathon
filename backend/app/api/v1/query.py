@@ -21,6 +21,8 @@ from app.core.geojson import feature_collection, point_feature
 from app.models.classification import Classification
 from app.models.thermal_source import ThermalSource
 from app.processing.classify import CLASSES
+from app.models.user import User
+from app.api.dependencies import get_current_user_or_api_key
 
 router = APIRouter(prefix="/query", tags=["query"])
 
@@ -76,7 +78,8 @@ def _interpret(q: str) -> dict:
              "Omit filters the user did not ask for."},
             {"role": "user", "content": q},
         ],
-        tools=[_TOOL], tool_choice={"type": "function", "function": {"name": "find_thermal_sources"}},
+        tools=[_TOOL], tool_choice={"type": "function",
+                                    "function": {"name": "find_thermal_sources"}},
         temperature=0,
     )
     calls = resp.choices[0].message.tool_calls
@@ -91,17 +94,22 @@ def _run(params: dict, db: Session):
         .join(Classification, Classification.thermal_source_id == ThermalSource.id, isouter=True)
     )
     if params.get("predicted_class"):
-        stmt = stmt.where(Classification.predicted_class == params["predicted_class"])
+        stmt = stmt.where(Classification.predicted_class ==
+                          params["predicted_class"])
     if params.get("unregistered_only"):
         stmt = stmt.where(Classification.is_unregistered.is_(True))
     if params.get("min_span_days") is not None:
-        stmt = stmt.where(ThermalSource.span_days >= float(params["min_span_days"]))
+        stmt = stmt.where(ThermalSource.span_days >=
+                          float(params["min_span_days"]))
     if params.get("min_recurrence_days") is not None:
-        stmt = stmt.where(ThermalSource.recurrence_days >= int(params["min_recurrence_days"]))
+        stmt = stmt.where(ThermalSource.recurrence_days >=
+                          int(params["min_recurrence_days"]))
     if params.get("min_frp_mean") is not None:
-        stmt = stmt.where(ThermalSource.frp_mean >= float(params["min_frp_mean"]))
+        stmt = stmt.where(ThermalSource.frp_mean >=
+                          float(params["min_frp_mean"]))
     if params.get("min_detections") is not None:
-        stmt = stmt.where(ThermalSource.detection_count >= int(params["min_detections"]))
+        stmt = stmt.where(ThermalSource.detection_count >=
+                          int(params["min_detections"]))
     if params.get("state") in _STATE_BBOX:
         lo_lon, lo_lat, hi_lon, hi_lat = _STATE_BBOX[params["state"]]
         stmt = stmt.where(
@@ -118,19 +126,21 @@ def _summarise(q: str, params: dict, rows: list) -> str:
     for _, c in rows:
         k = c.predicted_class if c else "unclassified"
         by_class[k] = by_class.get(k, 0) + 1
-    facts = {"result_count": len(rows), "filters_applied": params, "class_breakdown": by_class}
+    facts = {"result_count": len(
+        rows), "filters_applied": params, "class_breakdown": by_class}
     try:
         return chat([
             {"role": "system", "content": "Summarise these thermal-source query results for an "
              "analyst in 1-2 sentences. Use only the numbers given."},
-            {"role": "user", "content": f"Question: {q}\nResults: {json.dumps(facts)}"},
+            {"role": "user",
+                "content": f"Question: {q}\nResults: {json.dumps(facts)}"},
         ], temperature=0.2, max_tokens=800).strip()
     except Exception:
         return f"{len(rows)} matching sources. Breakdown: {by_class}."
 
 
 @router.post("/")
-def nl_query(body: QueryIn, db: Session = Depends(get_db)):
+def nl_query(body: QueryIn, db: Session = Depends(get_db), current_user: User = Depends(get_current_user_or_api_key)):
     params = _interpret(body.q)
     rows = _run(params, db)
     fc = feature_collection(

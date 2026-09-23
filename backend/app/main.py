@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.v1 import alerts, export, hotspots, infra, ingest, query, sources
+from app.api.v1 import alerts, export, hotspots, infra, ingest, query, sources, auth, admin
 from app.core.config import get_settings
 
 settings = get_settings()
@@ -18,6 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix=settings.api_v1_prefix)
+app.include_router(admin.router, prefix=settings.api_v1_prefix)
 app.include_router(hotspots.router, prefix=settings.api_v1_prefix)
 app.include_router(sources.router, prefix=settings.api_v1_prefix)
 app.include_router(infra.router, prefix=settings.api_v1_prefix)

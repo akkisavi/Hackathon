@@ -9,6 +9,8 @@ from sqlalchemy.orm import Session
 from app.core.db import get_db
 from app.core.geojson import feature_collection, point_feature
 from app.models.osm_infra import OsmInfra
+from app.models.user import User
+from app.api.dependencies import get_current_user_or_api_key
 
 router = APIRouter(prefix="/infra", tags=["infra"])
 
@@ -21,10 +23,12 @@ def list_infra(
     kind: str | None = Query(None, description="|".join(_KINDS)),
     limit: int = Query(4000, ge=1, le=20000),
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_or_api_key),
 ):
     stmt = select(
         OsmInfra.id, OsmInfra.kind, OsmInfra.name,
-        func.ST_Y(OsmInfra.geom).label("lat"), func.ST_X(OsmInfra.geom).label("lon"),
+        func.ST_Y(OsmInfra.geom).label("lat"), func.ST_X(
+            OsmInfra.geom).label("lon"),
     )
     if kind in _KINDS:
         stmt = stmt.where(OsmInfra.kind == kind)
@@ -36,13 +40,14 @@ def list_infra(
         )
     rows = db.execute(stmt.limit(limit)).all()
     return feature_collection(
-        point_feature(r.lon, r.lat, {"id": r.id, "kind": r.kind, "name": r.name})
+        point_feature(r.lon, r.lat, {"id": r.id,
+                      "kind": r.kind, "name": r.name})
         for r in rows
     )
 
 
 @router.get("/counts")
-def infra_counts(db: Session = Depends(get_db)):
+def infra_counts(db: Session = Depends(get_db), current_user: User = Depends(get_current_user_or_api_key)):
     rows = db.execute(
         select(OsmInfra.kind, func.count()).group_by(OsmInfra.kind)
     ).all()

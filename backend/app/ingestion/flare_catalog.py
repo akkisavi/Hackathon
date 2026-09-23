@@ -26,7 +26,7 @@ _YEAR_RE = re.compile(r"survey_(\d{4})_flare_list")
 def _load_year(path: str) -> pd.DataFrame:
     year = int(_YEAR_RE.search(os.path.basename(path)).group(1))
     df = pd.read_csv(path, usecols=[
-        "cntry_name", "latitude", "longitude", "flr_type",
+        "cntry_name", "latitude", "longitude", "flr_type", "flr_volume",
     ])
     lo_lon, lo_lat, hi_lon, hi_lat = INDIA_BBOX
     df = df[
@@ -54,6 +54,7 @@ def load_flare_catalog(data_dir: str, db: Session) -> int:
         first_year=("year", "min"),
         last_year=("year", "max"),
         years_seen=("year", "nunique"),
+        flr_volume_bcm=("flr_volume", "mean"),
     ).reset_index(drop=True)
 
     db.query(FlareRef).delete()
@@ -65,6 +66,7 @@ def load_flare_catalog(data_dir: str, db: Session) -> int:
             country=(str(r.country)[:64] if pd.notna(r.country) else None),
             first_year=int(r.first_year), last_year=int(r.last_year),
             years_seen=int(r.years_seen),
+            flr_volume_bcm=(float(r.flr_volume_bcm) if pd.notna(r.flr_volume_bcm) else None),
         ))
     db.commit()
     return len(grouped)

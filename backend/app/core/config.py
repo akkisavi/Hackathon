@@ -32,6 +32,23 @@ class Settings(BaseSettings):
     api_v1_prefix: str = "/api/v1"
     project_name: str = "SIH26162 — Industrial Fire & Thermal Source Detection"
 
+    # Auth
+    jwt_secret: str = "super_secret_jwt_key_default"
+    jwt_expire_minutes: int = 60
+    session_secret: str = "super_secret_session_key_default"
+    api_key_pepper: str = "pepper"
+    password_reset_expiry: int = 3600
+    frontend_url: str = "http://localhost:5173"
+
+    # SMTP (for forgot password + alert notifications)
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+
+    # Alerting — comma-separated emails; blank => no auto-notification
+    alert_notify_emails: str = ""
+
 
 @lru_cache
 def get_settings() -> Settings:

@@ -13,7 +13,8 @@ from app.core.config import get_settings
 settings = get_settings()
 
 engine = create_engine(settings.database_url, pool_pre_ping=True, future=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine, future=True)
+SessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine, future=True)
 Base = declarative_base()
 
 
@@ -28,10 +29,25 @@ def get_db():
 def init_db() -> None:
     """Enable PostGIS and create all tables. Idempotent."""
     import app.models  # noqa: F401  -- register models on Base.metadata
+    from app.models.user import User, RoleEnum
+    from app.core.security import get_password_hash
 
     with engine.begin() as conn:
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS postgis"))
     Base.metadata.create_all(engine)
+
+    # Seed admin user if none exists
+    with SessionLocal() as db:
+        if not db.query(User).first():
+            print("No users found, creating default admin (admin@example.com / admin123)")
+            admin_user = User(
+                name="System Admin",
+                email="admin@example.com",
+                password_hash=get_password_hash("admin123"),
+                role=RoleEnum.admin
+            )
+            db.add(admin_user)
+            db.commit()
 
 
 if __name__ == "__main__":

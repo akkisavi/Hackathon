@@ -17,12 +17,17 @@ from app.core.db import get_db
 from app.core.geojson import feature_collection, point_feature
 from app.models.classification import Classification
 from app.models.thermal_source import ThermalSource
+from app.models.user import User
+from app.api.dependencies import get_current_user_or_api_key
 
 router = APIRouter(prefix="/export", tags=["export"])
 
 _PROPS = ("predicted_class", "confidence", "is_unregistered", "first_seen",
           "last_seen", "span_days", "recurrence_days", "detection_count",
-          "frp_mean", "day_night_ratio")
+          "frp_mean", "day_night_ratio", "estimated_bcm_per_year",
+          "estimated_co2_tons_per_year", "estimated_value_inr")
+_CLASS_PROPS = ("predicted_class", "confidence", "is_unregistered",
+                "estimated_bcm_per_year", "estimated_co2_tons_per_year", "estimated_value_inr")
 
 _KML_COLOR = {  # aabbggrr
     "gas_flare": "ff0066ff", "mining": "ff00aaff", "steel_smelter": "ffff5555",
@@ -38,11 +43,13 @@ def _rows(params: dict, db: Session):
         .order_by(ThermalSource.detection_count.desc())
     )
     if params.get("predicted_class"):
-        stmt = stmt.where(Classification.predicted_class == params["predicted_class"])
+        stmt = stmt.where(Classification.predicted_class ==
+                          params["predicted_class"])
     if params.get("unregistered_only"):
         stmt = stmt.where(Classification.is_unregistered.is_(True))
     if params.get("bbox"):
-        lo_lon, lo_lat, hi_lon, hi_lat = (float(x) for x in params["bbox"].split(","))
+        lo_lon, lo_lat, hi_lon, hi_lat = (
+            float(x) for x in params["bbox"].split(","))
         stmt = stmt.where(
             ThermalSource.centroid_lon.between(lo_lon, hi_lon),
             ThermalSource.centroid_lat.between(lo_lat, hi_lat),
@@ -53,8 +60,7 @@ def _rows(params: dict, db: Session):
 def _props(s: ThermalSource, c: Classification | None) -> dict:
     out = {"id": s.id}
     for k in _PROPS:
-        v = getattr(c, k, None) if k in ("predicted_class", "confidence", "is_unregistered") \
-            else getattr(s, k, None)
+        v = getattr(c, k, None) if k in _CLASS_PROPS else getattr(s, k, None)
         out[k] = v.isoformat() if hasattr(v, "isoformat") else v
     return out
 
@@ -86,20 +92,24 @@ def export(
     unregistered_only: bool = False,
     bbox: str | None = None,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_or_api_key),
 ):
     rows = _rows(
-        {"predicted_class": predicted_class, "unregistered_only": unregistered_only, "bbox": bbox},
+        {"predicted_class": predicted_class,
+            "unregistered_only": unregistered_only, "bbox": bbox},
         db,
     )
     if format == "kml":
         return Response(
             _kml(rows), media_type="application/vnd.google-earth.kml+xml",
-            headers={"Content-Disposition": 'attachment; filename="thermal_sources.kml"'},
+            headers={
+                "Content-Disposition": 'attachment; filename="thermal_sources.kml"'},
         )
     fc = feature_collection(
         point_feature(s.centroid_lon, s.centroid_lat, _props(s, c)) for s, c in rows
     )
     return Response(
         json.dumps(fc), media_type="application/geo+json",
-        headers={"Content-Disposition": 'attachment; filename="thermal_sources.geojson"'},
+        headers={
+            "Content-Disposition": 'attachment; filename="thermal_sources.geojson"'},
     )
