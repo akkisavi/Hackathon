@@ -3,7 +3,19 @@ import { api } from "../lib/api.js";
 import { CLASS_LEGEND } from "../lib/classes.js";
 import {
   priority, plainSummary, heatLevel, activityPattern, persistencePhrase, spreadPhrase,
+  estimatedSpreadRadiusKm,
 } from "../lib/humanize.js";
+
+// Esri World Imagery export — same free provider already used for the basemap.
+// bbox padded from the source's footprint so a large wildfire shows a wider
+// patch than a tiny flare stack.
+function satelliteImageUrl([lon, lat], areaKm2) {
+  const halfKm = Math.max(0.5, Math.sqrt(areaKm2 || 0) * 1.5);
+  const dLat = halfKm / 111;
+  const dLon = halfKm / (111 * Math.cos((lat * Math.PI) / 180));
+  const bbox = [lon - dLon, lat - dLat, lon + dLon, lat + dLat].join(",");
+  return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&imageSR=4326&size=400,260&format=png32&f=image`;
+}
 
 export default function DetailPanel({ sourceId, onClose }) {
   const [data, setData] = useState(null);
@@ -78,6 +90,20 @@ export default function DetailPanel({ sourceId, onClose }) {
 
             {data && (
               <>
+                {data.geometry && (
+                  <Block label="Satellite view">
+                    <img
+                      src={satelliteImageUrl(data.geometry.coordinates, p?.bbox_area_km2)}
+                      alt="Satellite imagery of this location"
+                      className="w-full rounded border border-zinc-200 object-cover dark:border-zinc-800"
+                      loading="lazy"
+                    />
+                    <p className="mt-1 text-[10px] text-zinc-500 dark:text-zinc-500">
+                      Esri World Imagery — recent composite, not necessarily the detection date
+                    </p>
+                  </Block>
+                )}
+
                 {c ? (
                   <>
                     <div className="flex items-center gap-2">
@@ -112,6 +138,8 @@ export default function DetailPanel({ sourceId, onClose }) {
                         <Plain k="When active" v={activityPattern(m.day_night_ratio)} />
                         <Plain k="How long" v={cap(persistencePhrase(m.span_days))} />
                         <Plain k="Location" v={spreadPhrase(m.bbox_growth_rate)} />
+                        <Plain k="6-hr spread"
+                          v={`~${estimatedSpreadRadiusKm(m).toFixed(2)} km radius (shown on map, orange dashed circle)`} />
                         {m.land_cover && (
                           <Plain k="Ground" v={cap(String(m.land_cover).replace(/_/g, " "))} />
                         )}

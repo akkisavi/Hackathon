@@ -41,6 +41,16 @@ export function spreadPhrase(growth) {
   return "Stays in one fixed spot";
 }
 
+// Projected footprint 6 hours from now, extrapolated from the current
+// bounding-box area and its observed daily growth rate. A shrinking or
+// stable footprint still gets a small visible radius (its current size).
+export function estimatedSpreadRadiusKm(m) {
+  const currentAreaKm2 = Math.max(m?.bbox_area_km2 ?? 0, 0.01);
+  const growthPerHourKm2 = Math.max(m?.bbox_growth_rate ?? 0, 0) / 24;
+  const projectedAreaKm2 = currentAreaKm2 + growthPerHourKm2 * 6;
+  return Math.max(Math.sqrt(projectedAreaKm2 / Math.PI), 0.2);
+}
+
 // One-sentence, always-available headline (works even when the AI brief is offline).
 export function plainSummary(m, classLabel) {
   const label = (classLabel ?? "a heat source").toLowerCase();

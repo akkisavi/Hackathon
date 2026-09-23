@@ -3,15 +3,34 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { classColorExpr, INFRA_LEGEND } from "../lib/classes.js";
 import { theme } from "../lib/theme.js";
+import { estimatedSpreadRadiusKm } from "../lib/humanize.js";
 
 const DAY = 86400000;
 const fmtDay = (ms) => new Date(ms).toISOString().slice(0, 10);
 const empty = () => ({ type: "FeatureCollection", features: [] });
 
+// A geodesic circle polygon (radiusKm around [lon, lat]) — good enough at
+// the city/facility scale this is used at, no geo library needed for it.
+function circlePolygon([lon, lat], radiusKm, steps = 64) {
+  const coords = [];
+  const latRad = (lat * Math.PI) / 180;
+  const kmPerDegLat = 110.574;
+  const kmPerDegLon = 111.32 * Math.cos(latRad);
+  for (let i = 0; i <= steps; i++) {
+    const angle = (i / steps) * 2 * Math.PI;
+    coords.push([
+      lon + (Math.cos(angle) * radiusKm) / kmPerDegLon,
+      lat + (Math.sin(angle) * radiusKm) / kmPerDegLat,
+    ]);
+  }
+  return { type: "Polygon", coordinates: [coords] };
+}
+
 function baseStyle(mode) {
   const dark = mode === "dark";
   return {
     version: 8,
+    glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
     sources: {
       basemap: {
         type: "raster",
@@ -78,6 +97,37 @@ export default function MapView({
         map.on("mouseenter", "sources", () => (map.getCanvas().style.cursor = "pointer"));
         map.on("mouseleave", "sources", () => (map.getCanvas().style.cursor = ""));
       }
+      if (!map.getSource("spread-radius")) {
+        map.addSource("spread-radius", { type: "geojson", data: empty() });
+        map.addLayer(
+          { id: "spread-radius-fill", type: "fill", source: "spread-radius",
+            paint: { "fill-color": "#f59e0b", "fill-opacity": 0.12 } },
+          "sources"
+        );
+        map.addLayer(
+          { id: "spread-radius-line", type: "line", source: "spread-radius",
+            paint: { "line-color": "#f59e0b", "line-width": 2, "line-dasharray": [2, 2] } },
+          "sources"
+        );
+      }
+      if (!map.getSource("spread-radius-label")) {
+        map.addSource("spread-radius-label", { type: "geojson", data: empty() });
+        map.addLayer({
+          id: "spread-radius-label", type: "symbol", source: "spread-radius-label",
+          layout: {
+            "text-field": ["get", "label"],
+            "text-size": 12,
+            "text-font": ["Noto Sans Bold"],
+            "text-anchor": "bottom",
+            "text-offset": [0, -0.3],
+          },
+          paint: {
+            "text-color": "#f59e0b",
+            "text-halo-color": "#000000",
+            "text-halo-width": 1.4,
+          },
+        });
+      }
       if (!map.getSource("infra")) {
         map.addSource("infra", { type: "geojson", data: empty() });
         map.addLayer(
@@ -119,12 +169,47 @@ export default function MapView({
     setCursor((c) => c ?? b);
   }, [sources]);
 
-  // fly to the selected source (e.g. clicked from the alerts list)
+  // fly to the selected source (e.g. clicked from the alerts list) and draw
+  // its estimated 6-hour spread radius
   useEffect(() => {
-    if (selectedId == null) return;
-    const feature = (sources?.features ?? []).find((f) => f.properties.id === selectedId);
-    if (!feature) return;
-    mapRef.current?.flyTo({ center: feature.geometry.coordinates, zoom: 10, duration: 1200 });
+    const map = mapRef.current;
+    if (!map) return;
+    const feature = selectedId == null ? null
+      : (sources?.features ?? []).find((f) => f.properties.id === selectedId);
+
+    const drawRadius = () => {
+      const src = map.getSource("spread-radius");
+      const labelSrc = map.getSource("spread-radius-label");
+      if (!src || !labelSrc) return;
+      if (!feature) { src.setData(empty()); labelSrc.setData(empty()); return; }
+      const radiusKm = estimatedSpreadRadiusKm(feature.properties);
+      const [lon, lat] = feature.geometry.coordinates;
+      src.setData({
+        type: "Feature",
+        properties: {},
+        geometry: circlePolygon(feature.geometry.coordinates, radiusKm),
+      });
+      labelSrc.setData({
+        type: "Feature",
+        properties: { label: `${radiusKm.toFixed(2)} km radius` },
+        // sits just above the circle's northmost edge, not on top of the dot
+        geometry: { type: "Point", coordinates: [lon, lat + radiusKm / 110.574] },
+      });
+    };
+    if (map.isStyleLoaded() && map.getSource("spread-radius")) drawRadius();
+    else map.once("idle", drawRadius);
+
+    if (feature) {
+      // frame the dot + its spread circle close-up, however big the circle is
+      const radiusKm = estimatedSpreadRadiusKm(feature.properties);
+      const [lon, lat] = feature.geometry.coordinates;
+      const latPad = (radiusKm * 3) / 110.574;
+      const lonPad = (radiusKm * 3) / (111.32 * Math.cos((lat * Math.PI) / 180));
+      map.fitBounds(
+        [[lon - lonPad, lat - latPad], [lon + lonPad, lat + latPad]],
+        { maxZoom: 16, duration: 1200 }
+      );
+    }
   }, [selectedId, sources]);
 
   const shownSources = useMemo(() => {
