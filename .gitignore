@@ -31,3 +31,8 @@ Thumbs.db
 # ML artifacts
 ml/models/*.pkl
 ml/models/*.joblib
+
+.claude-flow
+brag-output
+brag-output-2026-09-25-211414
+.claude
