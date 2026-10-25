@@ -1,5 +1,9 @@
 # SIH26162 — AI-Based Detection & Classification of Industrial Fires and Persistent Thermal Sources
 
+## ORBIT DELTA — ORCA Track 05 extension
+
+Image comparison, local change polygons, replay, evidence-linked Gemini assessments and exports are available at `/orbit`. Run the database-free localhost demo with `.venv/bin/python run_orbit.py` after following [the ORBIT setup and demo guide](docs/orbit-delta.md). The original application remains available in normal mode.
+
 See `Plan.md` for the full winning plan (architecture, phases, team roles, cut list).
 This README is the **Phase 0 setup checklist** — everyone runs their part in parallel, nobody waits.
 

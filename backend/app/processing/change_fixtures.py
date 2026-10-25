@@ -1,5 +1,7 @@
 """Reproducible illustrative overhead scenes, never claimed as satellite captures."""
 from functools import lru_cache
+import json
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -70,3 +72,24 @@ def fixture_manifest():
                          "date": f"2026-10-20T{str(i * 6).zfill(2)}:00:00Z",
                          "image_url": f"/api/v1/change/fixtures/{f['id']}/image?frame={i}"}
                         for i in range(4)]} for f in FIXTURES]
+
+
+@lru_cache(maxsize=1)
+def thermal_snapshot():
+    """Read the existing committed snapshot without restoring a database."""
+    directory = Path(__file__).resolve().parents[3] / "data" / "demo"
+    classifications = {r["thermal_source_id"]: r for r in
+                       (json.loads(line) for line in (directory / "classification.jsonl").read_text().splitlines())}
+    features = []
+    for line in (directory / "thermal_source.jsonl").read_text().splitlines():
+        source = json.loads(line)
+        classification = classifications.get(source["id"], {})
+        properties = {key: source.get(key) for key in (
+            "id", "first_seen", "last_seen", "span_days", "detection_count", "recurrence_days",
+            "frp_mean", "bbox_area_km2", "bbox_growth_rate", "land_cover", "burn_scar", "dnbr")}
+        properties.update({key: classification.get(key) for key in
+                           ("predicted_class", "confidence", "is_unregistered", "rationale", "method")})
+        features.append({"type": "Feature", "geometry": {"type": "Point", "coordinates":
+                         [source["centroid_lon"], source["centroid_lat"]]}, "properties": properties})
+    return {"type": "FeatureCollection", "features": features,
+            "provenance": "Historical thermal-source snapshot bundled with the prior project. Not live observations or newly validated classifications."}

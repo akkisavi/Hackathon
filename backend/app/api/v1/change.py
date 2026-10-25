@@ -12,7 +12,7 @@ from pydantic import BaseModel
 
 from app.ai.change_report import generate_change_report, local_report
 from app.processing.change import MAX_IMAGE_BYTES, analyze_pair, decode_image, encode_png
-from app.processing.change_fixtures import fixture_manifest, render_fixture
+from app.processing.change_fixtures import fixture_manifest, render_fixture, thermal_snapshot
 
 MAX_ANALYSES = 12
 TTL_SECONDS = 30 * 60
@@ -78,6 +78,10 @@ def build_router(access_dependency, demo=False):
                 **generate_change_report(*saved["images"], saved["measurement"])}
 
     if demo:
+        @router.get("/thermal")
+        def thermal(principal=Depends(access_dependency)):
+            return thermal_snapshot()
+
         @router.get("/fixtures")
         def fixtures(principal=Depends(access_dependency)):
             return fixture_manifest()
@@ -87,7 +91,7 @@ def build_router(access_dependency, demo=False):
                   principal=Depends(access_dependency)):
             try:
                 return Response(encode_png(render_fixture(fixture_id, frame)), media_type="image/png",
-                                headers={"Cache-Control": "private, max-age=3600"})
+                                headers={"Cache-Control": "private, max-age=3600", "Vary": "Origin"})
             except ValueError as exc:
                 raise HTTPException(404, str(exc)) from exc
 

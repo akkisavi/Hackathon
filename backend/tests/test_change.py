@@ -146,3 +146,12 @@ def test_demo_boots_without_database_dependencies():
     result = subprocess.run([sys.executable, "-c", code], env={**os.environ, "ORBIT_DEMO": "true"},
                             capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_existing_thermal_snapshot_available_without_database(client):
+    response = client.get("/api/v1/change/thermal")
+    assert response.status_code == 200
+    snapshot = response.json()
+    assert len(snapshot["features"]) == 4984
+    assert snapshot["features"][0]["properties"]["predicted_class"]
+    assert "Not live" in snapshot["provenance"]
