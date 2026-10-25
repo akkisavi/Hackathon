@@ -46,7 +46,6 @@ def summary(row):
 
 
 def arrays(site_id, day):
-    import rasterio
     path=DATA_DIR/site_id/f'{day}.tif'
     if not path.exists():
         from app.processing.water_bundle import read_array
@@ -54,6 +53,7 @@ def arrays(site_id, day):
             return read_array(site_id, day)
         except (FileNotFoundError, KeyError):
             raise HTTPException(404, 'Cached source raster unavailable.')
+    import rasterio
     with rasterio.open(path) as src: return src.read(1)
 
 

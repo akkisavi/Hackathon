@@ -9,6 +9,7 @@ RUN npm run build
 
 FROM python:3.12-slim
 WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends libexpat1 && rm -rf /var/lib/apt/lists/*
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 ORBIT_SHOWCASE=true SERVE_FRONTEND=true OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 COPY ml/requirements-water.lock /app/ml/requirements-water.lock
 RUN pip install --no-cache-dir -r ml/requirements-water.lock
