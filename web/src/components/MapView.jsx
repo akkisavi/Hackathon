@@ -191,7 +191,7 @@ export default function MapView({
       });
       labelSrc.setData({
         type: "Feature",
-        properties: { label: `${radiusKm.toFixed(2)} km radius` },
+        properties: { label: `${radiusKm.toFixed(2)} km · illustrative estimate` },
         // sits just above the circle's northmost edge, not on top of the dot
         geometry: { type: "Point", coordinates: [lon, lat + radiusKm / 110.574] },
       });

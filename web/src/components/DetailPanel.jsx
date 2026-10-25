@@ -138,8 +138,8 @@ export default function DetailPanel({ sourceId, onClose }) {
                         <Plain k="When active" v={activityPattern(m.day_night_ratio)} />
                         <Plain k="How long" v={cap(persistencePhrase(m.span_days))} />
                         <Plain k="Location" v={spreadPhrase(m.bbox_growth_rate)} />
-                        <Plain k="6-hr spread"
-                          v={`~${estimatedSpreadRadiusKm(m).toFixed(2)} km radius (shown on map, orange dashed circle)`} />
+                        <Plain k="Illustrative spread"
+                          v={`~${estimatedSpreadRadiusKm(m).toFixed(2)} km radius after 6 hours; area-growth extrapolation, not a validated fire forecast`} />
                         {m.land_cover && (
                           <Plain k="Ground" v={cap(String(m.land_cover).replace(/_/g, " "))} />
                         )}
@@ -194,6 +194,10 @@ export default function DetailPanel({ sourceId, onClose }) {
                         })()}
                       </Block>
                     )}
+
+                <a href="/orbit" className="mt-3 block rounded border border-zinc-300 px-3 py-2 text-[12px] text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                  Inspect a before-and-after image pair →
+                </a>
 
                     <Block label="Why">
                       <p className="text-[12px] leading-relaxed text-zinc-600 dark:text-zinc-400">{c.rationale}</p>
