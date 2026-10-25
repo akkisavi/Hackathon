@@ -40,6 +40,9 @@ function baseStyle(mode) {
           }_Base/MapServer/tile/{z}/{y}/{x}`,
         ],
         tileSize: 256,
+        // Esri guarantees global coverage through level 13. Reuse these tiles
+        // at closer zooms instead of requesting regional/no-coverage placeholders.
+        maxzoom: 13,
         attribution: "Esri, OpenStreetMap contributors",
       },
     },
