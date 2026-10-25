@@ -111,7 +111,7 @@ def build_router(access_dependency):
         result={'site_id':site_id,'version':data['version'],'observation':summary(current),
                 'model_status':data['evaluation']['status'],'model_id':data.get('model_id'),'trained_at':data['trained_at'],
                 'anomaly_score':score,'threshold':data['threshold'],'is_anomaly':bool(trained and score>data['threshold']),
-                'possible_explanation':'Cause uncertain. Rainfall, reservoir operations, and withdrawals require independent verification.',
+                'possible_explanation':'Cause uncertain. Check classification artefacts, rainfall, reservoir operations, and withdrawals before interpreting this as physical water change.',
                 'next_action':'Inspect shoreline changes and compare with rainfall, gauge and reservoir-operation records.',
                 'limitations':data['evaluation']['limitations'],
                 'regions':{'type':'FeatureCollection','features':[]},'source':data['source'],

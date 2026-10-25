@@ -7,7 +7,7 @@ This extends the existing thermal-source platform with a separate, local water m
 From the repository root:
 
 ```sh
-uv pip install --python .venv/bin/python -r ml/requirements-water.txt
+uv pip install --python .venv/bin/python -r ml/requirements-water.lock
 .venv/bin/python ml/scripts/collect_water.py --workers 4
 .venv/bin/python ml/scripts/train_water.py
 .venv/bin/python run_orbit.py
@@ -16,6 +16,8 @@ uv pip install --python .venv/bin/python -r ml/requirements-water.txt
 Open `http://127.0.0.1:5173/orbit/water`. Original image inspection and thermal monitoring remain available. The normal server uses the existing authentication dependency; demo access is localhost-only.
 
 Collection can take substantial time. Downloads resume from checksummed local caches in `data/water/<site>/`; source rasters are excluded from Git. `--site hirakud`, `--site nagarjuna-sagar`, `--site sardar-sarovar`, and `--limit 2` support targeted checks. `--cadence-days 3` optionally reduces request count; the default searches all available days. An existing catalogue is cached; remove only `catalog.json` to discover new acquisitions. Run collection and training again to refresh observations. There is no background polling job.
+
+Data acknowledgement: NASA/JPL OPERA and NASA PO.DAAC. Official access and analysis example: https://podaac.github.io/tutorials/notebooks/GIS/OPERA_EGIS_access_Python_LakeMead_timeseries.html
 
 NASA's public service was reachable without a token during development. Availability and quotas may change; archive download paths can require Earthdata Login. Cached observations keep the presentation independent of the upstream service.
 
@@ -37,6 +39,8 @@ NASA's public service was reachable without a token during development. Availabi
 `ml/models/water/evaluation.json` records data sufficiency, exclusions, splits, baseline agreement, test alert frequency, and an explicitly artificial loss-sensitivity probe. **No independent labelled flood or shortage event set is supplied.** Event precision, recall, and warning lead time remain unknown. The artificial probe is not real-world accuracy evidence.
 
 Generated local `.joblib` artifacts include estimator, feature order, seasonal baseline, threshold, scikit-learn version, training timestamp, and manifest hash. JSON observation bundles and evaluation outputs accompany them. Never load untrusted joblib files. Raw data and model binaries remain local; scripts reproduce them.
+
+Clear-coverage filtering does not guarantee a correct water classification. Very large apparent changes require source-image and independent-record review before calling them physical water loss.
 
 An anomalous observation can be caused by genuine hydrological change, reservoir operations, extraction, or remaining measurement artefacts. The assessment reports “cause uncertain” and asks for rainfall, gauges, and operating records. No model infers natural versus human cause from water extent alone.
 
@@ -62,3 +66,15 @@ npm run build
 ```
 
 Tests cover no-data exclusion, exact pixel totals, no-future features, chronological training, saved-model score reproduction, insufficient history, geographic polygons, localhost access, and invalid inputs.
+
+## Collected model run — 25 October 2026
+
+| Study segment | Downloaded acquisition dates | Usable dates | Train / validation / test | Status | Test alerts | Artificial loss probe alerts |
+|---|---:|---:|---|---|---:|---:|
+| Hirakud Reservoir | 622 | 93 | 38 / 30 / 25 | experimental | 8.0% | 12.0% |
+| Nagarjuna Sagar | 541 | 89 | 34 / 33 / 22 | experimental | 13.6% | 100.0% |
+| Sardar Sarovar | 539 | 159 | 63 / 52 / 44 | experimental | 13.6% | 20.5% |
+
+All three fail the original 80-training-date readiness gate. The user selected explicitly labelled experimental training. The artificial probe is a fixed feature perturbation, not a simulated physical flood and not independent validation. Its weak sensitivity at Hirakud and Sardar Sarovar limits the models' usefulness. No real-world event precision/recall or forecasting accuracy is established.
+
+API integration checks verified that loaded model scores match saved observation scores for all three sites, classified PNGs decode, first observations have no invented comparison, and the original image fixtures remain available. Backend checks pass; the frontend builds. Interactive browser verification was unavailable because local browser use is disabled in Work settings.

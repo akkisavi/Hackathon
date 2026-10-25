@@ -1,0 +1,4504 @@
+{
+  "site": {
+    "id": "nagarjuna-sagar",
+    "name": "Nagarjuna Sagar",
+    "state": "Telangana / Andhra Pradesh",
+    "bbox": [
+      79.12,
+      16.4,
+      79.32,
+      16.6
+    ],
+    "epsg": 32644,
+    "study_area_note": "Fixed reservoir segment; not the complete reservoir boundary."
+  },
+  "version": "water-v1",
+  "model_id": "water-v1-498ae6288ed0",
+  "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+  "trained_at": "2026-10-25T07:52:28.425983+00:00",
+  "threshold": 0.5645379342660919,
+  "evaluation": {
+    "status": "experimental",
+    "readiness_gate_passed": false,
+    "train": 34,
+    "validation": 33,
+    "test": 22,
+    "training_span_days": 631,
+    "excluded_quality": 452,
+    "model": "IsolationForest",
+    "features": [
+      "seasonal_residual",
+      "area_ratio",
+      "rate_30d",
+      "trailing_std_ratio"
+    ],
+    "threshold": 0.5645379342660919,
+    "baseline_threshold": 1.5863341287534447,
+    "test_alert_fraction": 0.13636363636363635,
+    "test_baseline_alert_fraction": 0.09090909090909091,
+    "test_baseline_agreement": 0.7727272727272727,
+    "artificial_loss_probe_alert_fraction": 1.0,
+    "event_precision": null,
+    "event_recall": null,
+    "warning_lead_time": null,
+    "limitations": [
+      "Fewer than 80 training dates: experimental prototype; readiness gate not met.",
+      "No independent event labels: event accuracy and warning lead time are unknown.",
+      "Anomaly scores are not flood probabilities. Surface area is not storage volume.",
+      "Fixed study rectangles may include other water bodies; these are not surveyed reservoir boundaries.",
+      "Seasonal fit has fewer than two full annual cycles in the training period."
+    ],
+    "examples": [
+      {
+        "date": "2026-05-17",
+        "valid_fraction": 0.9711605417666221,
+        "open_water_km2": 115.8588,
+        "partial_water_km2": 24.4566,
+        "valid_pixels": 520207,
+        "total_pixels": 535655,
+        "sha256": "05e5a1c1a69f763375eed2950dc16fbdef2d00eda591dab1457d64887eacec3c",
+        "raster": "2026-05-17.tif",
+        "object_ids": [
+          11854162,
+          11854164
+        ],
+        "acquisitions": [
+          {
+            "objectid": 11854162,
+            "datetime": 1778994411000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 65
+          },
+          {
+            "objectid": 11854164,
+            "datetime": 1778994411000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 14
+          }
+        ],
+        "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+        "epsg": 32644,
+        "bounds": [
+          299220,
+          1813920,
+          320790,
+          1836270
+        ],
+        "pixel_size_m": 30,
+        "expected_km2": 131.71157785871065,
+        "baseline_deviation": -1.5172695727215595,
+        "gap_days": 30,
+        "anomaly_score": 0.642792014795383,
+        "is_anomaly": true,
+        "baseline_alert": false,
+        "direction": "water_loss",
+        "split": "test"
+      },
+      {
+        "date": "2026-06-16",
+        "valid_fraction": 0.9591602804043647,
+        "open_water_km2": 123.1353,
+        "partial_water_km2": 5.2254,
+        "valid_pixels": 513779,
+        "total_pixels": 535655,
+        "sha256": "96f98d435d5396b2b6cf6c7a2899e2f52110d765379cb3a0410c2823360ff1e5",
+        "raster": "2026-06-16.tif",
+        "object_ids": [
+          12260260,
+          12260261
+        ],
+        "acquisitions": [
+          {
+            "objectid": 12260260,
+            "datetime": 1781586411000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 23
+          },
+          {
+            "objectid": 12260261,
+            "datetime": 1781586411000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 14
+          }
+        ],
+        "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+        "epsg": 32644,
+        "bounds": [
+          299220,
+          1813920,
+          320790,
+          1836270
+        ],
+        "pixel_size_m": 30,
+        "expected_km2": 133.29358322544866,
+        "baseline_deviation": -0.9722494181417007,
+        "gap_days": 10,
+        "anomaly_score": 0.5924266754703171,
+        "is_anomaly": true,
+        "baseline_alert": false,
+        "direction": "water_loss",
+        "split": "test"
+      },
+      {
+        "date": "2026-06-06",
+        "valid_fraction": 0.9964286714396393,
+        "open_water_km2": 139.5414,
+        "partial_water_km2": 4.6917,
+        "valid_pixels": 533742,
+        "total_pixels": 535655,
+        "sha256": "4f39629745f2c062a939a389720ff23dbbd00b9422de56a2d704359d6af52d8c",
+        "raster": "2026-06-06.tif",
+        "object_ids": [
+          12118633,
+          12118635
+        ],
+        "acquisitions": [
+          {
+            "objectid": 12118633,
+            "datetime": 1780722411000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 3
+          },
+          {
+            "objectid": 12118635,
+            "datetime": 1780722411000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 8
+          }
+        ],
+        "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+        "epsg": 32644,
+        "bounds": [
+          299220,
+          1813920,
+          320790,
+          1836270
+        ],
+        "pixel_size_m": 30,
+        "expected_km2": 132.37316492048498,
+        "baseline_deviation": 0.6860718716428192,
+        "gap_days": 20,
+        "anomaly_score": 0.5700773054366157,
+        "is_anomaly": true,
+        "baseline_alert": false,
+        "direction": "water_expansion",
+        "split": "test"
+      },
+      {
+        "date": "2026-02-21",
+        "valid_fraction": 1.0,
+        "open_water_km2": 159.2352,
+        "partial_water_km2": 1.6605,
+        "valid_pixels": 535655,
+        "total_pixels": 535655,
+        "sha256": "ec9824be5bf157a7197d48f1f64574d82bd7ba180a19894a2701f99977709d2d",
+        "raster": "2026-02-21.tif",
+        "object_ids": [
+          10742210,
+          10742213,
+          10742455,
+          10742457
+        ],
+        "acquisitions": [
+          {
+            "objectid": 10742210,
+            "datetime": 1771650210000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 0
+          },
+          {
+            "objectid": 10742213,
+            "datetime": 1771650210000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 0
+          },
+          {
+            "objectid": 10742455,
+            "datetime": 1771650449000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 0
+          },
+          {
+            "objectid": 10742457,
+            "datetime": 1771650449000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 0
+          }
+        ],
+        "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+        "epsg": 32644,
+        "bounds": [
+          299220,
+          1813920,
+          320790,
+          1836270
+        ],
+        "pixel_size_m": 30,
+        "expected_km2": 144.44977531787112,
+        "baseline_deviation": 1.415113186464915,
+        "gap_days": 5,
+        "anomaly_score": 0.544114899180127,
+        "is_anomaly": false,
+        "baseline_alert": false,
+        "direction": "water_expansion",
+        "split": "test"
+      },
+      {
+        "date": "2026-03-09",
+        "valid_fraction": 1.0,
+        "open_water_km2": 156.9708,
+        "partial_water_km2": 2.0412,
+        "valid_pixels": 535655,
+        "total_pixels": 535655,
+        "sha256": "0739877a21c8385561236a7e06972c440d0be69297f96cc133d6a11490af0efe",
+        "raster": "2026-03-09.tif",
+        "object_ids": [
+          10910814,
+          10910820
+        ],
+        "acquisitions": [
+          {
+            "objectid": 10910814,
+            "datetime": 1773032601000,
+            "tileid": "T44QKD",
+            "cloud_coverage": 3
+          },
+          {
+            "objectid": 10910820,
+            "datetime": 1773032601000,
+            "tileid": "T44QLD",
+            "cloud_coverage": 62
+          }
+        ],
+        "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+        "epsg": 32644,
+        "bounds": [
+          299220,
+          1813920,
+          320790,
+          1836270
+        ],
+        "pixel_size_m": 30,
+        "expected_km2": 140.74843086285583,
+        "baseline_deviation": 1.5526431587333203,
+        "gap_days": 1,
+        "anomaly_score": 0.536990020725617,
+        "is_anomaly": false,
+        "baseline_alert": false,
+        "direction": "water_expansion",
+        "split": "test"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "date": "2023-04-02",
+      "valid_fraction": 0.9995146129504998,
+      "open_water_km2": 152.1549,
+      "partial_water_km2": 1.026,
+      "valid_pixels": 535395,
+      "total_pixels": 535655,
+      "sha256": "59779b790129abfbdd6c09edc9c18d57cff85c1fb73eff9d3290c61c8dfc54de",
+      "raster": "2023-04-02.tif",
+      "object_ids": [
+        574597,
+        574602
+      ],
+      "acquisitions": [
+        {
+          "objectid": 574597,
+          "datetime": 1680411795000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 4
+        },
+        {
+          "objectid": 574602,
+          "datetime": 1680411795000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 27
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.94897741739055,
+      "baseline_deviation": 1.5510690587873015,
+      "gap_days": 0,
+      "anomaly_score": 0.5051432523570302,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2023-05-18",
+      "valid_fraction": 0.9688680213943677,
+      "open_water_km2": 115.9632,
+      "partial_water_km2": 18.1467,
+      "valid_pixels": 518979,
+      "total_pixels": 535655,
+      "sha256": "9f186b553f8499cd5e3648a1d9ddff314156f4b21c8fc04920d0e8193fcd1ded",
+      "raster": "2023-05-18.tif",
+      "object_ids": [
+        1037776,
+        1037778
+      ],
+      "acquisitions": [
+        {
+          "objectid": 1037776,
+          "datetime": 1684386419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 1037778,
+          "datetime": 1684386419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 4
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 131.70611564225356,
+      "baseline_deviation": -1.5067546585716398,
+      "gap_days": 46,
+      "anomaly_score": 0.6696841455277195,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-05-20",
+      "valid_fraction": 0.9991860432554536,
+      "open_water_km2": 146.3418,
+      "partial_water_km2": 1.4382,
+      "valid_pixels": 535219,
+      "total_pixels": 535655,
+      "sha256": "67a285066f9eeac06f50a20dc7519a19a8f9b5cb3b2d897c278ed6d4b4dd5175",
+      "raster": "2023-05-20.tif",
+      "object_ids": [
+        1059259,
+        1059018,
+        1059020
+      ],
+      "acquisitions": [
+        {
+          "objectid": 1059259,
+          "datetime": 1684558621000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 26
+        },
+        {
+          "objectid": 1059018,
+          "datetime": 1684558966000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 1059020,
+          "datetime": 1684558966000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 10
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 131.70744751861776,
+      "baseline_deviation": 1.4006540641886893,
+      "gap_days": 2,
+      "anomaly_score": 0.739949265424639,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2023-06-17",
+      "valid_fraction": 0.9846561686159935,
+      "open_water_km2": 137.1537,
+      "partial_water_km2": 3.9375,
+      "valid_pixels": 527436,
+      "total_pixels": 535655,
+      "sha256": "34ffcdac816e231bc8386fb06cb82ca750000b81719fba757c4f3d7aa2aa7c4c",
+      "raster": "2023-06-17.tif",
+      "object_ids": [
+        1363316,
+        1363317
+      ],
+      "acquisitions": [
+        {
+          "objectid": 1363316,
+          "datetime": 1686978419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 4
+        },
+        {
+          "objectid": 1363317,
+          "datetime": 1686978419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 30
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.4060057759865,
+      "baseline_deviation": 0.35869186237512046,
+      "gap_days": 28,
+      "anomaly_score": 0.5098439300184352,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2023-07-02",
+      "valid_fraction": 0.9519952208044357,
+      "open_water_km2": 136.6164,
+      "partial_water_km2": 2.0619,
+      "valid_pixels": 509941,
+      "total_pixels": 535655,
+      "sha256": "eaeeceaa4d98092a527998d4ab9f145a92e489fb7c9c41325b03e309eb98821e",
+      "raster": "2023-07-02.tif",
+      "object_ids": [
+        1532945,
+        1532949
+      ],
+      "acquisitions": [
+        {
+          "objectid": 1532945,
+          "datetime": 1688274421000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 52
+        },
+        {
+          "objectid": 1532949,
+          "datetime": 1688274421000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 13
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.50113096199408,
+      "baseline_deviation": 0.10674241396974037,
+      "gap_days": 15,
+      "anomaly_score": 0.47606559681070626,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2023-08-06",
+      "valid_fraction": 0.9712034798517702,
+      "open_water_km2": 135.8748,
+      "partial_water_km2": 1.8747,
+      "valid_pixels": 520230,
+      "total_pixels": 535655,
+      "sha256": "6fdaff04514c4be4f195130d00bfc061dce619c576a068992baac02fd4de61e9",
+      "raster": "2023-08-06.tif",
+      "object_ids": [
+        1935639,
+        1935640
+      ],
+      "acquisitions": [
+        {
+          "objectid": 1935639,
+          "datetime": 1691298419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 21
+        },
+        {
+          "objectid": 1935640,
+          "datetime": 1691298419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 45
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 142.64699989081294,
+      "baseline_deviation": -0.648167338639189,
+      "gap_days": 35,
+      "anomaly_score": 0.43561137511514086,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-10-05",
+      "valid_fraction": 0.9985961113029842,
+      "open_water_km2": 149.0472,
+      "partial_water_km2": 1.7298,
+      "valid_pixels": 534903,
+      "total_pixels": 535655,
+      "sha256": "4d73b38331fb5c3ea8defb5a808bd164691a527581bd21f94acb60b2a840913a",
+      "raster": "2023-10-05.tif",
+      "object_ids": [
+        2502479,
+        2502481
+      ],
+      "acquisitions": [
+        {
+          "objectid": 2502479,
+          "datetime": 1696482409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 2502481,
+          "datetime": 1696482409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 155.63624703604452,
+      "baseline_deviation": -0.6306377765539848,
+      "gap_days": 60,
+      "anomaly_score": 0.4532143545425659,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-10-15",
+      "valid_fraction": 0.9618803147548328,
+      "open_water_km2": 146.1294,
+      "partial_water_km2": 1.3905,
+      "valid_pixels": 515236,
+      "total_pixels": 535655,
+      "sha256": "6dbe4f43fef65c2c85d82278dea6572cc2b2f3c3a4fd35b427b9e9e3e9604ae6",
+      "raster": "2023-10-15.tif",
+      "object_ids": [
+        2586724,
+        2586727
+      ],
+      "acquisitions": [
+        {
+          "objectid": 2586724,
+          "datetime": 1697346479000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 7
+        },
+        {
+          "objectid": 2586727,
+          "datetime": 1697346479000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 20
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 157.09376437640307,
+      "baseline_deviation": -1.0493994554656312,
+      "gap_days": 10,
+      "anomaly_score": 0.4041746003904956,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-10-25",
+      "valid_fraction": 0.9985905106831823,
+      "open_water_km2": 150.0732,
+      "partial_water_km2": 0.8442,
+      "valid_pixels": 534900,
+      "total_pixels": 535655,
+      "sha256": "dce0f515056797b715a8497cfb8038ef9261a7b1461a149d56de55d3d7e43251",
+      "raster": "2023-10-25.tif",
+      "object_ids": [
+        2665279,
+        2665282
+      ],
+      "acquisitions": [
+        {
+          "objectid": 2665279,
+          "datetime": 1698210539000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 2665282,
+          "datetime": 1698210539000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.20938632748025,
+      "baseline_deviation": -0.7787144980332777,
+      "gap_days": 10,
+      "anomaly_score": 0.41838008497032664,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-10-27",
+      "valid_fraction": 1.0,
+      "open_water_km2": 149.9094,
+      "partial_water_km2": 1.3473,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "97d13a2cf33538bf4b6b599f53d8ccd50a2108a649671f0e7acddbded81f4199",
+      "raster": "2023-10-27.tif",
+      "object_ids": [
+        2680146,
+        2679924,
+        2679930
+      ],
+      "acquisitions": [
+        {
+          "objectid": 2680146,
+          "datetime": 1698382751000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 40
+        },
+        {
+          "objectid": 2679924,
+          "datetime": 1698383022000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 7
+        },
+        {
+          "objectid": 2679930,
+          "datetime": 1698383022000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.38839555747467,
+      "baseline_deviation": -0.8115247738445203,
+      "gap_days": 2,
+      "anomaly_score": 0.3837233522557788,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2023-12-09",
+      "valid_fraction": 0.9761040221784544,
+      "open_water_km2": 147.0708,
+      "partial_water_km2": 2.1024,
+      "valid_pixels": 522855,
+      "total_pixels": 535655,
+      "sha256": "960ff2785f9156a4450b23c2c9b5fd5b8e709ca02ffa29010554286aa1329cdb",
+      "raster": "2023-12-09.tif",
+      "object_ids": [
+        2940786,
+        2940787
+      ],
+      "acquisitions": [
+        {
+          "objectid": 2940786,
+          "datetime": 1702098731000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 3
+        },
+        {
+          "objectid": 2940787,
+          "datetime": 1702098731000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 9
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.38187122795404,
+      "baseline_deviation": -1.0825827726861736,
+      "gap_days": 43,
+      "anomaly_score": 0.3969611782826894,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-01-13",
+      "valid_fraction": 0.9707572971408835,
+      "open_water_km2": 144.0585,
+      "partial_water_km2": 1.2042,
+      "valid_pixels": 519991,
+      "total_pixels": 535655,
+      "sha256": "0808852596632390022eafa1d4d1b5ef74ad2f9176e31a2b24db5d2e6b6c51d8",
+      "raster": "2024-01-13.tif",
+      "object_ids": [
+        3150105,
+        3150108
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3150105,
+          "datetime": 1705122719000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 3150108,
+          "datetime": 1705122719000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 153.2381618007415,
+      "baseline_deviation": -0.8785855489980515,
+      "gap_days": 35,
+      "anomaly_score": 0.3832910265811761,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-01-15",
+      "valid_fraction": 0.9923663552099766,
+      "open_water_km2": 147.3759,
+      "partial_water_km2": 4.6224,
+      "valid_pixels": 531566,
+      "total_pixels": 535655,
+      "sha256": "bf13fac504e587e44236503d0d1cbbb3da502f424394c440dd3f1a13da8d24e6",
+      "raster": "2024-01-15.tif",
+      "object_ids": [
+        3162261,
+        3162050,
+        3162054
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3162261,
+          "datetime": 1705294901000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 100
+        },
+        {
+          "objectid": 3162050,
+          "datetime": 1705295017000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 37
+        },
+        {
+          "objectid": 3162054,
+          "datetime": 1705295017000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 3
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 152.8399812378479,
+      "baseline_deviation": -0.522967285541693,
+      "gap_days": 2,
+      "anomaly_score": 0.49161320346911375,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-01-31",
+      "valid_fraction": 0.9749334926398522,
+      "open_water_km2": 141.2595,
+      "partial_water_km2": 1.3626,
+      "valid_pixels": 522228,
+      "total_pixels": 535655,
+      "sha256": "253287bc785d422fac5759b41b4e180c8beb03d2eecd7452c2aa516ae1e7b6e6",
+      "raster": "2024-01-31.tif",
+      "object_ids": [
+        3262772,
+        3262773
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3262772,
+          "datetime": 1706677413000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 8
+        },
+        {
+          "objectid": 3262773,
+          "datetime": 1706677413000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 31
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 149.38388576404844,
+      "baseline_deviation": -0.7775850659554675,
+      "gap_days": 16,
+      "anomaly_score": 0.39420124367738796,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-02-07",
+      "valid_fraction": 0.9971455507742857,
+      "open_water_km2": 145.791,
+      "partial_water_km2": 1.3005,
+      "valid_pixels": 534126,
+      "total_pixels": 535655,
+      "sha256": "afab4e2af401eb660295cd586fbcc938a6b149c473736cd7be4bfc9ab9c4bc64",
+      "raster": "2024-02-07.tif",
+      "object_ids": [
+        3309628,
+        3309890,
+        3309891
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3309628,
+          "datetime": 1707282586000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3309890,
+          "datetime": 1707282601000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3309891,
+          "datetime": 1707282601000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 147.76382039192768,
+      "baseline_deviation": -0.1888186650815751,
+      "gap_days": 7,
+      "anomaly_score": 0.4015464249780125,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-02-12",
+      "valid_fraction": 0.9990385602673363,
+      "open_water_km2": 146.0664,
+      "partial_water_km2": 0.9333,
+      "valid_pixels": 535140,
+      "total_pixels": 535655,
+      "sha256": "8891f25f313e0fa8741c646a0eabcc0a8a83e30deb4f44406210ed1111c081ba",
+      "raster": "2024-02-12.tif",
+      "object_ids": [
+        3345184,
+        3345185
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3345184,
+          "datetime": 1707714579000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 3345185,
+          "datetime": 1707714579000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 33
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 146.5852712131849,
+      "baseline_deviation": -0.04966117048653552,
+      "gap_days": 5,
+      "anomaly_score": 0.3587515036753679,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-02-16",
+      "valid_fraction": 1.0,
+      "open_water_km2": 145.953,
+      "partial_water_km2": 0.9783,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "02fb4accecef23e768090f9b1c4cf5257a2b3e1b73084729c2608872a8ebeca6",
+      "raster": "2024-02-16.tif",
+      "object_ids": [
+        3374432,
+        3374435
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3374432,
+          "datetime": 1708059813000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3374435,
+          "datetime": 1708059813000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 145.63629624873334,
+      "baseline_deviation": 0.03031172010649494,
+      "gap_days": 4,
+      "anomaly_score": 0.35242691153785727,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-02-17",
+      "valid_fraction": 0.9994642073722826,
+      "open_water_km2": 145.8153,
+      "partial_water_km2": 0.783,
+      "valid_pixels": 535368,
+      "total_pixels": 535655,
+      "sha256": "60c488263a0c08c9dbd9cd732d9dfac47d579cd0cdf2ef1787daf057766321b5",
+      "raster": "2024-02-17.tif",
+      "object_ids": [
+        3381213,
+        3381217
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3381213,
+          "datetime": 1708146541000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3381217,
+          "datetime": 1708146541000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 145.39878471113576,
+      "baseline_deviation": 0.03986468365352165,
+      "gap_days": 1,
+      "anomaly_score": 0.3559475101793991,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-02-22",
+      "valid_fraction": 0.9989862878158516,
+      "open_water_km2": 145.2069,
+      "partial_water_km2": 0.7119,
+      "valid_pixels": 535112,
+      "total_pixels": 535655,
+      "sha256": "444dfe41b53084f2ea8a40aee77d8f1c6e909dd288dd6cb412e841d54c0b9518",
+      "raster": "2024-02-22.tif",
+      "object_ids": [
+        3418032,
+        3418037
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3418032,
+          "datetime": 1708578509000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 3418037,
+          "datetime": 1708578509000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 144.21313320315994,
+      "baseline_deviation": 0.09511343290525413,
+      "gap_days": 5,
+      "anomaly_score": 0.35756568684024975,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-03-03",
+      "valid_fraction": 0.9977074796277454,
+      "open_water_km2": 143.1765,
+      "partial_water_km2": 0.9639,
+      "valid_pixels": 534427,
+      "total_pixels": 535655,
+      "sha256": "134a3128e4d41d00a24841b0954a6c8b7c79dbc8801f0ed38b07cc0aba43de7d",
+      "raster": "2024-03-03.tif",
+      "object_ids": [
+        3491540,
+        3491541,
+        3491813,
+        3491815
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3491540,
+          "datetime": 1709442206000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 6
+        },
+        {
+          "objectid": 3491541,
+          "datetime": 1709442206000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3491813,
+          "datetime": 1709442439000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 4
+        },
+        {
+          "objectid": 3491815,
+          "datetime": 1709442439000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 141.8793287584981,
+      "baseline_deviation": 0.12415227620557587,
+      "gap_days": 10,
+      "anomaly_score": 0.3658405939487503,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-03-08",
+      "valid_fraction": 0.9970372721247818,
+      "open_water_km2": 142.9497,
+      "partial_water_km2": 0.54,
+      "valid_pixels": 534068,
+      "total_pixels": 535655,
+      "sha256": "5affcc77a6d09143e316e5635eb9bb06fc53f55f7b9777935a66a42349608498",
+      "raster": "2024-03-08.tif",
+      "object_ids": [
+        3534431,
+        3534432
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3534431,
+          "datetime": 1709874411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 13
+        },
+        {
+          "objectid": 3534432,
+          "datetime": 1709874411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 5
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 140.74843086285583,
+      "baseline_deviation": 0.21068349742406287,
+      "gap_days": 5,
+      "anomaly_score": 0.3641460630957766,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-03-13",
+      "valid_fraction": 0.972612969168588,
+      "open_water_km2": 137.7621,
+      "partial_water_km2": 0.4968,
+      "valid_pixels": 520985,
+      "total_pixels": 535655,
+      "sha256": "5b41d57581253af39121d9b2b74001b7f06d2945143d3e2453793d38fcf4b3f6",
+      "raster": "2024-03-13.tif",
+      "object_ids": [
+        3578203,
+        3578204
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3578203,
+          "datetime": 1710306409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 6
+        },
+        {
+          "objectid": 3578204,
+          "datetime": 1710306409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 18
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 139.65275046780033,
+      "baseline_deviation": -0.18095418058665283,
+      "gap_days": 5,
+      "anomaly_score": 0.4453283252159707,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-03-23",
+      "valid_fraction": 0.9990814983524844,
+      "open_water_km2": 142.6014,
+      "partial_water_km2": 0.4374,
+      "valid_pixels": 535163,
+      "total_pixels": 535655,
+      "sha256": "2884b31836e890fe3afd2622b763b376c058d8ddd1523983101a89607df756d6",
+      "raster": "2024-03-23.tif",
+      "object_ids": [
+        3666415,
+        3666418
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3666415,
+          "datetime": 1711170409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3666418,
+          "datetime": 1711170409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 137.59912566418555,
+      "baseline_deviation": 0.47876774100930536,
+      "gap_days": 10,
+      "anomaly_score": 0.40081311818792237,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-03-28",
+      "valid_fraction": 0.9833045523704623,
+      "open_water_km2": 137.9538,
+      "partial_water_km2": 0.4662,
+      "valid_pixels": 526712,
+      "total_pixels": 535655,
+      "sha256": "3d679b8fdef063b23d042e1372cde77ac855e907facdecd1c3359c1000e868e7",
+      "raster": "2024-03-28.tif",
+      "object_ids": [
+        3711965,
+        3711966
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3711965,
+          "datetime": 1711602411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3711966,
+          "datetime": 1711602411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 136.65636478154497,
+      "baseline_deviation": 0.12417754144315518,
+      "gap_days": 5,
+      "anomaly_score": 0.4292911611154794,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-04-02",
+      "valid_fraction": 0.990521884421876,
+      "open_water_km2": 139.2417,
+      "partial_water_km2": 0.4203,
+      "valid_pixels": 530578,
+      "total_pixels": 535655,
+      "sha256": "ad81b76f6909aea97f516c718904f004bd8b222390ed3f397e7c30af88249b84",
+      "raster": "2024-04-02.tif",
+      "object_ids": [
+        3758258,
+        3758261
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3758258,
+          "datetime": 1712034409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3758261,
+          "datetime": 1712034409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.77907619155317,
+      "baseline_deviation": 0.33140776923527326,
+      "gap_days": 5,
+      "anomaly_score": 0.4003284867632436,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-04-04",
+      "valid_fraction": 1.0,
+      "open_water_km2": 141.354,
+      "partial_water_km2": 0.9558,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "23b9fc85b7d6bc1743f02a8a8bf0bbc911fdfbe1cce380f4922fb629a008aa6d",
+      "raster": "2024-04-04.tif",
+      "object_ids": [
+        3777219,
+        3776994,
+        3776997
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3777219,
+          "datetime": 1712206611000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3776994,
+          "datetime": 1712206986000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 3776997,
+          "datetime": 1712206986000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.44796330229698,
+      "baseline_deviation": 0.5652668482879095,
+      "gap_days": 2,
+      "anomaly_score": 0.45299398146721165,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-04-22",
+      "valid_fraction": 0.96526682286173,
+      "open_water_km2": 124.623,
+      "partial_water_km2": 0.5067,
+      "valid_pixels": 517050,
+      "total_pixels": 535655,
+      "sha256": "b8a70a2bc18d053a22d199890ec37373a857d68b02ec79d782743c4218d3348f",
+      "raster": "2024-04-22.tif",
+      "object_ids": [
+        3957149,
+        3957151
+      ],
+      "acquisitions": [
+        {
+          "objectid": 3957149,
+          "datetime": 1713762409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 3957151,
+          "datetime": 1713762409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.04612957010602,
+      "baseline_deviation": -0.8061778394750387,
+      "gap_days": 18,
+      "anomaly_score": 0.5254756540193092,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-04-27",
+      "valid_fraction": 0.9801588709150479,
+      "open_water_km2": 125.0172,
+      "partial_water_km2": 2.745,
+      "valid_pixels": 525027,
+      "total_pixels": 535655,
+      "sha256": "017b11dba20882a093c20a5a5014f0f8ec24d34532bcf46aa00ec8dc7dab2261",
+      "raster": "2024-04-27.tif",
+      "object_ids": [
+        4008866,
+        4008868,
+        4008568
+      ],
+      "acquisitions": [
+        {
+          "objectid": 4008866,
+          "datetime": 1714194411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 4008868,
+          "datetime": 1714194411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 4008568,
+          "datetime": 1714194545000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 132.58222122874437,
+      "baseline_deviation": -0.7240482790881704,
+      "gap_days": 5,
+      "anomaly_score": 0.4914285917751773,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-05-06",
+      "valid_fraction": 1.0,
+      "open_water_km2": 136.1961,
+      "partial_water_km2": 1.2843,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "ac561cc5ffdd4bb1c0a1e9074fc62020735b4f9ac618147e7a8a62467241a7e5",
+      "raster": "2024-05-06.tif",
+      "object_ids": [
+        4102411,
+        4102412
+      ],
+      "acquisitions": [
+        {
+          "objectid": 4102411,
+          "datetime": 1714971768000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 4102412,
+          "datetime": 1714971768000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 131.98993877816514,
+      "baseline_deviation": 0.4025717446324216,
+      "gap_days": 9,
+      "anomaly_score": 0.49536800074266985,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-06-16",
+      "valid_fraction": 0.9613911939587981,
+      "open_water_km2": 116.2845,
+      "partial_water_km2": 3.1788,
+      "valid_pixels": 514974,
+      "total_pixels": 535655,
+      "sha256": "791b49b67016f99b1b274b162164e52d04d5b13c1e3907824b6951f3b751ea98",
+      "raster": "2024-06-16.tif",
+      "object_ids": [
+        4535736,
+        4535737
+      ],
+      "acquisitions": [
+        {
+          "objectid": 4535736,
+          "datetime": 1718514421000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 3
+        },
+        {
+          "objectid": 4535737,
+          "datetime": 1718514421000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 23
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.4060057759865,
+      "baseline_deviation": -1.6386995379996836,
+      "gap_days": 41,
+      "anomaly_score": 0.5849077694141569,
+      "is_anomaly": true,
+      "baseline_alert": true,
+      "direction": "water_loss",
+      "split": "train"
+    },
+    {
+      "date": "2024-09-11",
+      "valid_fraction": 0.9522304468361166,
+      "open_water_km2": 168.5763,
+      "partial_water_km2": 5.274,
+      "valid_pixels": 510067,
+      "total_pixels": 535655,
+      "sha256": "c5a6f99d72127e4b35b80e05a43a9a0415a63e89d44d8165b724cc15678465c2",
+      "raster": "2024-09-11.tif",
+      "object_ids": [
+        5446490,
+        5446493
+      ],
+      "acquisitions": [
+        {
+          "objectid": 5446490,
+          "datetime": 1726031002000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 4
+        },
+        {
+          "objectid": 5446493,
+          "datetime": 1726031002000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 22
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 151.23593630580916,
+      "baseline_deviation": 1.6596464321655007,
+      "gap_days": 87,
+      "anomaly_score": 0.5314803347469798,
+      "is_anomaly": false,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-10-04",
+      "valid_fraction": 0.9799255117566344,
+      "open_water_km2": 173.0736,
+      "partial_water_km2": 4.1625,
+      "valid_pixels": 524902,
+      "total_pixels": 535655,
+      "sha256": "eaa02a7b62ea2e02cc20b83d5d6eac1c513767b60ab6f3fd001ac235c2b3b1cf",
+      "raster": "2024-10-04.tif",
+      "object_ids": [
+        5656301,
+        5656302,
+        5656019
+      ],
+      "acquisitions": [
+        {
+          "objectid": 5656301,
+          "datetime": 1728018411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 5656302,
+          "datetime": 1728018411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 31
+        },
+        {
+          "objectid": 5656019,
+          "datetime": 1728018572000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 25
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 155.63624703604452,
+      "baseline_deviation": 1.6689292764219414,
+      "gap_days": 23,
+      "anomaly_score": 0.5305127140740132,
+      "is_anomaly": false,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-10-29",
+      "valid_fraction": 0.9914403860693917,
+      "open_water_km2": 174.8889,
+      "partial_water_km2": 5.4126,
+      "valid_pixels": 531070,
+      "total_pixels": 535655,
+      "sha256": "aa591e5ea26c235c07b675735ec4ae6f58dcc26b0048384d6fe3f6afd82c86d2",
+      "raster": "2024-10-29.tif",
+      "object_ids": [
+        5857375,
+        5857379,
+        5857607,
+        5857608
+      ],
+      "acquisitions": [
+        {
+          "objectid": 5857375,
+          "datetime": 1730178208000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 14
+        },
+        {
+          "objectid": 5857379,
+          "datetime": 1730178208000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 5857607,
+          "datetime": 1730178519000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 17
+        },
+        {
+          "objectid": 5857608,
+          "datetime": 1730178519000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 10
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.62827211813632,
+      "baseline_deviation": 1.5563049036824266,
+      "gap_days": 25,
+      "anomaly_score": 0.5322206158525244,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2024-12-23",
+      "valid_fraction": 0.9903426645882144,
+      "open_water_km2": 173.0934,
+      "partial_water_km2": 2.2365,
+      "valid_pixels": 530482,
+      "total_pixels": 535655,
+      "sha256": "ee58b9ea7f9ea2e193d102ca723bc362215bf9f418e1ef830a862b9142f29ed0",
+      "raster": "2024-12-23.tif",
+      "object_ids": [
+        6206220,
+        6206424,
+        6206425
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6206220,
+          "datetime": 1734930583000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 32
+        },
+        {
+          "objectid": 6206424,
+          "datetime": 1734930751000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 11
+        },
+        {
+          "objectid": 6206425,
+          "datetime": 1734930751000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 11
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 156.68003285508289,
+      "baseline_deviation": 1.570923580513475,
+      "gap_days": 55,
+      "anomaly_score": 0.5194294014554494,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "train"
+    },
+    {
+      "date": "2025-01-01",
+      "valid_fraction": 0.951106589129197,
+      "open_water_km2": 168.1623,
+      "partial_water_km2": 11.0691,
+      "valid_pixels": 509465,
+      "total_pixels": 535655,
+      "sha256": "346f3f187b520845b7081fd77f86524d8a5470a4e80a0eab630b3a5f8d937edb",
+      "raster": "2025-01-01.tif",
+      "object_ids": [
+        6258902,
+        6258903
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6258902,
+          "datetime": 1735707813000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 13
+        },
+        {
+          "objectid": 6258903,
+          "datetime": 1735707813000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 66
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 155.4194966976668,
+      "baseline_deviation": 1.2196138679368624,
+      "gap_days": 9,
+      "anomaly_score": 0.5043227115454818,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-01-07",
+      "valid_fraction": 0.9936899683564981,
+      "open_water_km2": 168.7257,
+      "partial_water_km2": 2.1267,
+      "valid_pixels": 532275,
+      "total_pixels": 535655,
+      "sha256": "442878307412327ea0dcec5eb4d935359ec570482280101733fb2b28b9404b67",
+      "raster": "2025-01-07.tif",
+      "object_ids": [
+        6295010,
+        6295011
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6295010,
+          "datetime": 1736226679000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 9
+        },
+        {
+          "objectid": 6295011,
+          "datetime": 1736226679000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 154.37600402445628,
+      "baseline_deviation": 1.3734095863542422,
+      "gap_days": 6,
+      "anomaly_score": 0.4991046406062231,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-01-22",
+      "valid_fraction": 0.9937273058218443,
+      "open_water_km2": 164.9799,
+      "partial_water_km2": 1.3635,
+      "valid_pixels": 532295,
+      "total_pixels": 535655,
+      "sha256": "88371f8ccbfa9498773f36f502fbbe4846c4cd22044ff7b81bcf9e83db764ad3",
+      "raster": "2025-01-22.tif",
+      "object_ids": [
+        6386150,
+        6386151
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6386150,
+          "datetime": 1737522711000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 8
+        },
+        {
+          "objectid": 6386151,
+          "datetime": 1737522711000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 151.3812288335253,
+      "baseline_deviation": 1.3015289922201776,
+      "gap_days": 15,
+      "anomaly_score": 0.5041506811083041,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-01",
+      "valid_fraction": 0.9978474951227936,
+      "open_water_km2": 164.2221,
+      "partial_water_km2": 1.5372,
+      "valid_pixels": 534502,
+      "total_pixels": 535655,
+      "sha256": "2da383715f3aa19edfd5f5b988b519dafc608a9391f5b3b56d72f3fecca7ee2b",
+      "raster": "2025-02-01.tif",
+      "object_ids": [
+        6450989,
+        6450991
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6450989,
+          "datetime": 1738386661000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 32
+        },
+        {
+          "objectid": 6450991,
+          "datetime": 1738386661000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 149.15534129241078,
+      "baseline_deviation": 1.442039669659639,
+      "gap_days": 10,
+      "anomaly_score": 0.5080139487641447,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-02",
+      "valid_fraction": 1.0,
+      "open_water_km2": 163.8495,
+      "partial_water_km2": 2.9205,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "582a82c2ee48720c80b932d7abe655ca6b6bb8528b01a67897bd4fc95bbda2f3",
+      "raster": "2025-02-02.tif",
+      "object_ids": [
+        6458006,
+        6458009
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6458006,
+          "datetime": 1738472614000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 8
+        },
+        {
+          "objectid": 6458009,
+          "datetime": 1738472614000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 15
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 148.92571861478112,
+      "baseline_deviation": 1.4283553082969063,
+      "gap_days": 1,
+      "anomaly_score": 0.5136863099774279,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-06",
+      "valid_fraction": 0.9956557859069737,
+      "open_water_km2": 161.7102,
+      "partial_water_km2": 1.5678,
+      "valid_pixels": 533328,
+      "total_pixels": 535655,
+      "sha256": "13a63ae0f1879b30890ce304c7e42d4d7b40d03996d5b4226ef89a4c5c568062",
+      "raster": "2025-02-06.tif",
+      "object_ids": [
+        6709012,
+        6709014
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6709012,
+          "datetime": 1738818549000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6709014,
+          "datetime": 1738818549000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 147.99780918824698,
+      "baseline_deviation": 1.3124131009321849,
+      "gap_days": 4,
+      "anomaly_score": 0.5152035922367613,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-11",
+      "valid_fraction": 0.997741083346557,
+      "open_water_km2": 160.3305,
+      "partial_water_km2": 1.458,
+      "valid_pixels": 534445,
+      "total_pixels": 535655,
+      "sha256": "b6af8cdb6fd9d124a477e326b5a345275f36facf1039f92bcaa5937dc7e26bf4",
+      "raster": "2025-02-11.tif",
+      "object_ids": [
+        6743281,
+        6743283
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6743281,
+          "datetime": 1739250601000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6743283,
+          "datetime": 1739250601000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 146.82189612622494,
+      "baseline_deviation": 1.2929086504776452,
+      "gap_days": 5,
+      "anomaly_score": 0.5053887920222214,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-16",
+      "valid_fraction": 0.9984672970475399,
+      "open_water_km2": 158.274,
+      "partial_water_km2": 1.3941,
+      "valid_pixels": 534834,
+      "total_pixels": 535655,
+      "sha256": "571eaf5ba4fe74ac54e5e0310223883f8c33a7274debb9b6ec006d3365834158",
+      "raster": "2025-02-16.tif",
+      "object_ids": [
+        6778087,
+        6778088
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6778087,
+          "datetime": 1739682489000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6778088,
+          "datetime": 1739682489000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 145.63629624873334,
+      "baseline_deviation": 1.2095547885527203,
+      "gap_days": 5,
+      "anomaly_score": 0.5011048471123154,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-18",
+      "valid_fraction": 1.0,
+      "open_water_km2": 157.0968,
+      "partial_water_km2": 2.3841,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "a95ac045e2621d02862ddaad8179806cca69d84f50644114d2a2fae1e5773949",
+      "raster": "2025-02-18.tif",
+      "object_ids": [
+        6793251,
+        6793011,
+        6793014
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6793251,
+          "datetime": 1739854751000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 6793011,
+          "datetime": 1739855008000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6793014,
+          "datetime": 1739855008000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 145.16130659307584,
+      "baseline_deviation": 1.1423462274653802,
+      "gap_days": 2,
+      "anomaly_score": 0.5076034472286696,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-21",
+      "valid_fraction": 0.9869038840298326,
+      "open_water_km2": 153.1476,
+      "partial_water_km2": 1.3752,
+      "valid_pixels": 528640,
+      "total_pixels": 535655,
+      "sha256": "42a4520e12f0fb621c83c75de9a5db163b505d85575897fe7cbc1c1bead8e292",
+      "raster": "2025-02-21.tif",
+      "object_ids": [
+        6814988,
+        6814989
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6814988,
+          "datetime": 1740114531000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 23
+        },
+        {
+          "objectid": 6814989,
+          "datetime": 1740114531000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 144.44977531787112,
+      "baseline_deviation": 0.8324689121792871,
+      "gap_days": 3,
+      "anomaly_score": 0.5110513868398027,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-02-26",
+      "valid_fraction": 0.9982488728752649,
+      "open_water_km2": 153.8388,
+      "partial_water_km2": 1.0125,
+      "valid_pixels": 534717,
+      "total_pixels": 535655,
+      "sha256": "f559e5ed80e9633ab0e0141e0920e6e98e490ed3cadc3b7c8fdf974f786aa5b9",
+      "raster": "2025-02-26.tif",
+      "object_ids": [
+        6852958,
+        6852960
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6852958,
+          "datetime": 1740546419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 15
+        },
+        {
+          "objectid": 6852960,
+          "datetime": 1740546419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 143.27110590556825,
+      "baseline_deviation": 1.0114341376770348,
+      "gap_days": 5,
+      "anomaly_score": 0.48135587370398236,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-06",
+      "valid_fraction": 0.9995146129504998,
+      "open_water_km2": 151.0497,
+      "partial_water_km2": 1.0539,
+      "valid_pixels": 535395,
+      "total_pixels": 535655,
+      "sha256": "47350e824ad44dc1a48d6ced6bd5bdf61c7c759110f8a97058c77d0d5ec8af95",
+      "raster": "2025-03-06.tif",
+      "object_ids": [
+        6916037,
+        6916038
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6916037,
+          "datetime": 1741237401000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6916038,
+          "datetime": 1741237401000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 141.4232735043989,
+      "baseline_deviation": 0.9213454036883922,
+      "gap_days": 8,
+      "anomaly_score": 0.4767514066940203,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-08",
+      "valid_fraction": 0.9986502506277362,
+      "open_water_km2": 150.2325,
+      "partial_water_km2": 0.8559,
+      "valid_pixels": 534932,
+      "total_pixels": 535655,
+      "sha256": "e5542cc1c06ad1921bc1a79ad3b669653d4d386caf179517d1f3f912dcc866e2",
+      "raster": "2025-03-08.tif",
+      "object_ids": [
+        6932596,
+        6932597
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6932596,
+          "datetime": 1741410419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6932597,
+          "datetime": 1741410419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 140.97205724134338,
+      "baseline_deviation": 0.8863170955189391,
+      "gap_days": 2,
+      "anomaly_score": 0.4780500699294995,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-13",
+      "valid_fraction": 0.9983590183980361,
+      "open_water_km2": 147.6864,
+      "partial_water_km2": 1.0899,
+      "valid_pixels": 534776,
+      "total_pixels": 535655,
+      "sha256": "029a066e9d2f0eee98fdec1c3870a7971eb172fb2bb45c3d8b7f81b118ca0270",
+      "raster": "2025-03-13.tif",
+      "object_ids": [
+        6976451,
+        6976453,
+        6976161
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6976451,
+          "datetime": 1741842431000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6976453,
+          "datetime": 1741842431000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6976161,
+          "datetime": 1741842569000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 139.8686760627404,
+      "baseline_deviation": 0.7482344585698809,
+      "gap_days": 5,
+      "anomaly_score": 0.468698602688793,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-15",
+      "valid_fraction": 0.9983179471861553,
+      "open_water_km2": 146.8566,
+      "partial_water_km2": 1.1007,
+      "valid_pixels": 534754,
+      "total_pixels": 535655,
+      "sha256": "589d442df2beefba23832862a5526ad00a101c58c98124df221c4a42c7662080",
+      "raster": "2025-03-15.tif",
+      "object_ids": [
+        6995535,
+        6995746,
+        6995747
+      ],
+      "acquisitions": [
+        {
+          "objectid": 6995535,
+          "datetime": 1742014619000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 6995746,
+          "datetime": 1742015561000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 6995747,
+          "datetime": 1742015561000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 139.43855863637526,
+      "baseline_deviation": 0.7099808343074298,
+      "gap_days": 2,
+      "anomaly_score": 0.46276803768242997,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-18",
+      "valid_fraction": 0.9987305261782304,
+      "open_water_km2": 146.6478,
+      "partial_water_km2": 0.7605,
+      "valid_pixels": 534975,
+      "total_pixels": 535655,
+      "sha256": "ad2db217f0ef66f46dace1241f67045adb38c393b3d817a3ea68aecd055fe7e3",
+      "raster": "2025-03-18.tif",
+      "object_ids": [
+        7026232,
+        7026233
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7026232,
+          "datetime": 1742274419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 20
+        },
+        {
+          "objectid": 7026233,
+          "datetime": 1742274419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 138.8070168736582,
+      "baseline_deviation": 0.7504414538534764,
+      "gap_days": 3,
+      "anomaly_score": 0.44980078892319336,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-03-28",
+      "valid_fraction": 0.983926221168476,
+      "open_water_km2": 142.9848,
+      "partial_water_km2": 0.5076,
+      "valid_pixels": 527045,
+      "total_pixels": 535655,
+      "sha256": "ac954165f1a41945636eb8c5a0b49d4315659fba50183fee4dc969bbe2bb37f6",
+      "raster": "2025-03-28.tif",
+      "object_ids": [
+        7129151,
+        7129152
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7129151,
+          "datetime": 1743138419000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 7129152,
+          "datetime": 1743138419000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 136.83989557091348,
+      "baseline_deviation": 0.5881288819304271,
+      "gap_days": 10,
+      "anomaly_score": 0.4539750889442941,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-04-02",
+      "valid_fraction": 0.9965686869346875,
+      "open_water_km2": 144.8829,
+      "partial_water_km2": 0.846,
+      "valid_pixels": 533817,
+      "total_pixels": 535655,
+      "sha256": "c709f567b36d05cc3b179f8ddd6ed96b1e1c702301808152bc1bc1fe263cb963",
+      "raster": "2025-04-02.tif",
+      "object_ids": [
+        7183340,
+        7183341
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7183340,
+          "datetime": 1743570431000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 32
+        },
+        {
+          "objectid": 7183341,
+          "datetime": 1743570431000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 53
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.94897741739055,
+      "baseline_deviation": 0.8550658452704651,
+      "gap_days": 5,
+      "anomaly_score": 0.47550570371826756,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-04-07",
+      "valid_fraction": 0.9993428606099075,
+      "open_water_km2": 144.459,
+      "partial_water_km2": 1.1205,
+      "valid_pixels": 535303,
+      "total_pixels": 535655,
+      "sha256": "b5cb2cdb41c76c5d046229b1af2100bf9c3e559b7cee43e414aa3002ba496078",
+      "raster": "2025-04-07.tif",
+      "object_ids": [
+        7238922,
+        7238924,
+        7239246,
+        7239247
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7238922,
+          "datetime": 1744002187000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 20
+        },
+        {
+          "objectid": 7238924,
+          "datetime": 1744002187000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 7239246,
+          "datetime": 1744002409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 19
+        },
+        {
+          "objectid": 7239247,
+          "datetime": 1744002409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.12876164253763,
+      "baseline_deviation": 0.8929972331782002,
+      "gap_days": 5,
+      "anomaly_score": 0.4542937637193331,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-04-12",
+      "valid_fraction": 0.9932904574772942,
+      "open_water_km2": 138.6099,
+      "partial_water_km2": 1.7856,
+      "valid_pixels": 532061,
+      "total_pixels": 535655,
+      "sha256": "de5eba1e3a2c60828600f696515991d042c1c166ab46253049545dd75a862fa7",
+      "raster": "2025-04-12.tif",
+      "object_ids": [
+        7296831,
+        7296832
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7296831,
+          "datetime": 1744434431000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 4
+        },
+        {
+          "objectid": 7296832,
+          "datetime": 1744434431000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 134.38531253202876,
+      "baseline_deviation": 0.4043353208870939,
+      "gap_days": 5,
+      "anomaly_score": 0.4799379479278236,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-04-23",
+      "valid_fraction": 1.0,
+      "open_water_km2": 143.0784,
+      "partial_water_km2": 1.0116,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "0f917525c1bb25eccfe38cbf1b738e6d5195bef9ecc0a7f12186a5065cbc3217",
+      "raster": "2025-04-23.tif",
+      "object_ids": [
+        7426494,
+        7426497
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7426494,
+          "datetime": 1745384573000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 7426497,
+          "datetime": 1745384573000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.04612957010602,
+      "baseline_deviation": 0.9601887318586558,
+      "gap_days": 11,
+      "anomaly_score": 0.4497838551137605,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-05-09",
+      "valid_fraction": 0.9964734763980547,
+      "open_water_km2": 140.6367,
+      "partial_water_km2": 1.053,
+      "valid_pixels": 533766,
+      "total_pixels": 535655,
+      "sha256": "b7e27dba54df04ec179f25115206bbb4323c1b860d5ebffcecca4889a8153351",
+      "raster": "2025-05-09.tif",
+      "object_ids": [
+        7614366,
+        7614126,
+        7614129
+      ],
+      "acquisitions": [
+        {
+          "objectid": 7614366,
+          "datetime": 1746766641000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 72
+        },
+        {
+          "objectid": 7614126,
+          "datetime": 1746766972000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 15
+        },
+        {
+          "objectid": 7614129,
+          "datetime": 1746766972000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 131.9018989651511,
+      "baseline_deviation": 0.8360079193736276,
+      "gap_days": 16,
+      "anomaly_score": 0.42125279211149996,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-08",
+      "valid_fraction": 0.9990478946336728,
+      "open_water_km2": 176.0526,
+      "partial_water_km2": 5.0031,
+      "valid_pixels": 535145,
+      "total_pixels": 535655,
+      "sha256": "7f46decc434d74e7eaafff44cbcccdd8cf2a7d7d9c951b2a361c40ce4efa2db7",
+      "raster": "2025-11-08.tif",
+      "object_ids": [
+        9795616,
+        9795833,
+        9795834
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9795616,
+          "datetime": 1762578598000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 9795833,
+          "datetime": 1762578631000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 9795834,
+          "datetime": 1762578631000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.13625916448277,
+      "baseline_deviation": 1.61906319890898,
+      "gap_days": 183,
+      "anomaly_score": 0.5472105574497121,
+      "is_anomaly": false,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-09",
+      "valid_fraction": 0.9966919005703297,
+      "open_water_km2": 175.5909,
+      "partial_water_km2": 5.3973,
+      "valid_pixels": 533883,
+      "total_pixels": 535655,
+      "sha256": "72e0227fc977b92704df47a328431583360dfbc7af83357564c364a3e5b1c479",
+      "raster": "2025-11-09.tif",
+      "object_ids": [
+        9805151,
+        9805152
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9805151,
+          "datetime": 1762664632000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 9805152,
+          "datetime": 1762664632000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.17273101533263,
+      "baseline_deviation": 1.571383164657723,
+      "gap_days": 1,
+      "anomaly_score": 0.5576852465856584,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-10",
+      "valid_fraction": 0.9924877019723516,
+      "open_water_km2": 175.0419,
+      "partial_water_km2": 4.1787,
+      "valid_pixels": 531631,
+      "total_pixels": 535655,
+      "sha256": "c7b4dc2784a340d0a7965677dc96ce3301254c078906a14b08060f00bfc1ec91",
+      "raster": "2025-11-10.tif",
+      "object_ids": [
+        9814487,
+        9814697,
+        9814699
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9814487,
+          "datetime": 1762750769000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 100
+        },
+        {
+          "objectid": 9814697,
+          "datetime": 1762751561000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 9814699,
+          "datetime": 1762751561000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.20516035340717,
+      "baseline_deviation": 1.515734555233514,
+      "gap_days": 1,
+      "anomaly_score": 0.5635871408723356,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-13",
+      "valid_fraction": 0.9994231361604018,
+      "open_water_km2": 176.0868,
+      "partial_water_km2": 4.1985,
+      "valid_pixels": 535346,
+      "total_pixels": 535655,
+      "sha256": "a9ae4bc6717c5cda925861175066d3a9f2ae2b8ac44ad53ac3967cd04fa169b5",
+      "raster": "2025-11-13.tif",
+      "object_ids": [
+        9843704,
+        9843705
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9843704,
+          "datetime": 1763010589000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 23
+        },
+        {
+          "objectid": 9843705,
+          "datetime": 1763010589000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.2781033252566,
+      "baseline_deviation": 1.6087605748970275,
+      "gap_days": 3,
+      "anomaly_score": 0.5659641243567262,
+      "is_anomaly": true,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-17",
+      "valid_fraction": 0.9845161531209454,
+      "open_water_km2": 172.7703,
+      "partial_water_km2": 4.8492,
+      "valid_pixels": 527361,
+      "total_pixels": 535655,
+      "sha256": "cf79c4a9e6c029444d707de6f06dbf505c6809c59c341500f85819665141a54f",
+      "raster": "2025-11-17.tif",
+      "object_ids": [
+        9882177,
+        9882180
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9882177,
+          "datetime": 1763355827000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 9882180,
+          "datetime": 1763355827000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 4
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.3183206355662,
+      "baseline_deviation": 1.287489117960409,
+      "gap_days": 4,
+      "anomaly_score": 0.5395828130781837,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-11-18",
+      "valid_fraction": 0.9850818157209398,
+      "open_water_km2": 173.214,
+      "partial_water_km2": 3.798,
+      "valid_pixels": 527664,
+      "total_pixels": 535655,
+      "sha256": "306a6f931435306a1278ba5a848a298ac2866ef2484b42368823f878203fda6a",
+      "raster": "2025-11-18.tif",
+      "object_ids": [
+        9891854,
+        9891855
+      ],
+      "acquisitions": [
+        {
+          "objectid": 9891854,
+          "datetime": 1763442681000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 9891855,
+          "datetime": 1763442681000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 13
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 159.31816539370084,
+      "baseline_deviation": 1.3299705088672569,
+      "gap_days": 1,
+      "anomaly_score": 0.5355032358622107,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-12-11",
+      "valid_fraction": 1.0,
+      "open_water_km2": 172.9449,
+      "partial_water_km2": 3.3066,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "ebec8e77270a9b10c7444ec21c7647f457c584eb600da5bdc508a397df499e40",
+      "raster": "2025-12-11.tif",
+      "object_ids": [
+        10108984,
+        10108986
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10108984,
+          "datetime": 1765429428000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 10108986,
+          "datetime": 1765429428000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.2022869879129,
+      "baseline_deviation": 1.4110156809746623,
+      "gap_days": 23,
+      "anomaly_score": 0.511729319043769,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-12-13",
+      "valid_fraction": 0.9988201360950612,
+      "open_water_km2": 172.5921,
+      "partial_water_km2": 2.1924,
+      "valid_pixels": 535023,
+      "total_pixels": 535655,
+      "sha256": "b74663095872e4726babf823bfd13748412d811bbead71cf484a2806c89545ff",
+      "raster": "2025-12-13.tif",
+      "object_ids": [
+        10126926,
+        10126927
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10126926,
+          "datetime": 1765602679000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10126927,
+          "datetime": 1765602679000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 158.0076824880395,
+      "baseline_deviation": 1.3958747876231754,
+      "gap_days": 2,
+      "anomaly_score": 0.5188741224568625,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-12-18",
+      "valid_fraction": 0.9974479842435896,
+      "open_water_km2": 170.793,
+      "partial_water_km2": 2.331,
+      "valid_pixels": 534288,
+      "total_pixels": 535655,
+      "sha256": "82f0707c5d3a70199b0d869f02ab06bd0befc6a371ff025de04c51e363e228bd",
+      "raster": "2025-12-18.tif",
+      "object_ids": [
+        10170136,
+        10170340,
+        10170343
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10170136,
+          "datetime": 1766034603000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 10170340,
+          "datetime": 1766034751000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10170343,
+          "datetime": 1766034751000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 8
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 157.45701214506124,
+      "baseline_deviation": 1.2763875690950073,
+      "gap_days": 5,
+      "anomaly_score": 0.5089156000251515,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-12-19",
+      "valid_fraction": 0.989898348750595,
+      "open_water_km2": 169.1208,
+      "partial_water_km2": 4.4883,
+      "valid_pixels": 530244,
+      "total_pixels": 535655,
+      "sha256": "f3872274493279083d21485ee9b9f2cb81318795e8bf1efca44814a3fdae783a",
+      "raster": "2025-12-19.tif",
+      "object_ids": [
+        10179232,
+        10179234
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10179232,
+          "datetime": 1766120625000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 9
+        },
+        {
+          "objectid": 10179234,
+          "datetime": 1766120625000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 157.33613795487463,
+      "baseline_deviation": 1.1279101558879487,
+      "gap_days": 1,
+      "anomaly_score": 0.5226971291123031,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2025-12-20",
+      "valid_fraction": 0.9993409937366402,
+      "open_water_km2": 171.1647,
+      "partial_water_km2": 1.8324,
+      "valid_pixels": 535302,
+      "total_pixels": 535655,
+      "sha256": "61be7ab16f10da48c82ccc744e6470e79220deaaa81f6c7f8ef632283d620f65",
+      "raster": "2025-12-20.tif",
+      "object_ids": [
+        10187840,
+        10188041,
+        10188042
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10187840,
+          "datetime": 1766206879000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 10188041,
+          "datetime": 1766207561000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10188042,
+          "datetime": 1766207561000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 157.21176472934727,
+      "baseline_deviation": 1.3354356141868444,
+      "gap_days": 1,
+      "anomaly_score": 0.5713019014618796,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "validation"
+    },
+    {
+      "date": "2026-01-17",
+      "valid_fraction": 0.9970111358990394,
+      "open_water_km2": 165.2211,
+      "partial_water_km2": 1.5957,
+      "valid_pixels": 534054,
+      "total_pixels": 535655,
+      "sha256": "536a8714c1ed8b7d3c501ec06d84ea0077eb1397ffeefd05bbf3df2f9e16bda5",
+      "raster": "2026-01-17.tif",
+      "object_ids": [
+        10435687,
+        10435688
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10435687,
+          "datetime": 1768626701000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 10435688,
+          "datetime": 1768626701000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 152.43312711573518,
+      "baseline_deviation": 1.2239370492044144,
+      "gap_days": 28,
+      "anomaly_score": 0.4890413992557634,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-01-20",
+      "valid_fraction": 0.9813872735249367,
+      "open_water_km2": 162.8901,
+      "partial_water_km2": 5.0589,
+      "valid_pixels": 525685,
+      "total_pixels": 535655,
+      "sha256": "85ad4bec5e9720ea904b90acb8b6726b48eb1d8e065502e6ead870ba7f1e13cd",
+      "raster": "2026-01-20.tif",
+      "object_ids": [
+        10459311,
+        10459312
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10459311,
+          "datetime": 1768885418000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 20
+        },
+        {
+          "objectid": 10459312,
+          "datetime": 1768885418000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 151.80763905159017,
+      "baseline_deviation": 1.0607024798911013,
+      "gap_days": 3,
+      "anomaly_score": 0.5172622503117987,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-01-22",
+      "valid_fraction": 0.9963091915505315,
+      "open_water_km2": 163.5021,
+      "partial_water_km2": 1.9566,
+      "valid_pixels": 533678,
+      "total_pixels": 535655,
+      "sha256": "d9167159e82218c11f43d6ed85202e1cffee426b797332ae1c67080cb675db8d",
+      "raster": "2026-01-22.tif",
+      "object_ids": [
+        10475347,
+        10475349
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10475347,
+          "datetime": 1769058619000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 9
+        },
+        {
+          "objectid": 10475349,
+          "datetime": 1769058619000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 151.3812288335253,
+      "baseline_deviation": 1.160088735215892,
+      "gap_days": 2,
+      "anomaly_score": 0.5096209610577809,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-02-05",
+      "valid_fraction": 0.950283298018314,
+      "open_water_km2": 156.9168,
+      "partial_water_km2": 4.2957,
+      "valid_pixels": 509024,
+      "total_pixels": 535655,
+      "sha256": "179076de1c3faa39875c58b119321f5765717cac7e91556c721b73c5f5f4921f",
+      "raster": "2026-02-05.tif",
+      "object_ids": [
+        10593551,
+        10593552
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10593551,
+          "datetime": 1770267812000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 70
+        },
+        {
+          "objectid": 10593552,
+          "datetime": 1770267812000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 33
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 148.23106231094678,
+      "baseline_deviation": 0.8313120659165764,
+      "gap_days": 14,
+      "anomaly_score": 0.4919538300335582,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-02-06",
+      "valid_fraction": 0.9859163080714266,
+      "open_water_km2": 156.3966,
+      "partial_water_km2": 1.7505,
+      "valid_pixels": 528111,
+      "total_pixels": 535655,
+      "sha256": "64a543f0c7b0c8b30332e6fbd169f900a007a6596207eaa0bf330f42bba4f43b",
+      "raster": "2026-02-06.tif",
+      "object_ids": [
+        10602659,
+        10602660
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10602659,
+          "datetime": 1770354611000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10602660,
+          "datetime": 1770354611000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 147.99780918824698,
+      "baseline_deviation": 0.8038483766000819,
+      "gap_days": 1,
+      "anomaly_score": 0.49887296637697626,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-02-13",
+      "valid_fraction": 0.9962251822535028,
+      "open_water_km2": 155.5848,
+      "partial_water_km2": 2.5722,
+      "valid_pixels": 533633,
+      "total_pixels": 535655,
+      "sha256": "ff042ddf1968cc8b153e8d44eb999305aafe0476cc2a502fbe1722eea4ee5cd9",
+      "raster": "2026-02-13.tif",
+      "object_ids": [
+        10667668,
+        10667451,
+        10667454
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10667668,
+          "datetime": 1770958761000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 10667451,
+          "datetime": 1770959022000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10667454,
+          "datetime": 1770959022000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 16
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 146.34832861923778,
+      "baseline_deviation": 0.8840227946323993,
+      "gap_days": 7,
+      "anomaly_score": 0.4853842148590309,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-02-16",
+      "valid_fraction": 0.9861029953981574,
+      "open_water_km2": 154.4085,
+      "partial_water_km2": 1.2105,
+      "valid_pixels": 528211,
+      "total_pixels": 535655,
+      "sha256": "728c4928d76b48d453d6aafae924c18c4d2b005dbf4fa5b28685de4405d3ad5f",
+      "raster": "2026-02-16.tif",
+      "object_ids": [
+        10694974,
+        10694975
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10694974,
+          "datetime": 1771218551000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10694975,
+          "datetime": 1771218551000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 145.63629624873334,
+      "baseline_deviation": 0.839587733842966,
+      "gap_days": 3,
+      "anomaly_score": 0.4943268230313018,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-02-21",
+      "valid_fraction": 1.0,
+      "open_water_km2": 159.2352,
+      "partial_water_km2": 1.6605,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "ec9824be5bf157a7197d48f1f64574d82bd7ba180a19894a2701f99977709d2d",
+      "raster": "2026-02-21.tif",
+      "object_ids": [
+        10742210,
+        10742213,
+        10742455,
+        10742457
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10742210,
+          "datetime": 1771650210000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10742213,
+          "datetime": 1771650210000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10742455,
+          "datetime": 1771650449000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10742457,
+          "datetime": 1771650449000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 144.44977531787112,
+      "baseline_deviation": 1.415113186464915,
+      "gap_days": 5,
+      "anomaly_score": 0.544114899180127,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-01",
+      "valid_fraction": 0.999327925623769,
+      "open_water_km2": 157.3344,
+      "partial_water_km2": 2.2284,
+      "valid_pixels": 535295,
+      "total_pixels": 535655,
+      "sha256": "a2fb44c2cad848ceacd59aee588010ba05d52d782b1af2051a248bcc1081e9a1",
+      "raster": "2026-03-01.tif",
+      "object_ids": [
+        10822629,
+        10822633
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10822629,
+          "datetime": 1772341418000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 10822633,
+          "datetime": 1772341418000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 142.5713025779822,
+      "baseline_deviation": 1.4129762441125564,
+      "gap_days": 8,
+      "anomaly_score": 0.5071949398369692,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-03",
+      "valid_fraction": 0.9982936778336803,
+      "open_water_km2": 157.7853,
+      "partial_water_km2": 0.8883,
+      "valid_pixels": 534741,
+      "total_pixels": 535655,
+      "sha256": "b796d178469010d6ce17a264d5046527e707d6c90a3f17e9c6b6626ef630ab8e",
+      "raster": "2026-03-03.tif",
+      "object_ids": [
+        10843731,
+        10843733
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10843731,
+          "datetime": 1772514409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 10843733,
+          "datetime": 1772514409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 142.10900253335754,
+      "baseline_deviation": 1.500378632127202,
+      "gap_days": 2,
+      "anomaly_score": 0.5201790764120539,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-08",
+      "valid_fraction": 0.9988836097861497,
+      "open_water_km2": 157.9635,
+      "partial_water_km2": 0.7992,
+      "valid_pixels": 535057,
+      "total_pixels": 535655,
+      "sha256": "1c16421e69df6865738ea0fe960e3f8ddd22663d17dd6d5b13e942b9620357a3",
+      "raster": "2026-03-08.tif",
+      "object_ids": [
+        10898431,
+        10898432,
+        10898183
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10898431,
+          "datetime": 1772946411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 11
+        },
+        {
+          "objectid": 10898432,
+          "datetime": 1772946411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 10898183,
+          "datetime": 1772946585000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 140.97205724134338,
+      "baseline_deviation": 1.6262512049384503,
+      "gap_days": 5,
+      "anomaly_score": 0.5120641725068603,
+      "is_anomaly": false,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-09",
+      "valid_fraction": 1.0,
+      "open_water_km2": 156.9708,
+      "partial_water_km2": 2.0412,
+      "valid_pixels": 535655,
+      "total_pixels": 535655,
+      "sha256": "0739877a21c8385561236a7e06972c440d0be69297f96cc133d6a11490af0efe",
+      "raster": "2026-03-09.tif",
+      "object_ids": [
+        10910814,
+        10910820
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10910814,
+          "datetime": 1773032601000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 3
+        },
+        {
+          "objectid": 10910820,
+          "datetime": 1773032601000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 62
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 140.74843086285583,
+      "baseline_deviation": 1.5526431587333203,
+      "gap_days": 1,
+      "anomaly_score": 0.536990020725617,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-13",
+      "valid_fraction": 0.9693198047250562,
+      "open_water_km2": 153.2817,
+      "partial_water_km2": 0.6039,
+      "valid_pixels": 519221,
+      "total_pixels": 535655,
+      "sha256": "06dbb1b18448c002a142706fd7d2b0f82823b3b65d0c2966a04f1bc1489fff94",
+      "raster": "2026-03-13.tif",
+      "object_ids": [
+        10959809,
+        10959810
+      ],
+      "acquisitions": [
+        {
+          "objectid": 10959809,
+          "datetime": 1773378409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        },
+        {
+          "objectid": 10959810,
+          "datetime": 1773378409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 139.8686760627404,
+      "baseline_deviation": 1.2837606935246066,
+      "gap_days": 4,
+      "anomaly_score": 0.5089603640312074,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-03-23",
+      "valid_fraction": 0.9958518076000411,
+      "open_water_km2": 154.71,
+      "partial_water_km2": 0.7083,
+      "valid_pixels": 533433,
+      "total_pixels": 535655,
+      "sha256": "7e151ea46d1c356bc4dcb8afa0a6a32fdc0cbf0b4ce8ff4c2b17ca050bcc1273",
+      "raster": "2026-03-23.tif",
+      "object_ids": [
+        11088758,
+        11088760
+      ],
+      "acquisitions": [
+        {
+          "objectid": 11088758,
+          "datetime": 1774242409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 7
+        },
+        {
+          "objectid": 11088760,
+          "datetime": 1774242409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 1
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 137.7949290776422,
+      "baseline_deviation": 1.6189416555041598,
+      "gap_days": 10,
+      "anomaly_score": 0.4979094744092528,
+      "is_anomaly": false,
+      "baseline_alert": true,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-04-02",
+      "valid_fraction": 0.9659575659706341,
+      "open_water_km2": 147.0906,
+      "partial_water_km2": 1.836,
+      "valid_pixels": 517420,
+      "total_pixels": 535655,
+      "sha256": "c49be3ae5efbd7ce62a1fd65e81622849b0535cf8d1c410e67b030f9b01b5119",
+      "raster": "2026-04-02.tif",
+      "object_ids": [
+        11212683,
+        11212687,
+        11213050,
+        11213055
+      ],
+      "acquisitions": [
+        {
+          "objectid": 11212683,
+          "datetime": 1775106203000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        },
+        {
+          "objectid": 11212687,
+          "datetime": 1775106203000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 52
+        },
+        {
+          "objectid": 11213050,
+          "datetime": 1775106409000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 51
+        },
+        {
+          "objectid": 11213055,
+          "datetime": 1775106409000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.94897741739055,
+      "baseline_deviation": 1.0663648406611574,
+      "gap_days": 10,
+      "anomaly_score": 0.4692169388827242,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-04-07",
+      "valid_fraction": 0.994688745554508,
+      "open_water_km2": 150.8652,
+      "partial_water_km2": 0.5805,
+      "valid_pixels": 532810,
+      "total_pixels": 535655,
+      "sha256": "6181bbd570279058f887836db624d33e9e3a9f83d53dd4edf1eaaff3b31254dc",
+      "raster": "2026-04-07.tif",
+      "object_ids": [
+        11282721,
+        11282724
+      ],
+      "acquisitions": [
+        {
+          "objectid": 11282721,
+          "datetime": 1775538411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        },
+        {
+          "objectid": 11282724,
+          "datetime": 1775538411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 0
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 135.12876164253763,
+      "baseline_deviation": 1.506134717560977,
+      "gap_days": 5,
+      "anomaly_score": 0.515521066384595,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-04-17",
+      "valid_fraction": 0.994264965322829,
+      "open_water_km2": 148.0275,
+      "partial_water_km2": 0.8829,
+      "valid_pixels": 532583,
+      "total_pixels": 535655,
+      "sha256": "fa66bac442626f70b21adac73662feb8e3678f1618aaf6f7aca4c59b39988442",
+      "raster": "2026-04-17.tif",
+      "object_ids": [
+        11430620,
+        11430621,
+        11430381
+      ],
+      "acquisitions": [
+        {
+          "objectid": 11430620,
+          "datetime": 1776402411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 2
+        },
+        {
+          "objectid": 11430621,
+          "datetime": 1776402411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 8
+        },
+        {
+          "objectid": 11430381,
+          "datetime": 1776402554000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 13
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.72412679530126,
+      "baseline_deviation": 1.3689760333609666,
+      "gap_days": 10,
+      "anomaly_score": 0.476151172703385,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-05-17",
+      "valid_fraction": 0.9711605417666221,
+      "open_water_km2": 115.8588,
+      "partial_water_km2": 24.4566,
+      "valid_pixels": 520207,
+      "total_pixels": 535655,
+      "sha256": "05e5a1c1a69f763375eed2950dc16fbdef2d00eda591dab1457d64887eacec3c",
+      "raster": "2026-05-17.tif",
+      "object_ids": [
+        11854162,
+        11854164
+      ],
+      "acquisitions": [
+        {
+          "objectid": 11854162,
+          "datetime": 1778994411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 65
+        },
+        {
+          "objectid": 11854164,
+          "datetime": 1778994411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 14
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 131.71157785871065,
+      "baseline_deviation": -1.5172695727215595,
+      "gap_days": 30,
+      "anomaly_score": 0.642792014795383,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "test"
+    },
+    {
+      "date": "2026-06-06",
+      "valid_fraction": 0.9964286714396393,
+      "open_water_km2": 139.5414,
+      "partial_water_km2": 4.6917,
+      "valid_pixels": 533742,
+      "total_pixels": 535655,
+      "sha256": "4f39629745f2c062a939a389720ff23dbbd00b9422de56a2d704359d6af52d8c",
+      "raster": "2026-06-06.tif",
+      "object_ids": [
+        12118633,
+        12118635
+      ],
+      "acquisitions": [
+        {
+          "objectid": 12118633,
+          "datetime": 1780722411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 3
+        },
+        {
+          "objectid": 12118635,
+          "datetime": 1780722411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 8
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 132.37316492048498,
+      "baseline_deviation": 0.6860718716428192,
+      "gap_days": 20,
+      "anomaly_score": 0.5700773054366157,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    },
+    {
+      "date": "2026-06-16",
+      "valid_fraction": 0.9591602804043647,
+      "open_water_km2": 123.1353,
+      "partial_water_km2": 5.2254,
+      "valid_pixels": 513779,
+      "total_pixels": 535655,
+      "sha256": "96f98d435d5396b2b6cf6c7a2899e2f52110d765379cb3a0410c2823360ff1e5",
+      "raster": "2026-06-16.tif",
+      "object_ids": [
+        12260260,
+        12260261
+      ],
+      "acquisitions": [
+        {
+          "objectid": 12260260,
+          "datetime": 1781586411000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 23
+        },
+        {
+          "objectid": 12260261,
+          "datetime": 1781586411000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 14
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 133.29358322544866,
+      "baseline_deviation": -0.9722494181417007,
+      "gap_days": 10,
+      "anomaly_score": 0.5924266754703171,
+      "is_anomaly": true,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "test"
+    },
+    {
+      "date": "2026-07-15",
+      "valid_fraction": 0.9553070539806405,
+      "open_water_km2": 134.6481,
+      "partial_water_km2": 5.337,
+      "valid_pixels": 511715,
+      "total_pixels": 535655,
+      "sha256": "0c8fbbc7a70ae9b1cbd70502ff01b929e77bc1aef5bc7b3fa3e4cb7ced919ba3",
+      "raster": "2026-07-15.tif",
+      "object_ids": [
+        12552824,
+        12552825
+      ],
+      "acquisitions": [
+        {
+          "objectid": 12552824,
+          "datetime": 1784091774000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 14
+        },
+        {
+          "objectid": 12552825,
+          "datetime": 1784091774000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 5
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 137.85925568048185,
+      "baseline_deviation": -0.30733975147390197,
+      "gap_days": 29,
+      "anomaly_score": 0.49624520888908924,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_loss",
+      "split": "test"
+    },
+    {
+      "date": "2026-09-17",
+      "valid_fraction": 0.9871540450476519,
+      "open_water_km2": 155.0718,
+      "partial_water_km2": 1.6623,
+      "valid_pixels": 528774,
+      "total_pixels": 535655,
+      "sha256": "9643e384393a84b362a18d97c2d7add9bb60831793204e1e569546aec975da5a",
+      "raster": "2026-09-17.tif",
+      "object_ids": [
+        13519284,
+        13519287
+      ],
+      "acquisitions": [
+        {
+          "objectid": 13519284,
+          "datetime": 1789621404000,
+          "tileid": "T44QKD",
+          "cloud_coverage": 6
+        },
+        {
+          "objectid": 13519287,
+          "datetime": 1789621404000,
+          "tileid": "T44QLD",
+          "cloud_coverage": 19
+        }
+      ],
+      "source": "https://gis.earthdata.nasa.gov/portal/rest/services/C2617126679-POCLOUD/OPERA_L3_DSWX-HLS_V1_B01_WTR/ImageServer",
+      "epsg": 32644,
+      "bounds": [
+        299220,
+        1813920,
+        320790,
+        1836270
+      ],
+      "pixel_size_m": 30,
+      "expected_km2": 152.2941457019595,
+      "baseline_deviation": 0.26584932858567584,
+      "gap_days": 64,
+      "anomaly_score": 0.44097626294927433,
+      "is_anomaly": false,
+      "baseline_alert": false,
+      "direction": "water_expansion",
+      "split": "test"
+    }
+  ],
+  "provenance": "Real NASA OPERA DSWx-HLS observations; cached locally."
+}
