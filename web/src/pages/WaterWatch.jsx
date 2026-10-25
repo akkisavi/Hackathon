@@ -4,6 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { CHANGE_BASE, downloadJson } from '../lib/changeApi.js';
 import { auth } from '../lib/auth.js';
 import '../water.css';
+import SatellitePreview from '../components/SatellitePreview.jsx';
 
 async function request(path, signal) {
   const token=auth.getToken();
@@ -95,8 +96,9 @@ export default function WaterWatch(){
       {assessment?.model_status==='experimental'&&<div className="ww-error">Experimental model · limited training history · readiness gate not met</div>}<div className="ww-score"><span>Anomaly score</span><strong>{assessment?.anomaly_score?.toFixed(3)||'Unavailable'}</strong><small>Alert threshold {data.threshold?.toFixed(3)||'not trained'}</small></div>
       <h3>Measured change</h3>{!assessment?<p>Loading measurements…</p>:<p>Since {assessment?.previous_date||'first observation'}: <b>{assessment?.gained_km2?.toFixed(2)||'0'} km²</b> gained; <b>{assessment?.lost_km2?.toFixed(2)||'0'} km²</b> lost on comparable pixels.</p>}
       {!!assessment?.regions.features.length&&<details><summary>Inspect changed regions</summary>{assessment.regions.features.map((f,i)=><button key={`${f.properties.id}-${i}`} onClick={()=>{setSelectedRegion(f.properties.id);setView('map')}} aria-pressed={selectedRegion===f.properties.id}>{f.properties.id} · {(f.properties.component_pixels*.0009).toFixed(3)} km²</button>)}</details>}
-      {image&&<figure><img src={image} alt={`NASA classified water extent on ${row.date}`}/><figcaption>Blue: open water · Teal: partial water · Dark: invalid observation</figcaption></figure>}
+      {image&&<figure><img src={image} alt={`NASA classified water extent on ${row.date}`}/><figcaption>NASA classification · Blue: open water · Teal: partial water · Tan: non-water · Dark: invalid observation</figcaption></figure>}
       <h3>Possible explanation</h3><p>{assessment?.possible_explanation||'Loading evidence…'}</p><h3>Next verification</h3><p>{assessment?.next_action}</p>
+      <SatellitePreview bbox={site?.bbox}/>
       <button disabled={!assessment} onClick={()=>downloadJson(assessment,`orbit-water-${siteId}-${row.date}.json`)}>↓ Export assessment JSON</button>
       <details><summary>Model and data limits</summary>{data.evaluation.limitations.map(l=><p key={l}>{l}</p>)}<p>{data.version} · {rows.length} quality-filtered observations · {data.trained_at}</p><p>Historical training/validation scores are retrospective. No flood forecast is produced.</p></details></>}
     </section></div></div>;
