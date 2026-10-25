@@ -1,0 +1,41 @@
+[
+  {
+    "id": "hirakud",
+    "name": "Hirakud Reservoir",
+    "state": "Odisha",
+    "bbox": [
+      83.65,
+      21.55,
+      83.9,
+      21.8
+    ],
+    "epsg": 32644,
+    "study_area_note": "Fixed reservoir segment; not the complete reservoir boundary."
+  },
+  {
+    "id": "nagarjuna-sagar",
+    "name": "Nagarjuna Sagar",
+    "state": "Telangana / Andhra Pradesh",
+    "bbox": [
+      79.12,
+      16.4,
+      79.32,
+      16.6
+    ],
+    "epsg": 32644,
+    "study_area_note": "Fixed reservoir segment; not the complete reservoir boundary."
+  },
+  {
+    "id": "sardar-sarovar",
+    "name": "Sardar Sarovar",
+    "state": "Gujarat / Madhya Pradesh",
+    "bbox": [
+      73.72,
+      21.8,
+      73.97,
+      22.05
+    ],
+    "epsg": 32643,
+    "study_area_note": "Fixed reservoir segment; not the complete reservoir boundary."
+  }
+]

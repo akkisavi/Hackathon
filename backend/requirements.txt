@@ -33,3 +33,7 @@ httpx==0.28.1
 opencv-python-headless==4.11.0.86
 scikit-image==0.25.2
 Pillow==11.3.0
+
+# Water observation analysis
+rasterio==1.4.3
+pyproj==3.7.2

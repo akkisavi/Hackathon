@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.change import build_router, loopback_only
+from app.api.v1.water import build_router as build_water_router
 from app.core.config import get_settings
 
 settings = get_settings()
@@ -20,6 +21,7 @@ app.add_middleware(
 
 if settings.orbit_demo:
     app.include_router(build_router(loopback_only, demo=True), prefix=settings.api_v1_prefix)
+    app.include_router(build_water_router(loopback_only), prefix=settings.api_v1_prefix)
 else:
     from app.api.v1 import alerts, export, hotspots, infra, ingest, query, sources, auth, admin
     from app.api.dependencies import get_current_user_or_api_key
@@ -27,6 +29,7 @@ else:
     for module in (auth, admin, hotspots, sources, infra, ingest, query, alerts, export):
         app.include_router(module.router, prefix=settings.api_v1_prefix)
     app.include_router(build_router(get_current_user_or_api_key), prefix=settings.api_v1_prefix)
+    app.include_router(build_water_router(get_current_user_or_api_key), prefix=settings.api_v1_prefix)
 
 
 @app.get("/health")
