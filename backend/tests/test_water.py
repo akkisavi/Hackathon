@@ -82,3 +82,17 @@ def test_polygons_are_geographic_and_mask_counts_are_exact():
     assert features[0]['properties']['component_pixels']==36
     lon,lat=features[0]['geometry']['coordinates'][0][0]
     assert 80<lon<85 and 20<lat<23
+
+
+def test_experimental_model_keeps_readiness_gate():
+    import importlib.util
+    from pathlib import Path
+    spec=importlib.util.spec_from_file_location('train_water',Path(__file__).resolve().parents[2]/'ml/scripts/train_water.py')
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    rows=[{'date':(date(2023,4,1)+timedelta(days=i*15)).isoformat(),'open_water_km2':100+np.sin(i)*10,'valid_fraction':1} for i in range(92)]
+    result,strict=module.train_site({'observations':rows})
+    assert result is None
+    result,report=module.train_site({'observations':rows},allow_experimental=True)
+    assert result is not None and report['status']=='experimental'
+    assert report['readiness_gate_passed'] is False
+    assert 'Fewer than 80' in report['limitations'][0]

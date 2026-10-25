@@ -1,5 +1,6 @@
 """Train/evaluate per-reservoir anomaly models; no database dependency."""
 from datetime import date, datetime, timezone
+import argparse
 import json
 from pathlib import Path
 import sys
@@ -14,14 +15,16 @@ sys.path.insert(0,str(ROOT/'backend'))
 from app.processing.water import VERSION, FEATURES, seasonal_fit, feature_rows
 
 
-def train_site(manifest):
+def train_site(manifest, allow_experimental=False):
     rows=[r for r in manifest['observations'] if r['valid_fraction']>=.95]
     train=[r for r in rows if r['date']<'2025-01-01']
     val=[r for r in rows if '2025-01-01'<=r['date']<'2026-01-01']
     test=[r for r in rows if r['date']>='2026-01-01']
     spans=(date.fromisoformat(train[-1]['date'])-date.fromisoformat(train[0]['date'])).days if train else 0
     counts={'train':len(train),'validation':len(val),'test':len(test),'training_span_days':spans,'excluded_quality':len(manifest['observations'])-len(rows)}
-    if len(train)<80 or spans<548 or len(val)<20 or len(test)<20:
+    ready=len(train)>=80 and spans>=548 and len(val)>=20 and len(test)>=20
+    experimental=allow_experimental and len(train)>=20 and spans>=548 and len(val)>=20 and len(test)>=20
+    if not ready and not experimental:
         return None, {'status':'insufficient_history',**counts,'reason':'Requires 80 training observations over 18 months, 20 validation and 20 test observations.'}
     baseline=seasonal_fit(train)
     featured=feature_rows(rows,baseline)
@@ -41,12 +44,12 @@ def train_site(manifest):
     model_alert=scores[te]>threshold; base_alert=deviation[te]>base_threshold
     # Sensitivity probe is artificial, never a claim of event accuracy.
     probe=x[te].copy(); probe[:,0]-=5; probe[:,1]*=.7; probe[:,2]-=.3
-    report={'status':'trained',**counts,'model':'IsolationForest','features':FEATURES,'threshold':threshold,
+    report={'status':'trained' if ready else 'experimental','readiness_gate_passed':ready,**counts,'model':'IsolationForest','features':FEATURES,'threshold':threshold,
             'baseline_threshold':base_threshold,'test_alert_fraction':float(model_alert.mean()),
             'test_baseline_alert_fraction':float(base_alert.mean()),'test_baseline_agreement':float((model_alert==base_alert).mean()),
             'artificial_loss_probe_alert_fraction':float((-model.score_samples(probe)>threshold).mean()),
             'event_precision':None,'event_recall':None,'warning_lead_time':None,
-            'limitations':['No independent event labels: event accuracy and warning lead time are unknown.',
+            'limitations':(['Fewer than 80 training dates: experimental prototype; readiness gate not met.'] if not ready else [])+['No independent event labels: event accuracy and warning lead time are unknown.',
                           'Anomaly scores are not flood probabilities. Surface area is not storage volume.',
                           'Fixed study rectangles may include other water bodies; these are not surveyed reservoir boundaries.',
                           'Seasonal fit has fewer than two full annual cycles in the training period.'],
@@ -54,21 +57,24 @@ def train_site(manifest):
     artifact={'version':VERSION,'model':model,'baseline':baseline,'threshold':threshold,'features':FEATURES,
               'sklearn_version':sklearn.__version__,'trained_at':datetime.now(timezone.utc).isoformat(),
               'manifest_sha256':__import__('hashlib').sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest()}
+    artifact['model_id']=f"{VERSION}-{artifact['manifest_sha256'][:12]}"
     return (artifact,featured),report
 
 
 def main():
+    parser=argparse.ArgumentParser(); parser.add_argument('--experimental',action='store_true',help='Permit labelled limited-history prototype; does not pass the readiness gate.')
+    args=parser.parse_args()
     out=ROOT/'ml/models/water'; out.mkdir(parents=True,exist_ok=True)
     reports={}
     for site in json.loads((ROOT/'ml/water/sites.json').read_text()):
         path=ROOT/'data/water'/site['id']/'manifest.json'
         if not path.exists(): reports[site['id']]={'status':'not_collected'}; continue
-        manifest=json.loads(path.read_text()); result,report=train_site(manifest)
+        manifest=json.loads(path.read_text()); result,report=train_site(manifest,allow_experimental=args.experimental)
         reports[site['id']]=report
         if result:
             artifact,rows=result
             joblib.dump(artifact,out/f"{site['id']}.joblib")
-            bundle={'site':site,'version':VERSION,'source':manifest['observations'][0]['source'],
+            bundle={'site':site,'version':VERSION,'model_id':artifact['model_id'],'source':manifest['observations'][0]['source'],
                     'trained_at':artifact['trained_at'],'threshold':artifact['threshold'],'evaluation':report,
                     'observations':rows,'provenance':'Real NASA OPERA DSWx-HLS observations; cached locally.'}
             (out/f"{site['id']}.json").write_text(json.dumps(bundle,indent=2))

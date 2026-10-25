@@ -171,3 +171,7 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 4. **Toggle "Unregistered only"** — 27 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
 
 Before presenting: `python backend/scripts/demo_snapshot.py load` to guarantee the DB state.
+
+## India Water Anomaly Watch
+
+NASA OPERA observations, reproducible model training, dated replay, and evidence-linked water-change inspection: [setup and model card](docs/water-model.md). Open `/orbit/water` in the local demo.

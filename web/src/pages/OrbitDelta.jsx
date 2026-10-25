@@ -171,6 +171,7 @@ export default function OrbitDelta() {
     <header className="od-header">
       <a className="od-brand" href="/orbit"><span className="od-brand-mark"><Icon name="orbit" size={27}/></span><span>ORBIT<span className="od-brand-delta">DELTA</span><small>EARTH CHANGE INTELLIGENCE</small></span></a>
       <div className="od-header-center"><span className="od-live-dot"/>{upload ? "IMAGE INSPECTION" : "SCENARIO WORKSPACE"}<span className="od-separator">/</span>ORCA · TRACK 05</div>
+      <Link className="od-thermal-link" to="/orbit/water">Water Anomaly Watch ↗</Link>
       <Link className="od-thermal-link" to={isLoopback ? "/orbit/thermal" : "/"}>Thermal monitoring <Icon name="arrow" size={15}/></Link>
     </header>
 

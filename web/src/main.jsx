@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App.jsx";
 import OrbitDelta from "./pages/OrbitDelta.jsx";
+import WaterWatch from "./pages/WaterWatch.jsx";
 import ThermalSnapshot from "./pages/ThermalSnapshot.jsx";
 import { isLoopback } from "./lib/changeApi.js";
 import Login from "./pages/Login.jsx";
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/orbit/water" element={isLoopback ? <WaterWatch /> : <ProtectedRoute><WaterWatch /></ProtectedRoute>} />
         <Route path="/orbit" element={isLoopback ? <OrbitDelta /> : <ProtectedRoute><OrbitDelta /></ProtectedRoute>} />
         <Route path="/orbit/thermal" element={isLoopback ? <ThermalSnapshot /> : <ProtectedRoute><ThermalSnapshot /></ProtectedRoute>} />
         <Route

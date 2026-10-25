@@ -7,7 +7,7 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import Response
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image
 
 from app.processing.water import change_masks, feature_rows
 
@@ -32,7 +32,12 @@ def bundle(site_id):
 @lru_cache(maxsize=3)
 def load_model(site_id, modified):
     import joblib
-    return joblib.load(MODEL_DIR/f'{site_id}.joblib')
+    import sklearn
+    from app.processing.water import VERSION, FEATURES
+    artifact=joblib.load(MODEL_DIR/f'{site_id}.joblib')
+    if artifact['version']!=VERSION or artifact['features']!=FEATURES or artifact['sklearn_version']!=sklearn.__version__:
+        raise HTTPException(409,'Model environment changed. Retrain with the current dependencies.')
+    return artifact
 
 
 def summary(row):
@@ -88,22 +93,23 @@ def build_router(access_dependency):
     def observations(site_id:str,principal=Depends(access_dependency)):
         get_site(site_id); data=bundle(site_id)
         return {'site':data['site'],'version':data['version'],'threshold':data['threshold'],
-                'provenance':data['provenance'],'trained_at':data['trained_at'],
+                'provenance':data['provenance'],'trained_at':data['trained_at'],'model_id':data.get('model_id'),
                 'evaluation':data['evaluation'],'observations':[summary(r) for r in data['observations']]}
 
     @router.get('/sites/{site_id}/assessment')
     def assessment(site_id:str,date:str=Query(...,pattern=r'^\d{4}-\d{2}-\d{2}$'),principal=Depends(access_dependency)):
         get_site(site_id); data=bundle(site_id); rows=selected_rows(data,date); current=rows[-1]
         artifact_path=MODEL_DIR/f'{site_id}.joblib'
-        trained=data['evaluation']['status']=='trained'
+        trained=data['evaluation']['status'] in {'trained','experimental'}
         if trained and not artifact_path.exists(): raise HTTPException(409,'Trained model artifact unavailable.')
         score=None
         if trained:
             artifact=load_model(site_id,artifact_path.stat().st_mtime_ns)
+            if artifact.get('model_id')!=data.get('model_id'): raise HTTPException(409,'Model bundle changed. Reload the observations.')
             feature=feature_rows(rows,artifact['baseline'])[-1]
             score=float(-artifact['model'].score_samples([feature['features']])[0])
         result={'site_id':site_id,'version':data['version'],'observation':summary(current),
-                'model_status':data['evaluation']['status'],
+                'model_status':data['evaluation']['status'],'model_id':data.get('model_id'),'trained_at':data['trained_at'],
                 'anomaly_score':score,'threshold':data['threshold'],'is_anomaly':bool(trained and score>data['threshold']),
                 'possible_explanation':'Cause uncertain. Rainfall, reservoir operations, and withdrawals require independent verification.',
                 'next_action':'Inspect shoreline changes and compare with rainfall, gauge and reservoir-operation records.',
