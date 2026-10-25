@@ -155,3 +155,30 @@ def test_existing_thermal_snapshot_available_without_database(client):
     assert len(snapshot["features"]) == 4984
     assert snapshot["features"][0]["properties"]["predicted_class"]
     assert "Not live" in snapshot["provenance"]
+
+
+def test_missing_ai_key_returns_safe_actionable_notice(monkeypatch):
+    monkeypatch.setattr(change_report, "get_settings", lambda: SimpleNamespace(llm_api_key=""))
+    monkeypatch.setattr(change_report, "get_client", lambda: (_ for _ in ()).throw(RuntimeError("credential-secret")))
+    result = change_report.generate_change_report(*pair(), analyze_pair(*pair()))
+    assert result["fallback_reason"] == "not_configured"
+    assert "LLM_API_KEY" in result["report_notice"]
+    assert "credential-secret" not in json.dumps(result)
+
+
+def test_invalid_ai_response_explains_fallback(monkeypatch):
+    fake = SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content="invalid json"))])
+    provider = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=lambda **kw: fake)))
+    monkeypatch.setattr(change_report, "get_client", lambda: SimpleNamespace(with_options=lambda **kw: provider))
+    result = change_report.generate_change_report(*pair(), analyze_pair(*pair()))
+    assert result["fallback_reason"] == "invalid_response"
+    assert "local assessment" in result["report_notice"].lower()
+
+
+def test_local_report_contains_region_location_and_percentage():
+    measurement = analyze_pair(*pair())
+    report = change_report.local_report(measurement)
+    observation = report["evidence"][0]["observation"]
+    region = measurement["regions"][0]
+    assert f"{region['pixels'] / (512 * 512) * 100:.2f}%" in observation
+    assert "bounding box" in observation

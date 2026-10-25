@@ -2,6 +2,7 @@
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
+from openai import APIStatusError, APITimeoutError, APIConnectionError
 
 from app.ai.llm_client import get_client
 from app.core.config import get_settings
@@ -26,7 +27,12 @@ def local_report(measurement):
     regions = measurement["regions"]
     return ChangeReport(
         hypothesis="uncertain" if regions else "no_change",
-        evidence=[Evidence(region_id=r["id"], observation=f"{r['pixels']:,} pixels show retained structural change.")
+        evidence=[Evidence(region_id=r["id"], observation=(
+                    f"{r['pixels']:,} changed pixels ({r['pixels'] / (measurement['width'] * measurement['height']) * 100:.2f}% of the image). "
+                    f"Pixel bounding box: x={r['bbox_xywh'][0]}, y={r['bbox_xywh'][1]}, "
+                    f"width={r['bbox_xywh'][2]}, height={r['bbox_xywh'][3]}. "
+                    "Compare this region in both images; structural difference alone does not identify its cause."
+                ))
                   for r in regions[:100]],
         next_action="Review marked regions against weather, land-use records and later imagery."
                     if regions else "No retained changes at this threshold. Review smaller changes if relevant.",
@@ -67,7 +73,29 @@ def generate_change_report(before, after, measurement):
         if (report.hypothesis == "no_change" or not report.evidence
                 or any(e.region_id not in ids for e in report.evidence)):
             raise ValueError("Report did not reference measured regions.")
-        return {"report": report.model_dump(), "report_mode": "gemini"}
-    except Exception:
-        # Deliberately omit provider exception text: it may contain credentials or URLs.
-        return {"report": fallback, "report_mode": "local_fallback"}
+        return {"report": report.model_dump(), "report_mode": "gemini", "report_notice": None, "fallback_reason": None}
+    except Exception as exc:
+        # Return allowlisted diagnostics only. Provider exception strings may contain secrets.
+        if isinstance(exc, ValueError):
+            reason = "invalid_response"
+            notice = "The AI response did not pass evidence validation. Showing the local assessment."
+        elif isinstance(exc, APIStatusError):
+            if exc.status_code in (401, 403):
+                reason = "authentication_failed"
+                notice = "The AI provider rejected the configured credentials or access. Showing the local assessment."
+            elif exc.status_code == 429:
+                reason = "rate_limited"
+                notice = "The AI provider's quota or rate limit was reached. Showing the local assessment."
+            else:
+                reason = "provider_error"
+                notice = "The AI provider could not complete this request. Showing the local assessment."
+        elif isinstance(exc, (APITimeoutError, APIConnectionError)):
+            reason = "connection_failed"
+            notice = "The AI provider could not be reached in time. Showing the local assessment."
+        elif not get_settings().llm_api_key.strip():
+            reason = "not_configured"
+            notice = "AI assessment is not configured. Showing the local assessment. To enable AI locally, set LLM_API_KEY in the project root .env file and restart the backend."
+        else:
+            reason = "provider_error"
+            notice = "The AI assessment could not be completed. Showing the local assessment."
+        return {"report": fallback, "report_mode": "local_fallback", "fallback_reason": reason, "report_notice": notice}

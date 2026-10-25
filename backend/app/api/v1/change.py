@@ -75,7 +75,7 @@ def build_router(access_dependency, demo=False, local_reports=False):
                     or monotonic() - saved["created"] > TTL_SECONDS):
                 raise HTTPException(404, "Analysis expired or unavailable. Analyze the pair again.")
         if local_reports:
-            return {"analysis_id": body.analysis_id, "report": local_report(saved["measurement"]), "report_mode": "local"}
+            return {"analysis_id": body.analysis_id, "report": local_report(saved["measurement"]), "report_mode": "local", "report_notice": "Public showcase mode uses a local assessment based on measured regions."}
         return {"analysis_id": body.analysis_id,
                 **generate_change_report(*saved["images"], saved["measurement"])}
 
