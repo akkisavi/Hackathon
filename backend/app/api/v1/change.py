@@ -41,7 +41,7 @@ class ReportRequest(BaseModel):
     analysis_id: str
 
 
-def build_router(access_dependency, demo=False):
+def build_router(access_dependency, demo=False, local_reports=False):
     router = APIRouter(prefix="/change", tags=["change"])
 
     @router.post("/analyze")
@@ -74,6 +74,8 @@ def build_router(access_dependency, demo=False):
             if (not saved or saved["owner"] != _owner(principal)
                     or monotonic() - saved["created"] > TTL_SECONDS):
                 raise HTTPException(404, "Analysis expired or unavailable. Analyze the pair again.")
+        if local_reports:
+            return {"analysis_id": body.analysis_id, "report": local_report(saved["measurement"]), "report_mode": "local"}
         return {"analysis_id": body.analysis_id,
                 **generate_change_report(*saved["images"], saved["measurement"])}
 

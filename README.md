@@ -175,3 +175,7 @@ Before presenting: `python backend/scripts/demo_snapshot.py load` to guarantee t
 ## India Water Anomaly Watch
 
 NASA OPERA observations, reproducible model training, dated replay, and evidence-linked water-change inspection: [setup and model card](docs/water-model.md). Open `/orbit/water` in the local demo.
+
+## Render public showcase
+
+See [Render deployment instructions](docs/render.md) for the self-contained ORBIT DELTA build, bundled water evidence, public-service limits and verification.

@@ -1,8 +1,11 @@
 import { auth } from "./auth.js";
 
-export const CHANGE_BASE = (import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000/api/v1").replace(/\/$/, "");
+export const CHANGE_BASE = (import.meta.env.VITE_API_BASE_URL ?? "/api/v1").replace(/\/$/, "");
 export const API_ORIGIN = new URL(CHANGE_BASE, window.location.origin).origin;
 export const isLoopback = ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+
+export const isShowcase = import.meta.env.VITE_ORBIT_SHOWCASE === "true";
+export const hasDemoAccess = isLoopback || isShowcase;
 
 export function imageUrl(path) {
   return new URL(path, API_ORIGIN).href;
@@ -18,7 +21,7 @@ export async function changeRequest(path, options = {}) {
     });
   } catch (error) {
     if (error.name === "AbortError") throw error;
-    throw new Error("Cannot reach the analysis server. Start the local server and try again.");
+    throw new Error("Cannot reach the analysis server. Please retry shortly.");
   }
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));

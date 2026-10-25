@@ -33,6 +33,9 @@ class Settings(BaseSettings):
     project_name: str = "SIH26162 — Industrial Fire & Thermal Source Detection"
     orbit_demo: bool = False  # Explicit loopback-only, database-free fixture application.
 
+    orbit_showcase: bool = False
+    serve_frontend: bool = False
+
     # Auth
     jwt_secret: str = "super_secret_jwt_key_default"
     jwt_expire_minutes: int = 60

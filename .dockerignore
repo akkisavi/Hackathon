@@ -1,0 +1,12 @@
+.git
+.env
+.env.*
+.venv
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+web/dist
+data/water
+mobile
+docs
+*.rar

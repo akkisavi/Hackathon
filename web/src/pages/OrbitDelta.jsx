@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import ChangeMap from "../components/ChangeMap.jsx";
-import { changeRequest, downloadJson, downloadImage, imageUrl, isLoopback } from "../lib/changeApi.js";
+import { changeRequest, downloadJson, downloadImage, imageUrl, hasDemoAccess } from "../lib/changeApi.js";
 import "../orbit.css";
 
 const labels = { natural_like: "Natural-like change", human_like: "Human-like change", uncertain: "Cause uncertain", no_change: "No retained change" };
@@ -66,10 +66,10 @@ export default function OrbitDelta() {
   }, []);
 
   useEffect(() => {
-    if (!isLoopback) return;
+    if (!hasDemoAccess) return;
     const controller = new AbortController();
     changeRequest("/fixtures", { signal: controller.signal }).then(setFixtures).catch(e => {
-      if (e.name !== "AbortError") setFixtureError("Fixture mode is unavailable. Start the local demo server, or upload a pair with the authenticated API.");
+      if (e.name !== "AbortError") setFixtureError("Sample scenarios are unavailable. Please retry or upload an aligned image pair.");
     });
     return () => controller.abort();
   }, []);
@@ -172,7 +172,7 @@ export default function OrbitDelta() {
       <a className="od-brand" href="/orbit"><span className="od-brand-mark"><Icon name="orbit" size={27}/></span><span>ORBIT<span className="od-brand-delta">DELTA</span><small>EARTH CHANGE INTELLIGENCE</small></span></a>
       <div className="od-header-center"><span className="od-live-dot"/>{upload ? "IMAGE INSPECTION" : "SCENARIO WORKSPACE"}<span className="od-separator">/</span>ORCA · TRACK 05</div>
       <Link className="od-thermal-link" to="/orbit/water">Water Anomaly Watch ↗</Link>
-      <Link className="od-thermal-link" to={isLoopback ? "/orbit/thermal" : "/"}>Thermal monitoring <Icon name="arrow" size={15}/></Link>
+      <Link className="od-thermal-link" to={hasDemoAccess ? "/orbit/thermal" : "/"}>Thermal monitoring <Icon name="arrow" size={15}/></Link>
     </header>
 
     <div className="od-layout">
