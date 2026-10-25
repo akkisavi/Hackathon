@@ -1,5 +1,9 @@
 # SIH26162 — AI-Based Detection & Classification of Industrial Fires and Persistent Thermal Sources
 
+## ORBIT DELTA — ORCA Track 05 extension
+
+Image comparison, local change polygons, replay, evidence-linked Gemini assessments and exports are available at `/orbit`. Run the database-free localhost demo with `.venv/bin/python run_orbit.py` after following [the ORBIT setup and demo guide](docs/orbit-delta.md). The original application remains available in normal mode.
+
 See `Plan.md` for the full winning plan (architecture, phases, team roles, cut list).
 This README is the **Phase 0 setup checklist** — everyone runs their part in parallel, nobody waits.
 
@@ -167,3 +171,11 @@ Set `EXPO_PUBLIC_API_BASE_URL` to the dev machine LAN IP (Android emulator: `10.
 4. **Toggle "Unregistered only"** — 27 sources. Click one: "persistent, stable, 8 months, no facility on record. That's the one you investigate." Export to KML for the evaluator.
 
 Before presenting: `python backend/scripts/demo_snapshot.py load` to guarantee the DB state.
+
+## India Water Anomaly Watch
+
+NASA OPERA observations, reproducible model training, dated replay, and evidence-linked water-change inspection: [setup and model card](docs/water-model.md). Open `/orbit/water` in the local demo.
+
+## Render public showcase
+
+See [Render deployment instructions](docs/render.md) for the self-contained ORBIT DELTA build, bundled water evidence, public-service limits and verification.

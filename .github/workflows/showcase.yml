@@ -1,0 +1,31 @@
+name: Showcase container
+on:
+  push:
+    branches: [feature/orbit-delta]
+  pull_request:
+    paths: ["backend/**", "web/**", "deployment/**", "ml/**", "Dockerfile", ".github/workflows/showcase.yml"]
+permissions:
+  contents: read
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production container
+        run: docker build -t orbit-showcase .
+      - name: Start without database or raw data mounts
+        run: docker run -d --name orbit -p 10000:10000 -e PORT=10000 orbit-showcase
+      - name: Wait for readiness
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://localhost:10000/health; then exit 0; fi
+            sleep 2
+          done
+          docker logs orbit
+          exit 1
+      - name: Verify hosted routes and all sites
+        run: python3 scripts/smoke_showcase.py http://localhost:10000
+      - name: Container logs
+        if: always()
+        run: docker logs orbit

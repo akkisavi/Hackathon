@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: orbit-delta
+    runtime: docker
+    plan: starter
+    branch: feature/orbit-delta
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: ORBIT_SHOWCASE
+        value: "true"
+      - key: SERVE_FRONTEND
+        value: "true"
+      - key: ORBIT_DEMO
+        value: "false"

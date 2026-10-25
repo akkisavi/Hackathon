@@ -36,3 +36,8 @@ ml/models/*.joblib
 brag-output
 brag-output-2026-09-25-211414
 .claude
+# Reproducible water models are generated locally; evaluation JSON is versioned.
+ml/models/water/*.joblib
+
+# Trusted trained models required by the self-contained public showcase.
+!ml/models/water/*.joblib

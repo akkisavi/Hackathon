@@ -1,0 +1,6 @@
+.satellite-preview { margin: 20px 0; padding-top: 14px; border-top: 1px solid #77919b55; }
+.satellite-preview h3 { font-size: 13px; margin: 0 0 10px; }
+.satellite-preview img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.satellite-preview figcaption { font-size: 10px; line-height: 1.5; opacity: .75; margin-top: 7px; }
+.satellite-preview p { font-size: 12px; }
+.satellite-preview button { padding: 7px 12px; border: 1px solid currentColor; border-radius: 6px; }

@@ -2,6 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App.jsx";
+import OrbitDelta from "./pages/OrbitDelta.jsx";
+import WaterWatch from "./pages/WaterWatch.jsx";
+import ThermalSnapshot from "./pages/ThermalSnapshot.jsx";
+import { hasDemoAccess, isShowcase } from "./lib/changeApi.js";
 import Login from "./pages/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
@@ -29,6 +33,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route path="/orbit/water" element={hasDemoAccess ? <WaterWatch /> : <ProtectedRoute><WaterWatch /></ProtectedRoute>} />
+        <Route path="/orbit" element={hasDemoAccess ? <OrbitDelta /> : <ProtectedRoute><OrbitDelta /></ProtectedRoute>} />
+        <Route path="/orbit/thermal" element={hasDemoAccess ? <ThermalSnapshot /> : <ProtectedRoute><ThermalSnapshot /></ProtectedRoute>} />
         <Route
           path="/login"
           element={
@@ -64,9 +71,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route
           path="/*"
           element={
-            <ProtectedRoute>
-              <App />
-            </ProtectedRoute>
+            isShowcase ? <Navigate to="/orbit/water" replace /> : <ProtectedRoute><App /></ProtectedRoute>
           }
         />
       </Routes>

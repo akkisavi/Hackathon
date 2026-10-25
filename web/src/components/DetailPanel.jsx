@@ -6,16 +6,7 @@ import {
   estimatedSpreadRadiusKm,
 } from "../lib/humanize.js";
 
-// Esri World Imagery export — same free provider already used for the basemap.
-// bbox padded from the source's footprint so a large wildfire shows a wider
-// patch than a tiny flare stack.
-function satelliteImageUrl([lon, lat], areaKm2) {
-  const halfKm = Math.max(0.5, Math.sqrt(areaKm2 || 0) * 1.5);
-  const dLat = halfKm / 111;
-  const dLon = halfKm / (111 * Math.cos((lat * Math.PI) / 180));
-  const bbox = [lon - dLon, lat - dLat, lon + dLon, lat + dLat].join(",");
-  return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=${bbox}&bboxSR=4326&imageSR=4326&size=400,260&format=png32&f=image`;
-}
+import SatellitePreview from "./SatellitePreview.jsx";
 
 export default function DetailPanel({ sourceId, onClose }) {
   const [data, setData] = useState(null);
@@ -90,20 +81,6 @@ export default function DetailPanel({ sourceId, onClose }) {
 
             {data && (
               <>
-                {data.geometry && (
-                  <Block label="Satellite view">
-                    <img
-                      src={satelliteImageUrl(data.geometry.coordinates, p?.bbox_area_km2)}
-                      alt="Satellite imagery of this location"
-                      className="w-full rounded border border-zinc-200 object-cover dark:border-zinc-800"
-                      loading="lazy"
-                    />
-                    <p className="mt-1 text-[10px] text-zinc-500 dark:text-zinc-500">
-                      Esri World Imagery — recent composite, not necessarily the detection date
-                    </p>
-                  </Block>
-                )}
-
                 {c ? (
                   <>
                     <div className="flex items-center gap-2">
@@ -138,8 +115,8 @@ export default function DetailPanel({ sourceId, onClose }) {
                         <Plain k="When active" v={activityPattern(m.day_night_ratio)} />
                         <Plain k="How long" v={cap(persistencePhrase(m.span_days))} />
                         <Plain k="Location" v={spreadPhrase(m.bbox_growth_rate)} />
-                        <Plain k="6-hr spread"
-                          v={`~${estimatedSpreadRadiusKm(m).toFixed(2)} km radius (shown on map, orange dashed circle)`} />
+                        <Plain k="Illustrative spread"
+                          v={`~${estimatedSpreadRadiusKm(m).toFixed(2)} km radius after 6 hours; area-growth extrapolation, not a validated fire forecast`} />
                         {m.land_cover && (
                           <Plain k="Ground" v={cap(String(m.land_cover).replace(/_/g, " "))} />
                         )}
@@ -195,6 +172,10 @@ export default function DetailPanel({ sourceId, onClose }) {
                       </Block>
                     )}
 
+                <a href="/orbit" className="mt-3 block rounded border border-zinc-300 px-3 py-2 text-[12px] text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                  Inspect a before-and-after image pair →
+                </a>
+
                     <Block label="Why">
                       <p className="text-[12px] leading-relaxed text-zinc-600 dark:text-zinc-400">{c.rationale}</p>
                     </Block>
@@ -236,6 +217,8 @@ export default function DetailPanel({ sourceId, onClose }) {
                 ) : (
                   <p className="text-[12px] text-zinc-500 dark:text-zinc-500">Not classified yet.</p>
                 )}
+
+                <SatellitePreview coordinates={data.geometry?.coordinates} areaKm2={p?.bbox_area_km2}/>
 
                 <details className="mt-4 border-t border-zinc-200 pt-3 dark:border-zinc-800">
                   <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wider text-zinc-500 hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-zinc-100">

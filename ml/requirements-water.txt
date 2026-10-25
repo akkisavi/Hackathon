@@ -1,0 +1,8 @@
+# Collector, trainer, and API raster inspection; install in the existing demo environment.
+-r ../backend/requirements-demo.lock
+requests==2.32.3
+rasterio==1.4.3
+pyproj==3.7.2
+scikit-learn==1.5.2
+joblib==1.5.3
+pytest==8.3.5
